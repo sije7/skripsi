@@ -1,14 +1,59 @@
-import { Route, Switch, useLocation } from 'react-router-dom';
-import { Test } from "./pages/Test"
+import { Navigate, createBrowserRouter } from 'react-router-dom';
+import Login from './views/Login'
+import Signup from './views/Signup'
+import Users from './views/Users'
+import Notfound from './views/Notfound';
+import DefaultLayout from './components/DefaultLayout';
+import GuestLayout from './components/GuestLayout';
+import Dashboard from './views/Dashboard';
+import UserForm from './views/UserForm';
 
-const router = createBrowserRoute ({
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <DefaultLayout />, //layout
+        children: [
+            {
+                path:'/',
+                element: <Navigate to='/users'/> 
+            },
+            {
+                path: '/dashboard',
+                element: <Dashboard /> //page
+            },
+            {
+                path: '/users',
+                element: <Users />
+            },
+            {
+                path: '/users/new',
+                element: <UserForm key="userCreate" />
+            },
+            {
+                path: '/users/:id',
+                element: <UserForm key="userUpdate" />
+            },
+        ]
+    },
+    {
+        path: '/',
+        element: <GuestLayout />,
+        children: [
+            {
+                path: '/login',
+                element: <Login />
+            },
+            {
+                path: '/signup',
+                element: <Signup />
+            },
+        ]
+    },
+    {
+        path: '*',
+        element: <Notfound />
+    }
+])
 
-})
-
-return(
-    <Switch>
-        <Route path="/beranda" component={Test} />
-    </Switch>
-)
 
 export default router
