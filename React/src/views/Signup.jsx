@@ -1,10 +1,37 @@
-import { useRef, useState } from "react"
-import { Link } from "react-router-dom"
-import axiosClient from "../axios-client"
-import { useStateContext } from "../context/ContextProvider"
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useRef } from 'react';
+import { useStateContext } from '../context/ContextProvider';
+import { useState } from 'react';
+import axiosClient from '../axios-client';
 
-export default function Signup() {
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit" href="https://mui.com/">
+                Your Website
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
+// TODO remove, this demo shouldn't need to reset the theme.
+
+const defaultTheme = createTheme();
+
+export default function SignUp() {
     const nameRef = useRef()
     const emailRef = useRef()
     const passwordRef = useRef()
@@ -13,7 +40,7 @@ export default function Signup() {
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
 
-    const onSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault()
         const payload = {
             name: nameRef.current.value,
@@ -29,34 +56,72 @@ export default function Signup() {
             .catch(err => {
                 const response = err.response;
                 if (response && response.status === 422) {
-                    seterrors(response.data.errors)
+                    setErrors(response.data.errors)
                 }
             })
 
     }
+
     return (
-        <>
-            <div className="login-signup-form animated fadeInDown">
-                <div className="form">
-                    <form onSubmit={onSubmit}>
-                        <h1 className="title">Signup</h1>
-                        {errors && <div className="alert">
+        <ThemeProvider theme={defaultTheme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: '#132519' }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign up
+                    </Typography>
+                    {errors && <div className="alert">
                             {Object.keys(errors).map(key=>(
                                 <p key={key}>{errors[key][0]}</p>
                             ))}
                         </div>
                         }
-                        <input ref={nameRef} placeholder="Full Name" />
-                        <input ref={emailRef} type="email" placeholder="Email Address" />
-                        <input ref={passwordRef} type="password" placeholder="Password" />
-                        <input ref={passwordConfirmationRef} type="password" placeholder="Password Confirmation" />
-                        <button className="btn btn-block">Register</button>
-                        <p className="message">
-                            Already Registered ? <Link to="/login">Login</Link>
-                        </p>
-                    </form>
-                </div>
-            </div>
-        </>
-    )
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <input ref={nameRef} placeholder="Full Name" />
+                            </Grid>
+                            <Grid item xs={12}>
+                            <input ref={emailRef} type="email" placeholder="Email Address" />
+                            </Grid>
+                            <Grid item xs={12}>
+                            <input ref={passwordRef} type="password" placeholder="Password" />
+                            </Grid>
+                            <Grid item xs={12}>
+                            <input ref={passwordConfirmationRef} type="password" placeholder="Password Confirmation" />
+                            </Grid>
+                            <Grid item xs={12}>
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            Sign Up
+                        </Button>
+                        <Grid container justifyContent="flex-end">
+                            <Grid item>
+                                <Link href="/login" variant="body2">
+                                    Already have an account? Sign in
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Box>
+                <Copyright sx={{ mt: 5 }} />
+            </Container>
+        </ThemeProvider>
+    );
 }
