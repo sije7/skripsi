@@ -3,10 +3,11 @@ import Login from './views/Login'
 import Signup from './views/Signup'
 import Users from './views/Users'
 import Notfound from './views/Notfound';
-import DefaultLayout from './components/DefaultLayout';
-import GuestLayout from './components/GuestLayout';
+import DefaultLayout from './layouts/DefaultLayout';
+import GuestLayout from './layouts/GuestLayout';
 import Dashboard from './views/Dashboard';
 import UserForm from './views/UserForm';
+import LandingPage from './views/LandingPage';
 
 const router = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
                 path: '/signup',
                 element: <Signup />
             },
+            {
+                path: '/landingpage',
+                element: <LandingPage />
+            }
         ]
     },
     {
