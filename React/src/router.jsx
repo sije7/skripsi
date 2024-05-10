@@ -5,9 +5,9 @@ import Users from './views/Users'
 import Notfound from './views/Notfound';
 import DefaultLayout from './layouts/DefaultLayout';
 import GuestLayout from './layouts/GuestLayout';
-import Dashboard from './views/Dashboard';
 import UserForm from './views/UserForm';
 import LandingPage from './views/LandingPage';
+import Beranda from './views/Beranda';
 
 const router = createBrowserRouter([
     {
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
                 element: <Navigate to='/users'/> 
             },
             {
-                path: '/dashboard',
-                element: <Dashboard /> //page
+                path: '/beranda',
+                element: <Beranda /> //page
             },
             {
                 path: '/users',

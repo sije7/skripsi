@@ -55,6 +55,8 @@ export default function Login() {
                 if (response && response.status === 422) {
                     setErrors(response.data.errors)
                 }
+                console.log(response.data)
+                console.log(response.data.errors)
             })
     }
 
