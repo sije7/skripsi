@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import {useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import axiosClient from "../axios-client"
 import { useStateContext } from "../context/ContextProvider"
 
@@ -15,7 +15,7 @@ export default function UserForm() {
         password: '',
         password_confirmation: ''
     })
-    const {setNotification} = useStateContext()
+    const { setNotification } = useStateContext()
     if (id) {
         useEffect(() => {
             setLoading(true)
@@ -30,32 +30,32 @@ export default function UserForm() {
         }, [])
     }
 
-    const onSubmit = (event) =>{
+    const onSubmit = (event) => {
         event.preventDefault();
-        if(user.id){
+        if (user.id) {
             axiosClient.put(`/users/${user.id}`, user)
-            .then(()=>{
-                setNotification('User was successfully updated')
-                navigate('/users')
-            })
-            .catch(err => {
-                const response = err.response;
-                if (response && response.status === 422) {
-                    setErrors(response.data.errors)
-                }
-            })
-        }else{
+                .then(() => {
+                    setNotification('User was successfully updated')
+                    navigate('/users')
+                })
+                .catch(err => {
+                    const response = err.response;
+                    if (response && response.status === 422) {
+                        setErrors(response.data.errors)
+                    }
+                })
+        } else {
             axiosClient.post('/users', user)
-        .then(() => {
-        setNotification('User was successfully created')
-          navigate('/users')
-        })
-        .catch(err => {
-          const response = err.response;
-          if (response && response.status === 422) {
-            setErrors(response.data.errors)
-          }
-        })
+                .then(() => {
+                    setNotification('User was successfully created')
+                    navigate('/users')
+                })
+                .catch(err => {
+                    const response = err.response;
+                    if (response && response.status === 422) {
+                        setErrors(response.data.errors)
+                    }
+                })
         }
     }
 
@@ -76,10 +76,10 @@ export default function UserForm() {
             </div>
             {!loading &&
                 <form onSubmit={onSubmit}>
-                    <input type="" value={user.name} onChange={event => setUser({...user, name:event.target.value})} placeholder="Name"></input>
-                    <input type="email" value={user.email} onChange={event => setUser({...user, email:event.target.value})} placeholder="Email"></input>
-                    <input type="password" placeholder="Password" onChange={event => setUser({...user, password:event.target.value})}></input>
-                    <input type="password" placeholder="Password Confirmation" onChange={event => setUser({...user, password_confirmation:event.target.value})}></input>
+                    <input type="" value={user.name} onChange={event => setUser({ ...user, name: event.target.value })} placeholder="Name"></input>
+                    <input type="email" value={user.email} onChange={event => setUser({ ...user, email: event.target.value })} placeholder="Email"></input>
+                    <input type="password" placeholder="Password" onChange={event => setUser({ ...user, password: event.target.value })}></input>
+                    <input type="password" placeholder="Password Confirmation" onChange={event => setUser({ ...user, password_confirmation: event.target.value })}></input>
                     <button className="btn">Save</button>
                 </form>
             }

@@ -36,7 +36,8 @@ class SignupRequest extends FormRequest
                     ->letters()
                     ->symbols()
                     ->numbers()
-            ]
+            ],
+            'role' => ['required','string','in:admin,user,lembaga']
         ];
     }
 }

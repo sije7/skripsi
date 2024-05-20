@@ -17,10 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('user');
             $table->rememberToken();
+            $table->string('jenis_kelamin');
+            $table->string('umur');
+            $table->string('nomor_telepon');
+            $table->string('role');
+            $table->string('profile_image')->nullable();
             $table->timestamps();
         });
     }

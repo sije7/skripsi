@@ -26,14 +26,15 @@ class StoreUsersRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:55',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => [
                 'required',
                 'confirmed',
                 Password::min(8)
                 ->letters()
                 ->symbols()
-            ]
+            ],
+            'role' => 'required|string|in:admin,user,lembaga'
         ];
     }
 }

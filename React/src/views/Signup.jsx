@@ -36,6 +36,7 @@ export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmationRef = useRef()
+    const roleRef = useRef()
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
@@ -46,7 +47,8 @@ export default function SignUp() {
             name: nameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
-            password_confirmation: passwordConfirmationRef.current.value
+            password_confirmation: passwordConfirmationRef.current.value,
+            role: roleRef.current.value
         }
         axiosClient.post('/signup', payload)
             .then(({ data }) => {
@@ -81,26 +83,27 @@ export default function SignUp() {
                         Sign up
                     </Typography>
                     {errors && <div className="alert">
-                            {Object.keys(errors).map(key=>(
-                                <p key={key}>{errors[key][0]}</p>
-                            ))}
-                        </div>
-                        }
+                        {Object.keys(errors).map(key => (
+                            <p key={key}>{errors[key][0]}</p>
+                        ))}
+                    </div>
+                    }
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <input ref={nameRef} placeholder="Full Name" />
                             </Grid>
                             <Grid item xs={12}>
-                            <input ref={emailRef} type="email" placeholder="Email Address" />
+                                <input ref={emailRef} type="email" placeholder="Email Address" />
                             </Grid>
                             <Grid item xs={12}>
-                            <input ref={passwordRef} type="password" placeholder="Password" />
+                                <input ref={passwordRef} type="password" placeholder="Password" />
                             </Grid>
                             <Grid item xs={12}>
-                            <input ref={passwordConfirmationRef} type="password" placeholder="Password Confirmation" />
+                                <input ref={passwordConfirmationRef} type="password" placeholder="Password Confirmation" />
                             </Grid>
                             <Grid item xs={12}>
+                                <input ref={roleRef} type="" placeholder="Role" />
                             </Grid>
                         </Grid>
                         <Button

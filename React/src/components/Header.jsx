@@ -2,8 +2,32 @@ import { Box, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from '../assets/Logo.jpg'
 import Sushi from '../assets/sushi.jpg'
+import { useEffect, useState } from "react"
+import axiosClient from "../axios-client"
+import { useStateContext } from "../context/ContextProvider"
 
 export default function HeaderMain() {
+    const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(false)
+    const { user, setNotification } = useStateContext()
+
+    useEffect(() => {
+        getUsers()
+    }, [])
+
+    const getUsers = () => {
+        setLoading(true)
+        axiosClient.get('/user')
+            .then(({ data }) => {
+                console.log(data)
+                setUsers(data.data)
+                setLoading(false)
+            })
+            .catch(() => {
+                setLoading(false)
+            })
+    }
+
     return (
         <>
             <Grid container sx={{
@@ -51,7 +75,7 @@ export default function HeaderMain() {
                     <Link style={{ textDecoration: 'none', color: 'black' }} to='/galangdana'><h1>Galang Dana</h1></Link>
                 </Grid>
                 <Grid item sx={{ fontSize: '10px' }}>
-                    <Link to='beranda'>
+                    <Link to={'/profile/' + user.id}>
                         <Box
                             component="img"
                             sx={{
@@ -60,7 +84,7 @@ export default function HeaderMain() {
                                 backgroundColor: '#4287f5',
                                 borderRadius: '50px',
                             }}
-                            src={Sushi}
+                            src={`http://localhost:8000${user.profile_image}`}
                         />
                     </Link>
                 </Grid>
