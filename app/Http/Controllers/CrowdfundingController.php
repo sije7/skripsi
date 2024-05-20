@@ -65,7 +65,7 @@ class CrowdfundingController extends Controller
 
     public function approveCrowdfunding($id){
         $crowdfunding = Crowdfunding::find($id);
-        $crowdfunding->status = 0;
+        $crowdfunding->status = 1;
         $crowdfunding->save();
         return 'Approve Galangdana Berhasil';
     }
