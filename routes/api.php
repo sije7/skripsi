@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::post('/signup', [AuthController :: class , 'signup']);
 Route::post('/login', [AuthController :: class , 'login']);
 
+
 Route::post('/crowdfundings', [CrowdfundingController :: class, 'getCrowdfundings']);
 Route::get('/crowdfunding/{id}', [CrowdfundingController :: class, 'getCrowdfunding']);
 Route::post('/crowdfunding/request', [CrowdfundingController :: class, 'requestCrowdfunding']);
@@ -36,4 +37,3 @@ Route::post('/crowdfunding/approve/{id}', [CrowdfundingController :: class, 'app
 Route::post('/crowdfunding/pay/{id', [CrowdfundingController:: class, 'payCrowdfunding']);
 
 // Route::get('/')
-
