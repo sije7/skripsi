@@ -8,6 +8,11 @@ import GuestLayout from './layouts/GuestLayout';
 import UserForm from './views/UserForm';
 import LandingPage from './views/LandingPage';
 import Beranda from './views/Beranda';
+import GalangDana from './views/GalangDana/GalangDana';
+import GalangDanaDetail from './views/GalangDana/GalangDanaDetail';
+import RequestGalangDana from './views/GalangDana/RequestGalangDana';
+import ApproveGalangDana from './views/GalangDana/ApproveGalangDana';
+import PaymentGalangDana from './views/GalangDana/PaymentGalangDana';
 
 const router = createBrowserRouter([
     {
@@ -16,7 +21,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path:'/',
-                element: <Navigate to='/users'/> 
+                element: <Navigate to='/beranda'/> 
             },
             {
                 path: '/beranda',
@@ -33,6 +38,26 @@ const router = createBrowserRouter([
             {
                 path: '/users/:id',
                 element: <UserForm key="userUpdate" />
+            },
+            {   
+                path: '/galangdana',
+                element: <GalangDana />
+            },
+            {   
+                path: '/galangdana/:id',
+                element: <GalangDanaDetail />
+            },
+            {   
+                path: '/galangdana/request',
+                element: <RequestGalangDana />
+            },
+            {   
+                path: '/galangdana/approvepage',
+                element: <ApproveGalangDana />
+            },
+            {   
+                path: '/galangdana/payment',
+                element: <PaymentGalangDana  />
             },
         ]
     },
