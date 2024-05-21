@@ -8,6 +8,8 @@ import GuestLayout from './layouts/GuestLayout';
 import UserForm from './views/UserForm';
 import LandingPage from './views/LandingPage';
 import Beranda from './views/Beranda';
+import AboutUs from './views/AboutUs';
+import Uploads from './views/UploadPembelajaran';
 
 const router = createBrowserRouter([
     {
@@ -16,7 +18,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path:'/',
-                element: <Navigate to='/users'/> 
+                element: <Navigate to='/users'/>
             },
             {
                 path: '/beranda',
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
             {
                 path: '/users/:id',
                 element: <UserForm key="userUpdate" />
+            },
+            {
+                path: '/aboutus',
+                element: <AboutUs />
+            },
+            {
+                path: '/uploads',
+                element: <Uploads />
             },
         ]
     },
