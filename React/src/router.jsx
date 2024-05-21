@@ -13,6 +13,8 @@ import GalangDanaDetail from './views/GalangDana/GalangDanaDetail';
 import RequestGalangDana from './views/GalangDana/RequestGalangDana';
 import ApproveGalangDana from './views/GalangDana/ApproveGalangDana';
 import PaymentGalangDana from './views/GalangDana/PaymentGalangDana';
+import Profile from './views/Profile';
+import ProfileEdit from './views/ProfileEdit';
 import ApprovePayment from './views/GalangDana/ApprovePayment';
 
 const router = createBrowserRouter([
@@ -22,7 +24,15 @@ const router = createBrowserRouter([
         children: [
             {
                 path:'/',
-                element: <Navigate to='/beranda'/> 
+                element: <Navigate to='/beranda'/>
+            },
+            {
+                path: '/profile/:id',
+                element: <Profile key="profileUser" /> //page
+            },
+            {
+                path: '/profileEdit/:id',
+                element: <ProfileEdit key="profileEditUser" /> //page
             },
             {
                 path: '/beranda',
@@ -40,23 +50,23 @@ const router = createBrowserRouter([
                 path: '/users/:id',
                 element: <UserForm key="userUpdate" />
             },
-            {   
+            {
                 path: '/galangdana',
                 element: <GalangDana />
             },
-            {   
+            {
                 path: '/galangdana/:id',
                 element: <GalangDanaDetail />
             },
-            {   
+            {
                 path: '/galangdana/request',
                 element: <RequestGalangDana />
             },
-            {   
+            {
                 path: '/galangdana/approvepage',
                 element: <ApproveGalangDana />
             },
-            {   
+            {
                 path: '/galangdana/payment',
                 element: <PaymentGalangDana  />
             },

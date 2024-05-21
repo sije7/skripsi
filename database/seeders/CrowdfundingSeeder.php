@@ -16,7 +16,7 @@ class CrowdfundingSeeder extends Seeder
     public function run()
     {
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('31'),
+            'user_id'=> ('1'),
             'title'=>'Gunung Meletus Kabupaten Merapi',
             'description'=>'Pellentesque ac tortor mi. Aenean pulvinar vitae augue scelerisque blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris massa erat, porta vel lacinia et, dictum eu nisi. Suspendisse auctor sit amet erat eget viverra. Aliquam erat volutpat. Aenean rhoncus sit amet turpis nec venenatis. Vestibulum laoreet ex felis. In accumsan varius est, ac tristique arcu molestie sit amet. Praesent vulputate aliquam malesuada. Vestibulum eu enim quis massa gravida consequat. Vivamus consectetur tortor laoreet, tempus tortor non, posuere sem. Nulla eget lectus nunc. Nulla erat ex, rutrum ut rutrum eget, semper venenatis sem. Sed lobortis finibus ante quis auctor.',
             'image'=>'/storage/images/owi.jpg',
@@ -33,7 +33,7 @@ class CrowdfundingSeeder extends Seeder
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('31'),
+            'user_id'=> ('1'),
             'title'=>'Banjir Bandang Tangerang Selatan',
             'description'=>'Donec tempor mauris lectus, vestibulum viverra augue cursus eu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean placerat mauris id est vehicula, posuere volutpat dui congue. Quisque id sapien elit. Quisque sed posuere massa, vel sollicitudin metus. Nulla facilisi. Phasellus ultrices quis sem sed sagittis. Sed ullamcorper vel metus eu interdum. Morbi eu viverra sapien. Praesent posuere mi eget ullamcorper auctor.',
             'image'=>'/storage/images/whatu.jpg',
@@ -50,7 +50,7 @@ class CrowdfundingSeeder extends Seeder
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('31'),
+            'user_id'=> ('1'),
             'title'=>'Kebakaran Hutan Bandung Utara',
             'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus elit. Etiam vel efficitur elit. Donec id iaculis nisl, sit amet maximus lorem. Praesent non arcu sem. Integer molestie sem eu neque tempus, et condimentum quam posuere. Pellentesque sem elit, tristique a nunc ac, luctus hendrerit metus. Duis augue justo, interdum vitae sapien in, cursus convallis felis. Nullam bibendum mauris vel dui dictum, eu eleifend felis sagittis. Pellentesque vitae ultricies metus. Nunc ullamcorper, arcu et volutpat tincidunt, ante nisl lacinia est, quis porttitor purus ipsum quis orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque quis vulputate dolor.',
             'image'=>'/storage/images/hoekk.jpg',
@@ -67,7 +67,7 @@ class CrowdfundingSeeder extends Seeder
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('31'),
+            'user_id'=> ('1'),
             'title'=>'Gempa Bumi Kota Emas',
             'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus elit. Etiam vel efficitur elit. Donec id iaculis nisl, sit amet maximus lorem. Praesent non arcu sem. Integer molestie sem eu neque tempus, et condimentum quam posuere. Pellentesque sem elit, tristique a nunc ac, luctus hendrerit metus. Duis augue justo, interdum vitae sapien in, cursus convallis felis. Nullam bibendum mauris vel dui dictum, eu eleifend felis sagittis. Pellentesque vitae ultricies metus. Nunc ullamcorper, arcu et volutpat tincidunt, ante nisl lacinia est, quis porttitor purus ipsum quis orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque quis vulputate dolor.',
             'image'=>'/storage/images/owi.jpg',
@@ -84,7 +84,7 @@ class CrowdfundingSeeder extends Seeder
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('31'),
+            'user_id'=> ('1'),
             'title'=>'Banjir Bandang Kota Jakarta Utara',
             'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus elit. Etiam vel efficitur elit. Donec id iaculis nisl, sit amet maximus lorem. Praesent non arcu sem. Integer molestie sem eu neque tempus, et condimentum quam posuere. Pellentesque sem elit, tristique a nunc ac, luctus hendrerit metus. Duis augue justo, interdum vitae sapien in, cursus convallis felis. Nullam bibendum mauris vel dui dictum, eu eleifend felis sagittis. Pellentesque vitae ultricies metus. Nunc ullamcorper, arcu et volutpat tincidunt, ante nisl lacinia est, quis porttitor purus ipsum quis orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque quis vulputate dolor.',
             'image'=>'/storage/images/doge.jpg',
@@ -101,7 +101,7 @@ class CrowdfundingSeeder extends Seeder
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('31'),
+            'user_id'=> ('1'),
             'title'=>'Gempa Bumi Desa Jarilo',
             'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus elit. Etiam vel efficitur elit. Donec id iaculis nisl, sit amet maximus lorem. Praesent non arcu sem. Integer molestie sem eu neque tempus, et condimentum quam posuere. Pellentesque sem elit, tristique a nunc ac, luctus hendrerit metus. Duis augue justo, interdum vitae sapien in, cursus convallis felis. Nullam bibendum mauris vel dui dictum, eu eleifend felis sagittis. Pellentesque vitae ultricies metus. Nunc ullamcorper, arcu et volutpat tincidunt, ante nisl lacinia est, quis porttitor purus ipsum quis orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque quis vulputate dolor.',
             'image'=>'/storage/images/suprised.jpg',
