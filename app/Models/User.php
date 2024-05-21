@@ -15,6 +15,9 @@ class User extends Authenticatable
     public function crowdfundings(){
         return $this->hasMany(Crowdfunding::class);
     }
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
+    }
 
     /**
      * The attributes that are mass assignable.

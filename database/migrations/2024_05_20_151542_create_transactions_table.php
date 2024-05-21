@@ -13,21 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('crowdfundings', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('title');
-            $table->longText('description');
-            $table->string('image');
-            $table->string('location');
-            $table->bigInteger('fund')->nullable()->default(0);
-            $table->bigInteger('target');
-            $table->integer('status')->default(0);
-            $table->integer('deadline');
-            $table->string('no_rekening');
-            $table->string('nama_rekening');
-            $table->string('bank');
             $table->timestamps();
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('crowdfunding_id')->references('id')->on('crowdfundings')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('fund');
+            $table->string('image');
+            $table->integer('status')->default(0);
         });
     }
 
@@ -38,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('crowdfundings');
+        Schema::dropIfExists('transactions');
     }
 };

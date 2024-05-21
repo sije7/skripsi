@@ -20,6 +20,7 @@ class CrowdfundingController extends Controller
         $crowdfundings = Crowdfunding::whereIn('status', $tempStatus)->get();
         foreach ($crowdfundings as $c) {
             $c->progress = $c->fund / $c->target * 100;
+            $c->progress = round($c->progress, 2);
             if ($c->progress > 100) {
                 $c->progress = 100;
             };
@@ -34,6 +35,7 @@ class CrowdfundingController extends Controller
     {
         $crowdfunding = Crowdfunding::find($id);
         $crowdfunding->progress = $crowdfunding->fund / $crowdfunding->target * 100;
+        $crowdfunding->progress = round($crowdfunding->progress, 2);
         if ($crowdfunding->progress > 100) {
             $crowdfunding->progress = 100;
         };
@@ -48,15 +50,18 @@ class CrowdfundingController extends Controller
         $data = $request->validated();
 
             $crowdfunding = new Crowdfunding();
-            $crowdfunding->title = $request->judul;
-            $crowdfunding->description = $request->deskripsi;
-            $crowdfunding->target = $request->target;
+            $crowdfunding->title = $request->Judul;
+            $crowdfunding->description = $request->Deskripsi;
+            $crowdfunding->target = $request->Dana;
             $crowdfunding->user_id = $request->user_id;
-            $crowdfunding->deadline = $request->deadline;
-            $crowdfunding->location = $request->lokasi;
+            $crowdfunding->deadline = $request->Deadline;
+            $crowdfunding->location = $request->Lokasi;
+            $crowdfunding->no_rekening = $request->NomorRekening;
+            $crowdfunding->nama_rekening = $request->NamaRekening;
+            $crowdfunding->bank = $request->Bank;
 
-            $fileName = $request->gambar->getClientOriginalName('image');
-            $path = $request->gambar->storeAs('images', $fileName, 'public');
+            $fileName = $request->Gambar->getClientOriginalName('image');
+            $path = $request->Gambar->storeAs('images', $fileName, 'public');
             $crowdfunding->image = '/storage/' . $path;
 
             $crowdfunding->save();
@@ -68,13 +73,6 @@ class CrowdfundingController extends Controller
         $crowdfunding->status = 1;
         $crowdfunding->save();
         return 'Approve Galangdana Berhasil';
-    }
-
-    public function payCrowdfunding(Request $request, $id){
-        $crowdfunding = Crowdfunding::find($id);
-        $crowdfunding->fund += $request->fund;
-        $crowdfunding->save();
-        return 'Pembayaran Berhasil, Terima Kasih Untuk Kebaikannya';
     }
 
 }

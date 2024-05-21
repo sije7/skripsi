@@ -6,6 +6,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import "react-datepicker/dist/react-datepicker.css";
 import axiosClient from "../../axios-client";
 import { useNavigate } from "react-router-dom";
+import CurrencyInput from 'react-currency-input-field';
 
 export default function RequestGalangDana() {
     const [startDate, setStartDate] = useState(new Date());
@@ -18,6 +19,9 @@ export default function RequestGalangDana() {
     const [user, setUser] = useState({})
     const [userId, setuserId] = useState('')
     const [preview, setPreview] = useState('')
+    const [nomorRekening, setNomorRekening] = useState('')
+    const [namaRekening, setNamaRekening] = useState('')
+    const [bank, setBank] = useState('')
 
     //error
     const [errorJudul, seterrorJudul] = useState('')
@@ -25,8 +29,13 @@ export default function RequestGalangDana() {
     const [errorLokasi, seterrorLokasi] = useState('')
     const [errorTarget, seterrorTarget] = useState('')
     const [errorImage, seterrorImage] = useState('')
+    const [errorNomorRekening, seterrorNomorRekening] = useState('')
+    const [errorNamaRekening, seterrorNamaRekening] = useState('')
+    const [errorBank, seterrorBank] = useState('')
     const [errorDeadline, setErrorDeadline] = useState('')
     const navigate = useNavigate()
+
+    const [targetTemp, settargetTemp] = useState('')
 
 
     useEffect(() => {
@@ -57,31 +66,36 @@ export default function RequestGalangDana() {
     }
 
     const onSubmit = () => {
+        let temp = parseInt(target)
         let formData = new FormData()
+        if (isNaN(parseInt(target))) {
+            formData.append("Dana", '')
+        } else {
+            formData.append("Dana", parseInt(target))
+        }
 
-        formData.append("gambar", image)
-        formData.append("judul", judul)
-        formData.append("deskripsi", keterangan)
+        formData.append("Gambar", image)
+        formData.append("Judul", judul)
+        formData.append("Deskripsi", keterangan)
         formData.append("user_id", userId)
-        formData.append("target", target)
-        formData.append("lokasi", lokasi)
 
+        formData.append("Lokasi", lokasi)
+        formData.append("NomorRekening", nomorRekening)
+        formData.append("NamaRekening", namaRekening)
+        formData.append("Bank", bank)
 
         let nowDate = new Date().toLocaleString()
 
         let Difference_In_Time =
-           new Date(startDate).getTime() - new Date(nowDate).getTime();
+            new Date(startDate).getTime() - new Date(nowDate).getTime();
         let Difference_In_Days =
             Math.round
                 (Difference_In_Time / (1000 * 3600 * 24));
-                console.log(Difference_In_Days)
-
-        formData.append("deadline", Difference_In_Days)
-
+        formData.append("Deadline", Difference_In_Days)
 
         axiosClient.post('/crowdfunding/request', formData)
             .then((res) => {
-                return navigate('/galangdana', {state:{message:res.data}})
+                return navigate('/galangdana', { state: { message: res.data } })
             })
             .catch(err => {
                 seterrorJudul('')
@@ -90,13 +104,19 @@ export default function RequestGalangDana() {
                 seterrorImage('')
                 seterrorTarget('')
                 setErrorDeadline('')
+                seterrorNamaRekening('')
+                seterrorNomorRekening('')
+                seterrorBank('')
                 const response = err.response.data.errors;
-                response.judul ? seterrorJudul(response.judul) : ""
-                response.deskripsi ? seterrorDeskripsi(response.deskripsi) : ""
-                response.target ? seterrorTarget(response.target) : ""
-                response.lokasi ? seterrorLokasi(response.lokasi) : ""
-                response.gambar ? seterrorImage(response.gambar) : ""
-                response.deadline ? setErrorDeadline(response.deadline) : ""
+                response.Judul ? seterrorJudul(response.Judul) : ""
+                response.Deskripsi ? seterrorDeskripsi(response.Deskripsi) : ""
+                response.Dana ? seterrorTarget(response.Dana) : ""
+                response.Lokasi ? seterrorLokasi(response.Lokasi) : ""
+                response.Gambar ? seterrorImage(response.Gambar) : ""
+                response.Deadline ? setErrorDeadline(response.Deadline) : ""
+                response.NomorRekening ? seterrorNomorRekening(response.NomorRekening) : ""
+                response.NamaRekening ? seterrorNamaRekening(response.NamaRekening) : ""
+                response.Bank ? seterrorBank(response.bank) : ""
             })
     }
 
@@ -141,6 +161,58 @@ export default function RequestGalangDana() {
                     </Grid>
                     {errorDeskripsi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorDeskripsi}</small> : ""}
                     <Grid item>
+                        <TextField
+                            id="outlined-multiline-flexible"
+                            label="Nomor Rekening *"
+                            type="number"
+                            style={{ minWidth: '50%', backgroundColor: 'white' }}
+                            maxRows={4}
+                            value={nomorRekening}
+                            onChange={event => setNomorRekening(event.target.value)}
+                        />
+                    </Grid>
+                    {errorNomorRekening ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorNomorRekening}</small> : ""}
+                    <Grid item>
+                        <TextField
+                            id="outlined-multiline-flexible"
+                            label="Nama Rekening *"
+                            style={{ minWidth: '50%', backgroundColor: 'white' }}
+                            maxRows={4}
+                            value={namaRekening}
+                            onChange={event => setNamaRekening(event.target.value)}
+                        />
+                    </Grid>
+                    {errorNamaRekening ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorNamaRekening}</small> : ""}
+                    <Grid item>
+                        <TextField
+                            id="outlined-multiline-flexible"
+                            label="Bank Tujuan *"
+                            multiline
+                            style={{ minWidth: '50%', backgroundColor: 'white' }}
+                            maxRows={4}
+                            value={bank}
+                            onChange={event => setBank(event.target.value)}
+                        />
+                    </Grid>
+                    {errorBank ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorBank}</small> : ""}
+                    <Grid item>
+                        <TextField
+                            id="outlined-multiline-flexible"
+                            label="Lokasi Galang Dana *"
+                            multiline
+                            style={{ minWidth: '100%', backgroundColor: 'white' }}
+                            maxRows={4}
+                            value={lokasi}
+                            onChange={event => setLokasi(event.target.value)}
+                        />
+                    </Grid>
+                    {errorLokasi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorLokasi}</small> : ""}
+
+                </Grid>
+                {/* Right Side */}
+                <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
+                    <Grid item>
+                        <p style={{fontWeight:'lighter'}}>Upload Gambar</p>
                         <Button
                             component="label"
                             role={undefined}
@@ -159,51 +231,38 @@ export default function RequestGalangDana() {
                             <img src={preview} style={{ width: '100px', height: '100px' }}></img>
                         </Grid>
                     ) : " "}
-
-                </Grid>
-                {/* Right Side */}
-                <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
                     <Grid item>
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Lokasi Galang Dana *"
-                            multiline
-                            style={{ minWidth: '100%', backgroundColor: 'white' }}
-                            maxRows={4}
-                            value={lokasi}
-                            onChange={event => setLokasi(event.target.value)}
-                        />
-                    </Grid>
-                    {errorLokasi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorLokasi}</small> : ""}
-                    <Grid item>
+                        <p style={{fontWeight:'lighter'}}>Jumlah Dana yang Dibutuhkan</p>
                         <FormControl >
-                            <InputLabel htmlFor="outlined-adornment-amount">Target *</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-amount"
-                                startAdornment={<InputAdornment position="start">Rp</InputAdornment>}
-                                label="Amount"
-                                type="number"
-                                style={{ backgroundColor: 'white' }}
+                            <CurrencyInput
+                                id="input-example"
+                                name="input-name"
+                                placeholder="Rp"
+                                // defaultValue={''}
+                                prefix="Rp "
+                                decimalsLimit={2}
+                                style={{ width: '300px', height: '57px' }}
                                 value={target}
-                                onChange={event => setTarget(event.target.value)}
+                                onValueChange={(value) => setTarget(value)}
+                            // onChange={event => setTarget(event.target.value)}
                             />
                         </FormControl>
                     </Grid>
                     {errorTarget ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorTarget}</small> : ""}
                     <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
                         <Grid item >
-                            <h4>Tanggal Penyaluran Dana: </h4>
+                            <p style={{fontWeight:'lighter'}}>Tanggal Terakhir Penyaluran Dana </p>
                             <DatePicker
                                 selected={startDate}
                                 dateFormat="yyyy/MM/dd"
                                 value={startDate}
                                 onChange={(date) => setStartDate(date)} />
                         </Grid>
-                        
+
                     </Grid>
                     {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
                     <Grid item>
-                    
+
                         <Button onClick={onSubmit} variant="contained" style={{ backgroundColor: '#66AB92' }}>
                             Request Galang Dana
                         </Button>

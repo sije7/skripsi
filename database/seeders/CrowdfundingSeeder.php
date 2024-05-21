@@ -24,6 +24,9 @@ class CrowdfundingSeeder extends Seeder
             'target'=>(123),
             'deadline'=> 5,
             'status'=> 1,
+            'nama_rekening'=>'Danielson',
+            'no_rekening'=>'6020910274',
+            'bank'=>'BCA',
             'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
@@ -38,6 +41,9 @@ class CrowdfundingSeeder extends Seeder
             'target'=>(400000),
             'status'=> 1,
             'deadline'=> 6,
+            'nama_rekening'=>'Danielson',
+            'no_rekening'=>'6020910274',
+            'bank'=>'BCA',
             'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
@@ -52,6 +58,9 @@ class CrowdfundingSeeder extends Seeder
             'target'=>(100000),
             'deadline'=> 3,
             'status'=> 0,
+            'nama_rekening'=>'Danielson',
+            'no_rekening'=>'6020910274',
+            'bank'=>'BCA',
             'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
@@ -66,6 +75,9 @@ class CrowdfundingSeeder extends Seeder
             'target'=>(100000000),
             'deadline'=> 3,
             'status'=> 0,
+            'nama_rekening'=>'Danielson',
+            'no_rekening'=>'6020910274',
+            'bank'=>'BCA',
             'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
@@ -80,6 +92,9 @@ class CrowdfundingSeeder extends Seeder
             'target'=>(400000),
             'deadline'=> 3,
             'status'=> 1,
+            'nama_rekening'=>'Danielson',
+            'no_rekening'=>'6020910274',
+            'bank'=>'BCA',
             'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
@@ -94,6 +109,9 @@ class CrowdfundingSeeder extends Seeder
             'target'=>(500000),
             'status'=> 0,
             'deadline'=> 3,
+            'nama_rekening'=>'Danielson',
+            'no_rekening'=>'6020910274',
+            'bank'=>'BCA',
             'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'

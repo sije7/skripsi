@@ -1,16 +1,50 @@
-import { Button, FormControl, Grid, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
-import { useEffect } from "react"
+import { Button, FormControl, Grid, InputAdornment, InputLabel, OutlinedInput, TextField, styled } from "@mui/material";
+import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import axiosClient from "../../axios-client";
 
 export default function PaymentGalangDana() {
   const location = useLocation()
   const { detail } = location.state;
+  const [username, setUsername] = useState('')
+  const [rekeningUser, setRekeningUser] = useState('');
   useEffect(() => {
     console.log(detail)
+
+    axiosClient.get('/user')
+            .then(({ data }) => {
+                console.log('data:', data)
+                setUsername(data.name)
+            })
+
   }, [])
 
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
+
+  const handleImage = (e) => {
+    const file = e.target.files[0]
+    setImage(file)
+    setPreview(URL.createObjectURL(file))
+
+  }
 
   const onSubmit = () => {
+
+
+    let fd = new FormData()
+
+    axiosClient.post('/crowdfunding/transaction/create', fd)
 
   }
   return (
@@ -25,8 +59,8 @@ export default function PaymentGalangDana() {
               id="outlined-required"
               label="Nama Lengkap"
               style={{ minWidth: '60%', backgroundColor: 'white' }}
-            // value={user.name}
-            // onChange={event => setPenanggungjawab(event.target.value)}
+              value={username}
+              disabled
             />
           </Grid>
           <Grid item>
@@ -35,7 +69,7 @@ export default function PaymentGalangDana() {
               disabled
               id="outlined-required"
               value={detail.title}
-              style={{ minWidth: '60%', backgroundColor: 'white', fontWeight:'bold' }}
+              style={{ minWidth: '100%', backgroundColor: 'white', fontWeight: 'bold' }}
             // value={judul}
             // onChange={event => setJudul(event.target.value)}
             />
@@ -53,15 +87,28 @@ export default function PaymentGalangDana() {
             />
           </Grid>
           {/* {errorDeskripsi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorDeskripsi}</small> : ""} */}
+          <Grid item>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+            >
+              Upload file
+              <VisuallyHiddenInput type="file" onChange={handleImage} />
+            </Button>
+
+          </Grid>
         </Grid>
         {/* Right Side */}
         <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
           <Grid item>
             <TextField
               id="outlined-multiline-flexible"
-              label="Lokasi Galang Dana *"
+              label="Rekening Tujuan"
               multiline
-              style={{ minWidth: '100%', backgroundColor: 'white' }}
+              style={{ minWidth: '50%', backgroundColor: 'white' }}
             // maxRows={4}
             // value={lokasi}
             // onChange={event => setLokasi(event.target.value)}
