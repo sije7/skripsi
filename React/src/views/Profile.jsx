@@ -25,17 +25,18 @@ export default function Profile() {
         umur: '',
         nomor_telepon: '',
         role: '',
-        profile_image: null
+        profile_image: '',
+        no_req: ''
     });
     const { setNotification } = useStateContext();
 
     useEffect(() => {
         if (id) {
             setLoading(true);
-            axiosClient.get(`/users/${id}`)
+            axiosClient.get(`/user`)
                 .then(({ data }) => {
                     console.log(data);
-                    setUser(data.data);
+                    setUser(data);
                     setLoading(false);
                 })
                 .catch(err => {
@@ -43,33 +44,6 @@ export default function Profile() {
                 });
         }
     }, [id]);
-
-    const updateProfileImage = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-        console.log("Submitting user profile image:", user.profile_image);
-
-        try {
-            const formData = new FormData();
-            formData.append('profile_image', user.profile_image);
-
-            await axiosClient.put(`/users/${user.id}/profile_image`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-
-            setNotification('User profile image was successfully updated');
-            navigate('/users');
-        } catch (err) {
-            const response = err.response;
-            if (response && response.status === 422) {
-                console.error("Validation errors:", response.data.errors);
-            } else {
-                console.error("Error response:", response);
-            }
-        } finally {
-            setLoading(false);
-        }
-    }
 
     return (
         <>
@@ -130,6 +104,9 @@ export default function Profile() {
 
                                     <h2>Role :</h2>
                                     <Typography variant="body1" gutterBottom>{user.role}</Typography>
+
+                                    <h2>No Rekening :</h2>
+                                    <Typography variant="body1" gutterBottom>{user.no_req}</Typography>
                                 </Box>
                             </Card>
                             <Box mt={2}>

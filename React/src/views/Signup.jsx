@@ -37,6 +37,7 @@ export default function SignUp() {
     const passwordRef = useRef()
     const passwordConfirmationRef = useRef()
     const roleRef = useRef()
+    const noReqRef = useRef()
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
@@ -48,7 +49,8 @@ export default function SignUp() {
             email: emailRef.current.value,
             password: passwordRef.current.value,
             password_confirmation: passwordConfirmationRef.current.value,
-            role: roleRef.current.value
+            role: roleRef.current.value,
+            no_req : noReqRef.current.value,
         }
         axiosClient.post('/signup', payload)
             .then(({ data }) => {
@@ -104,6 +106,9 @@ export default function SignUp() {
                             </Grid>
                             <Grid item xs={12}>
                                 <input ref={roleRef} type="" placeholder="Role" />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <input ref={noReqRef} type="" placeholder="No Rekening" />
                             </Grid>
                         </Grid>
                         <Button

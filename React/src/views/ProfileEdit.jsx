@@ -29,17 +29,17 @@ export default function Profile() {
         umur: '',
         nomor_telepon: '',
         role: '',
-        profile_image: null
+        profile_image: '',
+        no_req: ''
     });
     const { setNotification } = useStateContext();
 
     useEffect(() => {
         if (id) {
             setLoading(true)
-            axiosClient.get(`/users/${id}`)
+            axiosClient.get(`/user`)
                 .then(({ data }) => {
-                    console.log(data)
-                    setUser(data.data);
+                    setUser(data);
                     setLoading(false);
                 })
                 .catch(err => {
@@ -48,95 +48,50 @@ export default function Profile() {
         }
     }, [id]);
 
-    const updateTextData = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-        console.log("Submitting user text data:", user);
-
-        try {
-            const formData = new FormData();
-            // formData.append('_method', 'PUT');
-            formData.append('name', user.name);
-            console.log(user.name);
-            formData.append('email', user.email);
-            console.log(user.email);
-            if (user.password) {
-                formData.append('password', user.password);
-                formData.append('password_confirmation', user.password_confirmation);
-            }
-            console.log(user.password);
-            console.log(user.password_confirmation);
-            formData.append('jenis_kelamin', user.jenis_kelamin);
-            console.log(user.jenis_kelamin);
-            formData.append('umur', user.umur);
-            console.log(user.umur);
-            formData.append('nomor_telepon', user.nomor_telepon);
-            console.log(user.nomor_telepon);
-            formData.append('role', user.role);
-            console.log(user.role);
-            if (user.profile_image) {
-                formData.append('profile_image', user.profile_image);
-            }
-            console.log(user.profile_image);
-
-            // const response = await axiosClient.put(`/users/${user.id}`, {
-            //     name: user.name,
-            //     email: user.email,
-            //     password: user.password,
-            //     password_confirmation: user.password_confirmation,
-            //     jenis_kelamin: user.jenis_kelamin,
-            //     umur: user.umur,
-            //     nomor_telepon: user.nomor_telepon,
-            //     role: user.role
-            // });
-            console.log("sebelum axios client");
-            await axiosClient.put(`/users/${user.id}`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            console.log("sesudah axios client");
-            
-            setNotification('User data was successfully updated');
-            navigate(`/profile/${user.id}`);
-        } catch (err) {
-            const response = err.response;
-            if (response && response.status === 422) {
-                console.error("Validation errors:", response.data.errors);
-                setErrors(response.data.errors);
-            } else {
-                console.error("Error response:", response);
-            }
-        } finally {
-            setLoading(false);
-        }
+    const handleImage = (e) => {
+        const file = e.target.files[0]
+        setImage(file)
+        setPreview(URL.createObjectURL(file))
     }
 
-    // const updateProfileImage = async (event) => {
-    //     event.preventDefault();
-    //     setLoading(true);
-    //     console.log("Submitting user profile image:", user.profile_image);
+    const updateData = () => {
+        setLoading(true);
+        console.log("Submitting user data:", user);
 
-    //     try {
-    //         const formData = new FormData();
-    //         formData.append('profile_image', user.profile_image);
+        let formData = new FormData();
+        formData.append('name', user.name);
+        formData.append('email', user.email);
+        if (user.password) {
+            formData.append('password', user.password);
+            formData.append('password_confirmation', user.password_confirmation);
+        }
+        formData.append('jenis_kelamin', user.jenis_kelamin);
+        formData.append('umur', user.umur);
+        formData.append('nomor_telepon', user.nomor_telepon);
+        formData.append('role', user.role);
+        formData.append('no_req', user.no_req);
+        console.log(user.nomor_telepon);
+        console.log(user.no_req);
 
-    //         await axiosClient.put(`/users/${user.id}`, formData, {
-    //             headers: { 'Content-Type': 'multipart/form-data' }
-    //         });
 
-    //         setNotification('User profile image was successfully updated');
-    //         navigate(`/profile/${user.id}`);
-    //     } catch (err) {
-    //         const response = err.response;
-    //         if (response && response.status === 422) {
-    //             console.error("Validation errors:", response.data.errors);
-    //             setErrors(response.data.errors);
-    //         } else {
-    //             console.error("Error response:", response);
-    //         }
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
+        if (user.profile_image instanceof File) {
+            formData.append("profile_image", user.profile_image);
+        }
+
+        axiosClient.post(`/profileTryEdit/${user.id}`, formData)
+            .then(() => {
+                navigate(`/profile/${user.id}`);
+            })
+            .catch(err => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    setErrors(response.data.errors);
+                } else {
+                    console.error("Error response:", response);
+                }
+                setLoading(false);
+            });
+    }
 
     return (
         <>
@@ -148,7 +103,6 @@ export default function Profile() {
                         color="primary"
                         startIcon={<ArrowBackIcon />}
                         loading
-                        // fullWidth
                         onClick={() => navigate('/')}>
                         Back
                     </Button>
@@ -178,12 +132,13 @@ export default function Profile() {
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={8}>
-                            <form onSubmit={updateTextData}>
-                                {errors && <Box className="alert" mb={2}>
-                                    {Object.keys(errors).map(key => (
-                                        <Typography color="error" key={key}>{errors[key][0]}</Typography>
-                                    ))}
-                                </Box>}
+                            <form onSubmit={updateData}>
+                                {errors &&
+                                    <Box className="alert" mb={2}>
+                                        {Object.keys(errors).map(key => (
+                                            <Typography color="error" key={key}>{errors[key][0]}</Typography>
+                                        ))}
+                                    </Box>}
                                 <TextField
                                     fullWidth
                                     label="Name"
@@ -222,6 +177,14 @@ export default function Profile() {
                                     label="Jenis Kelamin"
                                     value={user.jenis_kelamin}
                                     onChange={event => setUser({ ...user, jenis_kelamin: event.target.value })}
+                                    margin="normal"
+                                />
+
+                                <TextField
+                                    fullWidth
+                                    label="Nomor Rekening"
+                                    value={user.no_req}
+                                    onChange={event => setUser({ ...user, no_req: event.target.value })}
                                     margin="normal"
                                 />
 

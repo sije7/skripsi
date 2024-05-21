@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->default('user');
             $table->rememberToken();
-            $table->string('jenis_kelamin');
-            $table->string('umur');
-            $table->string('nomor_telepon');
-            $table->string('role');
+            $table->string('no_req')->nullable();
+            $table->string('jenis_kelamin')->nullable();
+            $table->string('umur')->nullable();
+            $table->string('nomor_telepon')->nullable();
             $table->string('profile_image')->nullable();
             $table->timestamps();
         });

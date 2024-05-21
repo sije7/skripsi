@@ -28,6 +28,7 @@ class User extends Authenticatable
         'umur',
         'nomor_telepon',
         'role',
+        'no_req',
         'jenis_kelamin',
         'profile_image'
     ];

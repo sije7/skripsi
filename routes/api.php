@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CrowdfundingController;
 use App\Models\Crowdfunding;
 use Illuminate\Http\Request;
@@ -29,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::post('/signup', [AuthController :: class , 'signup']);
 Route::post('/login', [AuthController :: class , 'login']);
 
+Route::post('/profileTryEdit/{id}', [ProfileController::class, 'updateProfile']);
 
 Route::post('/crowdfundings', [CrowdfundingController :: class, 'getCrowdfundings']);
 Route::get('/crowdfunding/{id}', [CrowdfundingController :: class, 'getCrowdfunding']);

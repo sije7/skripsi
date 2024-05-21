@@ -58,6 +58,7 @@ class UserController extends Controller
      */
     public function update(UpdateUsersRequest $request, User $user)
     {
+        error_log($request->name);
         $data = $request->validated();
         if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);
@@ -75,7 +76,7 @@ class UserController extends Controller
             // Jangan memperbarui field profile_image jika tidak ada file yang diunggah
             unset($data['profile_image']);
         }
-        
+
         $user->update($data);
 
         return new UserResource($user);
