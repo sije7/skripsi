@@ -85,7 +85,7 @@ export default function GalangDana() {
                                     </Link>}
                                 </Grid>
                                 <Grid item sx={{ marginTop: '20px' }}>
-                                    {role === 'admin' && <Link to='/galangdana/approvepage'>
+                                    {role === 'admin' && <Link to='/galangdana/payment/approve'>
                                         <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                             Approve Payment
                                         </Button>
