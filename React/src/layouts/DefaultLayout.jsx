@@ -27,6 +27,8 @@ export default function DefaultLayout() {
         axiosClient.get('/user')
             .then(({ data }) => {
                 setUser(data)
+            }).catch((err)=>{
+                return <Navigate to="/landingpage" />
             })
     }, [])
 

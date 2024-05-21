@@ -2,7 +2,10 @@ import { Card, CardContent, Grid, styled } from "@mui/material";
 import LinearDeterminate from "../LinearDeterminate";
 import { Link } from "react-router-dom";
 
+
+
 export default function CardGalangDana(props) {
+
     let path = props.image
     let image = `http://localhost:8000${path}`
     return (
@@ -14,7 +17,7 @@ export default function CardGalangDana(props) {
                     </Grid>
                     <CardContent>
                         <Grid container direction='column' rowSpacing={1} >
-                            <Grid item sx={{ display: 'flex', justifyContent: 'center', textAlign:'center' }}>
+                            <Grid item sx={{ display: 'flex', justifyContent: 'center', textAlign:'center', minHeight:'70px' }}>
                                 <h2>{props.title}</h2>
                             </Grid>
                             <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -23,22 +26,26 @@ export default function CardGalangDana(props) {
                             <Grid item sx={{ textAlign: 'center' }}>
                                 <p>{props.progress}%</p>
                             </Grid>
-                            <Grid container direction='row' style={{ justifyContent: 'space-between' }}>
+                            {props.fund !== null && <Grid container direction='row' style={{ justifyContent: 'space-between' }}>
                                 <Grid item>
                                     <p><b>Terkumpul</b></p>
                                 </Grid>
-                                <Grid item>
-                                    <p><b>Target</b></p>
-                                </Grid>
-                            </Grid>
-                            <Grid container direction='row' style={{ justifyContent: 'space-between' }}>
+                            </Grid>}
+                            {props.fund !== null && <Grid container direction='row' style={{ justifyContent: 'space-between' }}>
                                 <Grid item>
                                     <p>Rp {props.fund}</p>
                                 </Grid>
+                            </Grid>}
+                            {props.target !== null && <Grid container direction='row' style={{ justifyContent: 'space-between' }}>
+                                <Grid item>
+                                    <p><b>Target Dana</b></p>
+                                </Grid>
+                            </Grid>}
+                            {props.target !== null && <Grid container direction='row' style={{ justifyContent: 'space-between' }}>
                                 <Grid item>
                                     <p>Rp {props.target}</p>
                                 </Grid>
-                            </Grid>
+                            </Grid>}
 
                         </Grid>
                     </CardContent>
