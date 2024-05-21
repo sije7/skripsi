@@ -23,6 +23,11 @@ class ProfileController extends Controller
             $data['password'] = bcrypt($data['password']);
         }
 
+        if($request->file('umur'))
+        {
+            $data['umur'] = $request->file('umur');
+        }
+
         if($request->file('profile_image'))
         {
             $fileName = $request->file('profile_image')->getClientOriginalName();

@@ -66,13 +66,14 @@ export default function Profile() {
             formData.append('password_confirmation', user.password_confirmation);
         }
         formData.append('jenis_kelamin', user.jenis_kelamin);
-        formData.append('umur', user.umur);
-        formData.append('nomor_telepon', user.nomor_telepon);
+        if (user.umur !== undefined && user.umur !== null && user.umur !== '' && !isNaN(user.umur) && Number(user.umur) > 0) {
+            formData.append('umur', user.umur);
+        }
+        if (user.nomor_telepon !== undefined && user.nomor_telepon !== null && user.nomor_telepon !== '' && !isNaN(user.nomor_telepon) && Number(user.nomor_telepon) > 0) {
+            formData.append('nomor_telepon', user.nomor_telepon);
+        }
         formData.append('role', user.role);
         formData.append('no_req', user.no_req);
-        console.log(user.nomor_telepon);
-        console.log(user.no_req);
-
 
         if (user.profile_image instanceof File) {
             formData.append("profile_image", user.profile_image);
