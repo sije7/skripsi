@@ -72,10 +72,10 @@ export default function GalangDanaDetail() {
                     </Grid>
                     <Grid container sx={{ justifyContent: 'space-between' }}>
                         <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <h2>Rp {detail.fund}</h2>
+                            <h2>Rp {detail.fund ? detail.fund.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'): detail.fund}</h2>
                         </Grid>
                         <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <h2>Rp {detail.target}</h2>
+                            <h2>Rp {detail.target ? detail.target.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'): detail.target}</h2>
                         </Grid>
                     </Grid>
                     <Grid item>

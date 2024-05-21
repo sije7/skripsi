@@ -66,23 +66,18 @@ export default function ApproveGalangDana() {
                 <Grid item xs={6} md={12} sx={{ direction: 'column', padding: '20px' }} >
                     {/* Header Content */}
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <h1>Galang Dana</h1>
+                        <h1>Approve Request Galang Dana</h1>
                     </Grid>
                     <Grid item sx={{ direction: 'row' }}>
-                        <Grid container direction={'row'} xs={4} columnSpacing={6} rowSpacing={2}>
-                            <Grid item>
-                                <Link to='/galangdana/request'>
-                                    <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                        Request
-                                    </Button>
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link to='/galangdana'>
-                                    <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                        Galang Dana
-                                    </Button>
-                                </Link>
+                        <Grid container direction={'row'} xs={12}  spacing={3}>
+                            <Grid container xs={12} md={6} spacing={3}>
+                                <Grid item>
+                                    <Link to='/galangdana'>
+                                        <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
+                                            Galang Dana
+                                        </Button>
+                                    </Link>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -96,8 +91,8 @@ export default function ApproveGalangDana() {
                                     title={cr.title}
                                     image={cr.image}
                                     progress={cr.progress}
-                                    fund={cr.fund}
-                                    target={cr.target}
+                                    fund = {null}
+                                    target={cr.target ? cr.target.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : cr.target}
                                     deadline={cr.deadline}
                                     username={cr.username}
                                 />

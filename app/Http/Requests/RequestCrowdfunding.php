@@ -24,13 +24,16 @@ class RequestCrowdfunding extends FormRequest
     public function rules()
     {
         return [
-            'judul'=>'required',
+            'Judul'=>'required',
             'user_id'=>'required',
-            'deskripsi'=>'required',
-            'target'=>'required',
-            'lokasi'=>'required',
-            'gambar'=>'required|mimes:png,jpg,jpeg',
-            'deadline'=>'required|gte:7'
+            'Deskripsi'=>'required',
+            'Dana'=>'required',
+            'Lokasi'=>'required',
+            'Gambar'=>'required|mimes:png,jpg,jpeg',
+            'Deadline'=>'required|gte:7',
+            'NomorRekening'=>'required',
+            'NamaRekening'=>'required',
+            'Bank'=>'required',
         ];
     }
 }

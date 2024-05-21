@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\CrowdfundingController;
+use App\Http\Controllers\TransactionController;
 use App\Models\Crowdfunding;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,6 @@ Route::post('/crowdfundings', [CrowdfundingController :: class, 'getCrowdfunding
 Route::get('/crowdfunding/{id}', [CrowdfundingController :: class, 'getCrowdfunding']);
 Route::post('/crowdfunding/request', [CrowdfundingController :: class, 'requestCrowdfunding']);
 Route::post('/crowdfunding/approve/{id}', [CrowdfundingController :: class, 'approveCrowdfunding']);
-Route::post('/crowdfunding/pay/{id', [CrowdfundingController:: class, 'payCrowdfunding']);
 
-// Route::get('/')
+
+Route::post('/crowdfunding/transaction/create', [TransactionController:: class,'createNewTransaction']);
