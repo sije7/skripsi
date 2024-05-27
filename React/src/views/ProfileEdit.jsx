@@ -25,6 +25,7 @@ export default function Profile() {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(null);
     const [preview, setPreview] = useState('')
+    const [role, setRole] = useState('')
     const [user, setUser] = useState({
         id: null,
         name: '',
@@ -34,7 +35,7 @@ export default function Profile() {
         jenis_kelamin: '',
         umur: '',
         nomor_telepon: '',
-        role: '',
+        // role: '',
         profile_image: '',
         no_req: '',
         lokasi: '',
@@ -48,6 +49,7 @@ export default function Profile() {
             setLoading(true)
             axiosClient.get(`/user`)
                 .then(({ data }) => {
+                    setRole(data.role);
                     setUser(data);
                     setLoading(false);
                 })
@@ -193,7 +195,7 @@ export default function Profile() {
                                     onChange={event => setUser({ ...user, password_confirmation: event.target.value })}
                                     margin="normal"
                                 />
-                                {user.role === 'user' && (
+                                {role === 'user' && (
                                     <>
                                         <FormControl component="fieldset" margin="normal">
                                             <FormLabel component="legend">Jenis Kelamin</FormLabel>
@@ -217,7 +219,7 @@ export default function Profile() {
                                         />
                                     </>
                                 )}
-                                {user.role === 'lembaga' && (
+                                {role === 'lembaga' && (
                                     <>
                                         <TextField
                                             fullWidth
@@ -259,14 +261,17 @@ export default function Profile() {
                                     onChange={event => setUser({ ...user, nomor_telepon: event.target.value })}
                                     margin="normal"
                                 />
-                                {user.role === 'admin' &&
-                                    <TextField
-                                        fullWidth
-                                        label="Role"
-                                        value={user.role}
-                                        onChange={event => setUser({ ...user, role: event.target.value })}
-                                        margin="normal"
-                                    />
+                                {role === 'admin' && (
+                                    <>
+                                        <TextField
+                                            fullWidth
+                                            label="Role"
+                                            value={user.role}
+                                            onChange={event => setUser({ ...user, role: event.target.value })}
+                                            margin="normal"
+                                        />
+                                    </>
+                                )
                                 }
                                 <Box mt={2}>
                                     <Button type="submit" variant="contained" color="primary" fullWidth>Save Data</Button>
