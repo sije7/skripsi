@@ -1,7 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from '../assets/Logo.jpg'
-import Sushi from '../assets/sushi.jpg'
 import { useEffect, useState } from "react"
 import axiosClient from "../axios-client"
 import { useStateContext } from "../context/ContextProvider"

@@ -13,12 +13,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 export default function Profile() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState(null);
+    const [preview, setPreview] = useState('')
     const [user, setUser] = useState({
         id: null,
         name: '',
@@ -30,7 +36,10 @@ export default function Profile() {
         nomor_telepon: '',
         role: '',
         profile_image: '',
-        no_req: ''
+        no_req: '',
+        lokasi: '',
+        penanggung_jawab: '',
+        bank: ''
     });
     const { setNotification } = useStateContext();
 
@@ -50,7 +59,7 @@ export default function Profile() {
 
     const handleImage = (e) => {
         const file = e.target.files[0]
-        setImage(file)
+        setUser({ ...user, profile_image: e.target.files[0] })
         setPreview(URL.createObjectURL(file))
     }
 
@@ -65,14 +74,23 @@ export default function Profile() {
             formData.append('password', user.password);
             formData.append('password_confirmation', user.password_confirmation);
         }
-        formData.append('jenis_kelamin', user.jenis_kelamin);
-        formData.append('umur', user.umur);
-        formData.append('nomor_telepon', user.nomor_telepon);
+        if (user.jenis_kelamin !== undefined && user.jenis_kelamin !== null && user.jenis_kelamin !== '') {
+            formData.append('jenis_kelamin', user.jenis_kelamin);
+        }
+        if (user.umur !== undefined && user.umur !== null && user.umur !== '' && !isNaN(user.umur) && Number(user.umur) > 0) {
+            formData.append('umur', user.umur);
+        }
+        if (user.nomor_telepon !== undefined && user.nomor_telepon !== null && user.nomor_telepon !== '' && !isNaN(user.nomor_telepon) && Number(user.nomor_telepon) > 0) {
+            formData.append('nomor_telepon', user.nomor_telepon);
+        }
         formData.append('role', user.role);
         formData.append('no_req', user.no_req);
-        console.log(user.nomor_telepon);
-        console.log(user.no_req);
 
+        formData.append('bank', user.bank);
+
+        formData.append('lokasi', user.lokasi);
+
+        formData.append('penanggung_jawab', user.penanggung_jawab);
 
         if (user.profile_image instanceof File) {
             formData.append("profile_image", user.profile_image);
@@ -124,11 +142,15 @@ export default function Profile() {
                                         borderRadius: '50%',
                                         marginBottom: 2
                                     }}
-                                    src={user.profile_image ? `http://localhost:8000${user.profile_image}` : ''}
+                                    src=
+                                    {preview ?
+                                        preview :
+                                        (user.profile_image ? `http://localhost:8000${user.profile_image}` : '')
+                                    }
                                 />
                             </Card>
                             <Box mt={2}>
-                                <input type="file" onChange={event => setUser({ ...user, profile_image: event.target.files[0] })} />
+                                <input type="file" onChange={handleImage} />
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={8}>
@@ -154,7 +176,7 @@ export default function Profile() {
                                     value={user.email}
                                     onChange={event => setUser({ ...user, email: event.target.value })}
                                     margin="normal"
-                                    required
+                                    disabled
                                 />
                                 <TextField
                                     fullWidth
@@ -171,15 +193,49 @@ export default function Profile() {
                                     onChange={event => setUser({ ...user, password_confirmation: event.target.value })}
                                     margin="normal"
                                 />
+                                {user.role === 'user' && (
+                                    <>
+                                        <FormControl component="fieldset" margin="normal">
+                                            <FormLabel component="legend">Jenis Kelamin</FormLabel>
+                                            <RadioGroup
+                                                row
+                                                name="jenis_kelamin"
+                                                value={user.jenis_kelamin}
+                                                onChange={event => setUser({ ...user, jenis_kelamin: event.target.value })}
+                                            >
+                                                <FormControlLabel value="pria" control={<Radio />} label="Pria" />
+                                                <FormControlLabel value="wanita" control={<Radio />} label="Wanita" />
+                                            </RadioGroup>
+                                        </FormControl>
 
-                                <TextField
-                                    fullWidth
-                                    label="Jenis Kelamin"
-                                    value={user.jenis_kelamin}
-                                    onChange={event => setUser({ ...user, jenis_kelamin: event.target.value })}
-                                    margin="normal"
-                                />
+                                        <TextField
+                                            fullWidth
+                                            label="Umur"
+                                            value={user.umur}
+                                            onChange={event => setUser({ ...user, umur: event.target.value })}
+                                            margin="normal"
+                                        />
+                                    </>
+                                )}
+                                {user.role === 'lembaga' && (
+                                    <>
+                                        <TextField
+                                            fullWidth
+                                            label="Lokasi"
+                                            value={user.lokasi}
+                                            onChange={event => setUser({ ...user, lokasi: event.target.value })}
+                                            margin="normal"
+                                        />
 
+                                        <TextField
+                                            fullWidth
+                                            label="Nama Penanggung Jawab"
+                                            value={user.penanggung_jawab}
+                                            onChange={event => setUser({ ...user, penanggung_jawab: event.target.value })}
+                                            margin="normal"
+                                        />
+                                    </>
+                                )}
                                 <TextField
                                     fullWidth
                                     label="Nomor Rekening"
@@ -190,9 +246,9 @@ export default function Profile() {
 
                                 <TextField
                                     fullWidth
-                                    label="Umur"
-                                    value={user.umur}
-                                    onChange={event => setUser({ ...user, umur: event.target.value })}
+                                    label="Bank"
+                                    value={user.bank}
+                                    onChange={event => setUser({ ...user, bank: event.target.value })}
                                     margin="normal"
                                 />
 

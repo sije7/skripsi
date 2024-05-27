@@ -7,7 +7,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class SignupRequest extends FormRequest
+class SignupLembagaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -40,8 +40,9 @@ class SignupRequest extends FormRequest
             'role' => ['required','string','in:admin,user,lembaga'],
             'no_req' => ['nullable','string','regex:/^[0-9]{10,15}$/'],
             'jenis_kelamin' => ['nullable','string','in:pria,wanita'],
-            'nomor_telepon' => ['nullable','string','regex:/^[0-9]{10,15}$/'],
-            'umur' => ['nullable','integer','min:0','max:150'],
+            'nomor_telepon' => ['nullable','string','regex:/^[0-9]{0,15}$/'],
+            'lokasi' => ['required'],
+            'penanggung_jawab' => ['required'],
             'bank' => ['nullable','string']
         ];
     }
