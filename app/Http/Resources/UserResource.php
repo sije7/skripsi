@@ -25,6 +25,8 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'no_req' => $this->no_req,
             'profile_image' => $this->profile_image,
+            'lokasi' => $this->lokasi,
+            'penanggung_jawab' => $this->penanggung_jawab,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
 
         ];

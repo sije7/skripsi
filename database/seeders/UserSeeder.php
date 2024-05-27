@@ -29,6 +29,9 @@ class UserSeeder extends Seeder
             'nomor_telepon'=>'121031892381923',
             'profile_image'=>'/storage/images/Remuru.png',
             'no_req'=>'6043340633',
+            'lokasi'=>'',
+            'penanggung_jawab'=>'',
+            'bank'=>'',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]));
@@ -44,6 +47,9 @@ class UserSeeder extends Seeder
             'role'=>'admin',
             'profile_image'=>'/storage/images/Remuru.png',
             'no_req'=>'6043340633',
+            'lokasi'=>'',
+            'penanggung_jawab'=>'',
+            'bank'=>'',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -59,6 +65,9 @@ class UserSeeder extends Seeder
             'role'=>'user',
             'profile_image'=>'/storage/images/chainsaw.jpg',
             'no_req'=>'6043340633',
+            'lokasi'=>'',
+            'penanggung_jawab'=>'',
+            'bank'=>'',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -74,6 +83,9 @@ class UserSeeder extends Seeder
             'role'=>'lembaga',
             'profile_image'=>'/storage/images/ANto.jpeg',
             'no_req'=>'6043340633',
+            'lokasi'=>'',
+            'penanggung_jawab'=>'',
+            'bank'=>'',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);

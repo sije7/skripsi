@@ -33,7 +33,10 @@ class User extends Authenticatable
         'role',
         'no_req',
         'jenis_kelamin',
-        'profile_image'
+        'profile_image',
+        'penanggung_jawab',
+        'lokasi',
+        'bank'
     ];
 
     /**

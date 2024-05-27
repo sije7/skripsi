@@ -103,10 +103,10 @@ export default function Login() {
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <input ref={emailRef} type="email" placeholder="Email" />
                             <input ref={passwordRef} type="password" placeholder="Password" />
-                            <FormControlLabel
+                            {/* <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
                                 label="Remember me"
-                            />
+                            /> */}
                             <Button
                                 type="submit"
                                 fullWidth
@@ -122,7 +122,10 @@ export default function Login() {
                                     </Link> */}
                                 </Grid>
                                 <Grid item>
-                                    <Link href="/signup" variant="body2">
+                                    {/* <Link href="/signup" variant="body2">
+                                        {"Don't have an account? Sign Up"}
+                                    </Link> */}
+                                    <Link href="/pilihregis" variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>

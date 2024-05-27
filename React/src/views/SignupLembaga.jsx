@@ -42,11 +42,11 @@ export default function SignUp() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmationRef = useRef()
-    const [gender, setGender] = useState()
-    const umurRef = useRef()
     const noReqRef = useRef()
     const noTelpRef = useRef()
-    // const roleRef = useRef()
+    const roleRef = useRef()
+    const penanggungRef = useRef()
+    const lokasiRef = useRef()
     const bankRef = useRef()
 
     const { setUser, setToken } = useStateContext()
@@ -64,14 +64,14 @@ export default function SignUp() {
             email: emailRef.current.value,
             password: passwordRef.current.value,
             password_confirmation: passwordConfirmationRef.current.value,
-            jenis_kelamin: gender || null,
-            umur: umurRef.current.value,
             no_req: noReqRef.current.value,
             nomor_telepon: noTelpRef.current.value,
-            role: "user",
-            bank: bankRef.current.value
+            role: "lembaga",
+            penanggung_jawab: penanggungRef.current.value,
+            lokasi: lokasiRef.current.value,
+            bank: bankRef.current.value,
         }
-        axiosClient.post('/signup', payload)
+        axiosClient.post('/signupLembaga', payload)
             .then(({ data }) => {
                 setUser(data.user)
                 setToken(data.token);
@@ -103,7 +103,7 @@ export default function SignUp() {
                         </Avatar>
                         <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, borderRadius: 10 }}>
                             <Typography component="h1" variant="h5">
-                                Sign Up User
+                                Sign Up Lembaga
                             </Typography>
                             {errors && <div className="alert">
                                 {Object.keys(errors).map(key => (
@@ -114,7 +114,7 @@ export default function SignUp() {
                             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={nameRef} placeholder="Nama Lengkap" />
+                                        <input ref={nameRef} placeholder="Nama Organisasi" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={emailRef} type="email" placeholder="Email Address" />
@@ -125,23 +125,14 @@ export default function SignUp() {
                                     <Grid item xs={12} sm={6}>
                                         <input ref={passwordConfirmationRef} type="password" placeholder="Password Confirmation" />
                                     </Grid>
-                                    <Grid item xs={12} sm={12}>
-                                        <Typography component="legend">Jenis Kelamin</Typography>
-                                        <RadioGroup
-                                            aria-label="jenis kelamin"
-                                            name="jenis_kelamin"
-                                            value={gender}
-                                            onChange={(event) => setGender(event.target.value)}
-                                        >
-                                            <FormControlLabel value="pria" control={<Radio />} label="Pria" />
-                                            <FormControlLabel value="wanita" control={<Radio />} label="Wanita" />
-                                        </RadioGroup>
+                                    <Grid item xs={12} sm={6}>
+                                        <input ref={penanggungRef} type="" placeholder="Nama Penanggung Jawab" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={noReqRef} type="" placeholder="No Rekening" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={umurRef} type="" placeholder="Umur" />
+                                        <input ref={lokasiRef} type="" placeholder="Lokasi" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={noTelpRef} type="" placeholder="No Telepon" />

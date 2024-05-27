@@ -16,6 +16,8 @@ import PaymentGalangDana from './views/GalangDana/PaymentGalangDana';
 import Profile from './views/Profile';
 import ProfileEdit from './views/ProfileEdit';
 import ApprovePayment from './views/GalangDana/ApprovePayment';
+import ChooseRegistration from './views/ChooseRegister';
+import SignupLembaga from './views/SignupLembaga';
 
 const router = createBrowserRouter([
     {
@@ -70,7 +72,7 @@ const router = createBrowserRouter([
                 path: '/galangdana/payment',
                 element: <PaymentGalangDana  />
             },
-            {   
+            {
                 path: '/galangdana/payment/approve',
                 element: <ApprovePayment  />
             },
@@ -89,9 +91,17 @@ const router = createBrowserRouter([
                 element: <Signup />
             },
             {
+                path: '/signupLembaga',
+                element: <SignupLembaga />
+            },
+            {
                 path: '/landingpage',
                 element: <LandingPage />
-            }
+            },
+            {
+                path: '/pilihregis',
+                element: <ChooseRegistration /> //page
+            },
         ]
     },
     {
