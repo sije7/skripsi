@@ -75,4 +75,11 @@ class CrowdfundingController extends Controller
         return 'Approve Galangdana Berhasil';
     }
 
+    public function rejectCrowdfunding($id){
+        $crowdfunding = Crowdfunding::find($id);
+        $crowdfunding->status = -1;
+        $crowdfunding->save();
+        return 'Reject Galangdana Berhasil';
+    }
+
 }
