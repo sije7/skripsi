@@ -19,7 +19,6 @@ export default function HeaderMain() {
         setLoading(true)
         axiosClient.get('/user')
             .then(({ data }) => {
-                console.log(data)
                 setUsers(data.data)
                 setLoading(false)
             })

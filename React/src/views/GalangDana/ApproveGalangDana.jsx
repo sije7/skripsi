@@ -3,6 +3,7 @@ import CardGalangDana from "../../components/GalangDana/CardGalangDana";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
+import CircularIndeterminate from "../../components/CircularIndeterminate";
 
 export default function ApproveGalangDana() {
 
@@ -27,9 +28,10 @@ export default function ApproveGalangDana() {
         setOpen(false);
     };
 
-
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
         location.state ? location.state.message ? setOpen(true) : '' : ''
         window.history.replaceState({}, '')
@@ -47,6 +49,7 @@ export default function ApproveGalangDana() {
         axiosClient.post('/crowdfundings', fd)
             .then(({ data }) => {
                 setCrowdfunding(data.crowdfundings)
+                setLoading(false)
             })
 
     }, [])
@@ -61,7 +64,8 @@ export default function ApproveGalangDana() {
                 key={vertical + horizontal}
                 onClose={handleClose}
             />}
-            <Grid container sx={{ direction: 'row', padding: '10px' }}>
+            {loading && <CircularIndeterminate />}
+            {!loading && <Grid container sx={{ direction: 'row', padding: '10px' }}>
                 {/* Grid Content */}
                 <Grid item xs={6} md={12} sx={{ direction: 'column', padding: '20px' }} >
                     {/* Header Content */}
@@ -101,7 +105,7 @@ export default function ApproveGalangDana() {
                     </Grid>
 
                 </Grid>
-            </Grid>
+            </Grid>}
         </>
     )
 }
