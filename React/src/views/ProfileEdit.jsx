@@ -176,7 +176,7 @@ export default function Profile() {
                                     value={user.email}
                                     onChange={event => setUser({ ...user, email: event.target.value })}
                                     margin="normal"
-                                    disable
+                                    disabled
                                 />
                                 <TextField
                                     fullWidth
