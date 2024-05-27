@@ -3,6 +3,7 @@ import CardGalangDana from "../../components/GalangDana/CardGalangDana";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
+import CircularIndeterminate from "../../components/CircularIndeterminate";
 
 export default function GalangDana() {
 
@@ -27,7 +28,10 @@ export default function GalangDana() {
         setOpen(false);
     };
 
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
+        setLoading(true)
         location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
         location.state ? location.state.message ? setOpen(true) : '' : ''
         window.history.replaceState({}, '')
@@ -43,6 +47,7 @@ export default function GalangDana() {
         axiosClient.post('/crowdfundings', fd)
             .then(({ data }) => {
                 setCrowdfunding(data.crowdfundings)
+                setLoading(false)
             })
 
 
@@ -58,7 +63,8 @@ export default function GalangDana() {
                 key={vertical + horizontal}
                 onClose={handleClose}
             />}
-            <Grid container sx={{ direction: 'row', padding: '10px' }}>
+            {loading && <CircularIndeterminate />}
+            {!loading && <Grid container sx={{ direction: 'row', padding: '10px' }}>
                 {/* Grid Content */}
                 <Grid item xs={6} md={12} sx={{ padding: '20px' }} >
                     {/* Header Content */}
@@ -87,7 +93,7 @@ export default function GalangDana() {
                                 <Grid item sx={{ marginTop: '20px' }}>
                                     {role === 'admin' && <Link to='/galangdana/payment/approve'>
                                         <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                            Approve Payment
+                                            Approve Pembayaran
                                         </Button>
                                     </Link>}
                                 </Grid>
@@ -114,7 +120,7 @@ export default function GalangDana() {
                     </Grid>
 
                 </Grid>
-            </Grid>
+            </Grid>}
         </>
     )
 }

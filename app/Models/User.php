@@ -28,6 +28,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'umur',
+        'nomor_telepon',
+        'role',
+        'no_req',
+        'jenis_kelamin',
+        'profile_image'
     ];
 
     /**

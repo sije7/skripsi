@@ -7,6 +7,8 @@ use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -30,6 +32,7 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $data['password'] = bcrypt($data['password']);
+
         $user = User::create($data);
 
         return response(new UserResource($user) , 201);
@@ -55,10 +58,25 @@ class UserController extends Controller
      */
     public function update(UpdateUsersRequest $request, User $user)
     {
+        error_log($request->name);
         $data = $request->validated();
         if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);
         }
+
+        if ($request->hasFile('profile_image')) {
+            if ($user->profile_image) {
+                Storage::disk('public')->delete(str_replace('/storage/', '', $user->profile_image));
+            }
+
+            $fileName = $request->file('profile_image')->getClientOriginalName();
+            $path = $request->file('profile_image')->storeAs('images', $fileName, 'public');
+            $data['profile_image'] = '/storage/' . $path;
+        } else {
+            // Jangan memperbarui field profile_image jika tidak ada file yang diunggah
+            unset($data['profile_image']);
+        }
+
         $user->update($data);
 
         return new UserResource($user);
@@ -72,6 +90,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if($user->profile_image){
+            Storage::delete($user->profile_image);
+        }
         $user->delete();
 
         return response("", 204);

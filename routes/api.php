@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CrowdfundingController;
 use App\Http\Controllers\TransactionController;
 use App\Models\Crowdfunding;
@@ -30,11 +31,16 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::post('/signup', [AuthController :: class , 'signup']);
 Route::post('/login', [AuthController :: class , 'login']);
 
+Route::post('/profileTryEdit/{id}', [ProfileController::class, 'updateProfile']);
 
 Route::post('/crowdfundings', [CrowdfundingController :: class, 'getCrowdfundings']);
 Route::get('/crowdfunding/{id}', [CrowdfundingController :: class, 'getCrowdfunding']);
 Route::post('/crowdfunding/request', [CrowdfundingController :: class, 'requestCrowdfunding']);
 Route::post('/crowdfunding/approve/{id}', [CrowdfundingController :: class, 'approveCrowdfunding']);
+Route::post('/crowdfunding/reject/{id}', [CrowdfundingController :: class, 'rejectCrowdfunding']);
 
 
 Route::post('/crowdfunding/transaction/create', [TransactionController:: class,'createNewTransaction']);
+Route::post('/transactions', [TransactionController::class, 'getTransaction']);
+Route::post('/transaction/approve', [TransactionController::class, 'approveTransaction']);
+Route::post('/transaction/reject', [TransactionController::class, 'rejectTransaction']);

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class UpdateUsersRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,19 +26,19 @@ class UpdateUsersRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:55',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$this->route('user')->id,
+            'email' => 'required|string|email|max:255',
             'password' => [
                 'confirmed',
                 Password::min(8)
                 ->letters()
                 ->symbols()
             ],
-            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'profile_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'umur' => 'nullable|integer|min:0|max:150',
             'jenis_kelamin' => 'nullable|string|in:pria,wanita',
             'role' => 'required|string|in:admin,user,lembaga',
-            'nomor_telepon' => 'nullable|string|regex:/^[0-9]{10,15}$/',
-            'no_req' => 'nullable|string|regex:/^[0-9]{10,15}$/',
+            'nomor_telepon' => 'nullable|string|regex:/^[0-9]{0,15}$/',
+            'no_req' => 'nullable',
         ];
     }
 }

@@ -36,7 +36,10 @@ class SignupRequest extends FormRequest
                     ->letters()
                     ->symbols()
                     ->numbers()
-            ]
+            ],
+            'role' => ['required','string','in:admin,user,lembaga'],
+            'no_req' => ['nullable','string','regex:/^[0-9]{10,15}$/'],
+            'jenis_kelamin' => ['nullable','string','in:pria,wanita'],
         ];
     }
 }

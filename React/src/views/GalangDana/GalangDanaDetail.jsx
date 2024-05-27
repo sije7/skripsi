@@ -28,7 +28,15 @@ export default function GalangDanaDetail() {
         axiosClient.post(`/crowdfunding/approve/${id.id}`)
             .then((res) => {
                 console.log(res.data)
-                return navigate('/galangdana/approvepage',{state:{message:res.data}})
+                return navigate('/galangdana/approvepage', { state: { message: res.data } })
+            }
+            )
+    }
+    const handleReject = () => {
+        axiosClient.post(`/crowdfunding/reject/${id.id}`)
+            .then((res) => {
+                console.log(res.data)
+                return navigate('/galangdana/approvepage', { state: { message: res.data } })
             }
             )
     }
@@ -72,10 +80,10 @@ export default function GalangDanaDetail() {
                     </Grid>
                     <Grid container sx={{ justifyContent: 'space-between' }}>
                         <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <h2>Rp {detail.fund ? detail.fund.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'): detail.fund}</h2>
+                            <h2>Rp {detail.fund ? detail.fund.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : detail.fund}</h2>
                         </Grid>
                         <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <h2>Rp {detail.target ? detail.target.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'): detail.target}</h2>
+                            <h2>Rp {detail.target ? detail.target.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : detail.target}</h2>
                         </Grid>
                     </Grid>
                     <Grid item>
@@ -93,7 +101,7 @@ export default function GalangDanaDetail() {
             {/* Bottom */}
             <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px' }} spacing={1}>
                 {/* {Left} */}
-                <Grid container xs={12} md={8} sx={{display:'block'}}>
+                <Grid container xs={12} md={8} sx={{ display: 'block' }}>
                     <Grid item>
                         <h1>Deskripsi</h1>
                     </Grid>
@@ -111,14 +119,25 @@ export default function GalangDanaDetail() {
                                 </Button>
                             </Link>}
                         {detail.status === 0 &&
-                            <Button onClick={handleApprove} variant="contained" style={{ backgroundColor: '#66AB92', width: '200px', height: '70px', fontSize: '18px' }}>
-                                Approve
-                            </Button>}
+                            <>
+                                <Grid container spacing={3}>
+                                    <Grid item>
+                                        <Button onClick={handleReject} color="error" variant="contained" style={{ width: '200px', height: '70px', fontSize: '18px' }}>
+                                            Reject
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button onClick={handleApprove} color="success" variant="contained" style={{ backgroundColor: '#66AB92', width: '200px', height: '70px', fontSize: '18px' }}>
+                                            Approve
+                                        </Button>
+                                    </Grid>
+                                    </Grid>
+                                </>}
+                            </Grid>
                     </Grid>
-                </Grid>
 
-            </Grid>
-        </>
-    )
+                </Grid>
+            </>
+            )
 
 }

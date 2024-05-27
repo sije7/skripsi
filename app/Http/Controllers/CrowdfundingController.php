@@ -27,7 +27,7 @@ class CrowdfundingController extends Controller
             $user = DB::table('users')->where('id','=',$c->user_id)->first('name');
             $c->username = $user->name;
         }
-        
+
         return compact('crowdfundings');
     }
 
@@ -63,16 +63,23 @@ class CrowdfundingController extends Controller
             $fileName = $request->Gambar->getClientOriginalName('image');
             $path = $request->Gambar->storeAs('images', $fileName, 'public');
             $crowdfunding->image = '/storage/' . $path;
-    
+
             $crowdfunding->save();
             return 'Request Galangdana Berhasil';
-        }
+    }
 
     public function approveCrowdfunding($id){
         $crowdfunding = Crowdfunding::find($id);
         $crowdfunding->status = 1;
         $crowdfunding->save();
         return 'Approve Galangdana Berhasil';
+    }
+
+    public function rejectCrowdfunding($id){
+        $crowdfunding = Crowdfunding::find($id);
+        $crowdfunding->status = -1;
+        $crowdfunding->save();
+        return 'Reject Galangdana Berhasil';
     }
 
 }

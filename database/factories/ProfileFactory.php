@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Resources;
+namespace Database\Factories;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-class UserResource extends JsonResource
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Profile>
+ */
+class ProfileFactory extends Factory
 {
     /**
-     * Transform the resource into an array.
+     * Define the model's default state.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function definition()
     {
         return [
             'id' => $this->id,
@@ -23,10 +25,9 @@ class UserResource extends JsonResource
             'umur' => $this->umur,
             'nomor_telepon' => $this->nomor_telepon,
             'role' => $this->role,
-            'no_req' => $this->no_req,
             'profile_image' => $this->profile_image,
+            'no_req' => $this->no_req,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-
         ];
     }
 }

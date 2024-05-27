@@ -35,9 +35,6 @@ export default function RequestGalangDana() {
     const [errorDeadline, setErrorDeadline] = useState('')
     const navigate = useNavigate()
 
-    const [targetTemp, settargetTemp] = useState('')
-
-
     useEffect(() => {
         axiosClient.get('/user')
             .then(({ data }) => {
@@ -66,7 +63,6 @@ export default function RequestGalangDana() {
     }
 
     const onSubmit = () => {
-        let temp = parseInt(target)
         let formData = new FormData()
         if (isNaN(parseInt(target))) {
             formData.append("Dana", '')
@@ -82,7 +78,7 @@ export default function RequestGalangDana() {
         formData.append("Lokasi", lokasi)
         formData.append("NomorRekening", nomorRekening)
         formData.append("NamaRekening", namaRekening)
-        formData.append("Bank", bank)
+        formData.append("Bank", bank.toUpperCase())
 
         let nowDate = new Date().toLocaleString()
 
@@ -132,7 +128,9 @@ export default function RequestGalangDana() {
                             id="outlined-required"
                             // label="Penanggung Jawab"
                             style={{ minWidth: '60%', backgroundColor: 'white' }}
-                            disabled
+                            InputProps={{
+                                readOnly: true,
+                              }}
                             value={user.name}
                             onChange={event => setPenanggungjawab(event.target.value)}
                         />
