@@ -18,6 +18,9 @@ import ProfileEdit from './views/ProfileEdit';
 import ApprovePayment from './views/GalangDana/ApprovePayment';
 import ChooseRegistration from './views/ChooseRegister';
 import SignupLembaga from './views/SignupLembaga';
+import Donasi from './views/Donasi/Donasi';
+import DonasiDetail from './views/Donasi/DonasiDetail';
+import RequestDonasi from './views/Donasi/RequestDonasi';
 
 const router = createBrowserRouter([
     {
@@ -76,6 +79,18 @@ const router = createBrowserRouter([
                 path: '/galangdana/payment/approve',
                 element: <ApprovePayment  />
             },
+            {
+                path: '/donasi',
+                element: <Donasi />
+            },
+            {
+                path: '/donasi/:id',
+                element: <DonasiDetail />
+            },
+            {
+                path: '/donasi/request',
+                element: <RequestDonasi />
+            }
         ]
     },
     {

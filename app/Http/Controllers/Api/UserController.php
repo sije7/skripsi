@@ -9,6 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -96,5 +97,10 @@ class UserController extends Controller
         $user->delete();
 
         return response("", 204);
+    }
+
+    public function getLembaga(){
+        $lembaga = DB::table('users')->where('role', '=','lembaga')->get();
+        return $lembaga;
     }
 }

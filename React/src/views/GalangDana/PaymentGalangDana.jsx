@@ -21,8 +21,6 @@ export default function PaymentGalangDana() {
   const [errorDana, seterrorDana] = useState('')
 
   useEffect(() => {
-    // console.log(detail)
-
     axiosClient.get('/user')
       .then(({ data }) => {
         setUsername(data.name)
@@ -50,7 +48,6 @@ export default function PaymentGalangDana() {
   }
 
   const onSubmit = () => {
-    console.log(parseInt(dana))
     let fd = new FormData()
     if (isNaN(parseInt(dana))) {
       fd.append("Dana", '')
@@ -62,7 +59,7 @@ export default function PaymentGalangDana() {
     fd.append("Gambar",image)
     axiosClient.post('/crowdfunding/transaction/create', fd)
       .then((res) => {
-        // return navigate('/galangdana', { state: { message: res.data } })
+        return navigate('/galangdana', { state: { message: res.data } })
       })
       .catch(err=>{
         seterrorDana('')

@@ -131,7 +131,7 @@ export default function RequestGalangDana() {
                             InputProps={{
                                 readOnly: true,
                               }}
-                            value={user.name}
+                            value={user.name+ ' (Penanggung Jawab)'}
                             onChange={event => setPenanggungjawab(event.target.value)}
                         />
                     </Grid>

@@ -36,7 +36,7 @@ export default function DefaultLayout() {
     return (
         <>
             <HeaderMain />
-            <Button onClick={onLogout}>Logout</Button>
+            {/* <Button onClick={onLogout}>Logout</Button> */}
                 <Outlet />
             {/* <Footer /> */}
         </>
