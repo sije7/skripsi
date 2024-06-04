@@ -16,6 +16,7 @@ import PaymentGalangDana from './views/GalangDana/PaymentGalangDana';
 import Profile from './views/Profile';
 import ProfileEdit from './views/ProfileEdit';
 import ApprovePayment from './views/GalangDana/ApprovePayment';
+import UploadPembelajaran from './views/UploadPembelajaran';
 
 const router = createBrowserRouter([
     {
@@ -70,9 +71,13 @@ const router = createBrowserRouter([
                 path: '/galangdana/payment',
                 element: <PaymentGalangDana  />
             },
-            {   
+            {
                 path: '/galangdana/payment/approve',
                 element: <ApprovePayment  />
+            },
+            {
+                path: '/uploads',
+                element: <UploadPembelajaran/>
             },
         ]
     },
