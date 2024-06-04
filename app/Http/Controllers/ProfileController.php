@@ -14,10 +14,9 @@ class ProfileController extends Controller
 {
     public function updateProfile(UpdateProfileRequest $request , $id)
     {
-        error_log('test123');
         $user = User::find($id);
-        error_log($request->name);
-        error_log($user);
+        // error_log($request->name);
+        // error_log($user);
         $data = $request->validated();
         if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);

@@ -17,6 +17,7 @@ export default function Profile() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [role, setRole] = useState('');
     const [user, setUser] = useState({
         id: null,
         name: '',
@@ -24,7 +25,7 @@ export default function Profile() {
         jenis_kelamin: '',
         umur: '',
         nomor_telepon: '',
-        role: '',
+        // role: '',
         profile_image: '',
         no_req: '',
         lokasi: '',
@@ -39,14 +40,15 @@ export default function Profile() {
             axiosClient.get(`/user`)
                 .then(({ data }) => {
                     console.log(data);
+                    setRole(data.role);
                     setUser(data);
                     setLoading(false);
                 })
                 .catch(err => {
                     setLoading(false);
-                });
+                })
         }
-    }, [id]);
+    }, [id])
 
     return (
         <>
@@ -96,7 +98,7 @@ export default function Profile() {
                                     <h2>Email :</h2>
                                     <Typography variant="body1" gutterBottom>{user.email}</Typography>
 
-                                    {user.role === 'user' && (
+                                    {role === 'user' && (
                                         <>
                                             <h2>Jenis Kelamin :</h2>
                                             <Typography variant="body1" gutterBottom>{user.jenis_kelamin}</Typography>
@@ -106,7 +108,7 @@ export default function Profile() {
                                         </>
                                     )}
 
-                                    {user.role === 'lembaga' && (
+                                    {role === 'lembaga' && (
                                         <>
                                             <h2>Lokasi :</h2>
                                             <Typography variant="body1" gutterBottom>{user.lokasi}</Typography>
@@ -147,5 +149,5 @@ export default function Profile() {
             </Container>
             <Footer />
         </>
-    );
+    )
 }

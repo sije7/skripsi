@@ -15,7 +15,7 @@ export default function ChooseRegistration() {
     }
 
     return (
-        <div style={styles}>
+        <div>
             <Container>
                 <Typography variant="h3" align="center" gutterBottom>Register</Typography>
                 <Grid container spacing={6}>
