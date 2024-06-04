@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         // \App\Models\User::factory(30)->create();
 
         DB::table('users')->insert(([
-            'name'=>'Danielson',
+            'name'=>'Danielsonz',
             'role'=>'admin',
             'email'=>'d@gmail.com',
             'password'=>bcrypt('d'),

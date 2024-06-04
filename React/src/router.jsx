@@ -21,6 +21,7 @@ import SignupLembaga from './views/SignupLembaga';
 import Donasi from './views/Donasi/Donasi';
 import DonasiDetail from './views/Donasi/DonasiDetail';
 import RequestDonasi from './views/Donasi/RequestDonasi';
+import UploadPembelajaran from './views/UploadPembelajaran';
 
 const router = createBrowserRouter([
     {
@@ -90,7 +91,11 @@ const router = createBrowserRouter([
             {
                 path: '/donasi/request',
                 element: <RequestDonasi />
-            }
+            },
+            {
+                path: '/uploads',
+                element: <UploadPembelajaran/>
+            },
         ]
     },
     {
