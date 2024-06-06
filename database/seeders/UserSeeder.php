@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         // \App\Models\User::factory(30)->create();
 
         DB::table('users')->insert(([
-            'name'=>'Danielson',
+            'name'=>'Danielsonz',
             'role'=>'admin',
             'email'=>'d@gmail.com',
             'password'=>bcrypt('d'),
@@ -29,6 +29,9 @@ class UserSeeder extends Seeder
             'nomor_telepon'=>'121031892381923',
             'profile_image'=>'/storage/images/Remuru.png',
             'no_req'=>'6043340633',
+            'lokasi'=>'',
+            'penanggung_jawab'=>'',
+            'bank'=>'',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]));
@@ -44,6 +47,9 @@ class UserSeeder extends Seeder
             'role'=>'admin',
             'profile_image'=>'/storage/images/Remuru.png',
             'no_req'=>'6043340633',
+            'lokasi'=>'',
+            'penanggung_jawab'=>'',
+            'bank'=>'',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -59,6 +65,9 @@ class UserSeeder extends Seeder
             'role'=>'user',
             'profile_image'=>'/storage/images/chainsaw.jpg',
             'no_req'=>'6043340633',
+            'lokasi'=>'',
+            'penanggung_jawab'=>'',
+            'bank'=>'',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -74,6 +83,26 @@ class UserSeeder extends Seeder
             'role'=>'lembaga',
             'profile_image'=>'/storage/images/ANto.jpeg',
             'no_req'=>'6043340633',
+            'lokasi'=>'',
+            'penanggung_jawab'=>'',
+            'bank'=>'',
+            'created_at'=>'2024-05-10 14:43:22',
+            'updated_at'=>'2024-05-10 14:43:22'
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Teach For Indonesia',
+            'email' => 'tfi@email',
+            'password' => bcrypt('tfi'),
+            'remember_token'=>'831239812',
+            'jenis_kelamin'=>null,
+            'umur'=>null,
+            'nomor_telepon'=>'021 534 5830 ',
+            'role'=>'lembaga',
+            'profile_image'=>null,
+            'no_req'=>'6043340633',
+            'lokasi'=>'Jl. Kebon Jeruk Raya No. 27, Kebon Jeruk, Jakarta Barat, 11530, INDONESIA',
+            'penanggung_jawab'=>'',
+            'bank'=>'BCA',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);

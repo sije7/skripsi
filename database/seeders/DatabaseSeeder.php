@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\ProgressDonation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +23,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(CrowdfundingSeeder::class);
         $this->call(TransactionSeeder::class);
-        
+        $this->call(CategorySeeder::class);
+        $this->call(SubCategorySeeder::class);
+        $this->Call(ItemSeeder::class);
+        $this->call(DonationSeeder::class);
+        $this->call(ProgressDonationSeeder::class);
     }
 }

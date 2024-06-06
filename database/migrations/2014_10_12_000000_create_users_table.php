@@ -23,8 +23,11 @@ return new class extends Migration
             $table->string('no_req')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->string('umur')->nullable();
+            $table->string('lokasi')->nullable();
+            $table->string('penanggung_jawab')->nullable();
             $table->string('nomor_telepon')->nullable();
             $table->string('profile_image')->nullable();
+            $table->string('bank')->nullable();
             $table->timestamps();
         });
     }

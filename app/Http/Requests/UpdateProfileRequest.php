@@ -38,7 +38,10 @@ class UpdateProfileRequest extends FormRequest
             'jenis_kelamin' => 'nullable|string|in:pria,wanita',
             'role' => 'required|string|in:admin,user,lembaga',
             'nomor_telepon' => 'nullable|string|regex:/^[0-9]{0,15}$/',
-            'no_req' => 'nullable',
+            'no_req' => 'nullable|string|regex:/^[0-9]{10,15}$/',
+            'lokasi' => 'nullable',
+            'penanggung_jawab' => 'nullable',
+            'bank' => 'nullable','string'
         ];
     }
 }

@@ -1,7 +1,6 @@
 import { Box, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from '../assets/Logo.jpg'
-import Sushi from '../assets/sushi.jpg'
 import { useEffect, useState } from "react"
 import axiosClient from "../axios-client"
 import { useStateContext } from "../context/ContextProvider"
@@ -65,10 +64,10 @@ export default function HeaderMain() {
                     <Link style={{ textDecoration: 'none', color: 'black' }} to='/beranda'><h1>Pembelajaran</h1></Link>
                 </Grid>
                 <Grid item sx={{ fontSize: '10px' }}>
-                    <Link style={{ textDecoration: 'none', color: 'black' }} to='/beranda'><h1>Donasi</h1></Link>
+                    <Link style={{ textDecoration: 'none', color: 'black' }} to='/donasi'><h1>Donasi</h1></Link>
                 </Grid>
                 <Grid item sx={{ fontSize: '10px' }}>
-                    <Link style={{ textDecoration: 'none', color: 'black' }} to='/beranda'><h1>Tentang Kami</h1></Link>
+                    <Link style={{ textDecoration: 'none', color: 'black' }} to='/aboutus'><h1>Tentang Kami</h1></Link>
                 </Grid>
                 <Grid item sx={{ fontSize: '10px' }}>
                     <Link style={{ textDecoration: 'none', color: 'black' }} to='/galangdana'><h1>Galang Dana</h1></Link>

@@ -17,6 +17,7 @@ export default function Profile() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [role, setRole] = useState('');
     const [user, setUser] = useState({
         id: null,
         name: '',
@@ -24,9 +25,12 @@ export default function Profile() {
         jenis_kelamin: '',
         umur: '',
         nomor_telepon: '',
-        role: '',
+        // role: '',
         profile_image: '',
-        no_req: ''
+        no_req: '',
+        lokasi: '',
+        penanggung_jawab: '',
+        bank: ''
     });
     const { setNotification } = useStateContext();
 
@@ -35,15 +39,15 @@ export default function Profile() {
             setLoading(true);
             axiosClient.get(`/user`)
                 .then(({ data }) => {
-                    console.log(data);
+                    setRole(data.role);
                     setUser(data);
                     setLoading(false);
                 })
                 .catch(err => {
                     setLoading(false);
-                });
+                })
         }
-    }, [id]);
+    }, [id])
 
     return (
         <>
@@ -93,11 +97,28 @@ export default function Profile() {
                                     <h2>Email :</h2>
                                     <Typography variant="body1" gutterBottom>{user.email}</Typography>
 
-                                    <h2>Jenis Kelamin :</h2>
-                                    <Typography variant="body1" gutterBottom>{user.jenis_kelamin}</Typography>
+                                    {role === 'user' && (
+                                        <>
+                                            <h2>Jenis Kelamin :</h2>
+                                            <Typography variant="body1" gutterBottom>{user.jenis_kelamin}</Typography>
 
-                                    <h2>Umur :</h2>
-                                    <Typography variant="body1" gutterBottom>{user.umur}</Typography>
+                                            <h2>Umur :</h2>
+                                            <Typography variant="body1" gutterBottom>{user.umur}</Typography>
+                                        </>
+                                    )}
+
+                                    {role === 'lembaga' && (
+                                        <>
+                                            <h2>Lokasi :</h2>
+                                            <Typography variant="body1" gutterBottom>{user.lokasi}</Typography>
+
+                                            <h2>Nama Penanggung Jawab :</h2>
+                                            <Typography variant="body1" gutterBottom>{user.penanggung_jawab}</Typography>
+                                        </>
+                                    )}
+
+                                    <h2>Bank :</h2>
+                                    <Typography variant="body1" gutterBottom>{user.bank}</Typography>
 
                                     <h2>Nomor Telepon :</h2>
                                     <Typography variant="body1" gutterBottom>{user.nomor_telepon}</Typography>
@@ -125,7 +146,7 @@ export default function Profile() {
                     </Grid>
                 )}
             </Container>
-            <Footer />
+            {/* <Footer /> */}
         </>
-    );
+    )
 }

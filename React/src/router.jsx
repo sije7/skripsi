@@ -1,7 +1,7 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import Login from './views/Login'
 import Signup from './views/Signup'
-import Users from './views/Users'
+// import Users from './views/Users'
 import Notfound from './views/Notfound';
 import DefaultLayout from './layouts/DefaultLayout';
 import GuestLayout from './layouts/GuestLayout';
@@ -16,6 +16,13 @@ import PaymentGalangDana from './views/GalangDana/PaymentGalangDana';
 import Profile from './views/Profile';
 import ProfileEdit from './views/ProfileEdit';
 import ApprovePayment from './views/GalangDana/ApprovePayment';
+import ChooseRegistration from './views/ChooseRegister';
+import SignupLembaga from './views/SignupLembaga';
+import Donasi from './views/Donasi/Donasi';
+import DonasiDetail from './views/Donasi/DonasiDetail';
+import RequestDonasi from './views/Donasi/RequestDonasi';
+import UploadPembelajaran from './views/UploadPembelajaran';
+import AboutUs from './views/AboutUs';
 
 const router = createBrowserRouter([
     {
@@ -38,10 +45,10 @@ const router = createBrowserRouter([
                 path: '/beranda',
                 element: <Beranda /> //page
             },
-            {
-                path: '/users',
-                element: <Users />
-            },
+            // {
+            //     path: '/users',
+            //     element: <Users />
+            // },
             {
                 path: '/users/new',
                 element: <UserForm key="userCreate" />
@@ -70,9 +77,29 @@ const router = createBrowserRouter([
                 path: '/galangdana/payment',
                 element: <PaymentGalangDana  />
             },
-            {   
+            {
                 path: '/galangdana/payment/approve',
                 element: <ApprovePayment  />
+            },
+            {
+                path: '/donasi',
+                element: <Donasi />
+            },
+            {
+                path: '/donasi/:id',
+                element: <DonasiDetail />
+            },
+            {
+                path: '/donasi/request',
+                element: <RequestDonasi />
+            },
+            {
+                path: '/uploads',
+                element: <UploadPembelajaran/>
+            },
+            {
+                path: '/aboutus',
+                element: <AboutUs />
             },
         ]
     },
@@ -89,9 +116,17 @@ const router = createBrowserRouter([
                 element: <Signup />
             },
             {
+                path: '/signupLembaga',
+                element: <SignupLembaga />
+            },
+            {
                 path: '/landingpage',
                 element: <LandingPage />
-            }
+            },
+            {
+                path: '/pilihregis',
+                element: <ChooseRegistration /> //page
+            },
         ]
     },
     {
