@@ -3,6 +3,7 @@ import axiosClient from "../../axios-client";
 import { useEffect, useState } from "react";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DatePicker from "react-datepicker";
+import { useNavigate } from "react-router-dom";
 
 export default function RequestDonasi() {
     const [user, setUser] = useState('')
@@ -25,18 +26,28 @@ export default function RequestDonasi() {
     const [addFlagBarang, setAddFlagBarang] = useState(false)
     const [addFlagJumlah, setAddFlagJumlah] = useState(false)
 
-    // const [listItems, setListItems] = useState([[]])
     const [listId, setListId] = useState([])
     const [listName, setListName] = useState([])
     const [listQty, setListQty] = useState([])
     const [listCurrency, setListCurrency] = useState([])
+
+    //errors
+    const [errorJudul, setErrorJudul] = useState('')
+    const [errorDeskripsi, setErrorDeskripsi] = useState('')
+    const [errorLokasi, setErrorLokasi] = useState('')
+    const [errorDeadline, setErrorDeadline] = useState('')
+    const [errorGambar, setErrorGambar] = useState('')
+    const [errorLembaga, setErrorLembaga] = useState('')
+    const [errorBarang, setErrorBarang] = useState('')
+
+    const navigate = useNavigate()
 
 
     //modal
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
         clipPath: 'inset(50%)',
@@ -113,6 +124,52 @@ export default function RequestDonasi() {
 
     }
 
+    const handleSubmit = (event) => {
+        let nowDate = new Date().toLocaleString()
+
+        let Difference_In_Time =
+            new Date(startDate).getTime() - new Date(nowDate).getTime();
+        let Difference_In_Days =
+            Math.round
+                (Difference_In_Time / (1000 * 3600 * 24));
+        let fd = new FormData()
+        fd.append('Judul', judul)
+        fd.append('Deskripsi', keterangan)
+        fd.append('Lokasi', lokasi)
+        fd.append('Deadline', Difference_In_Days)
+        fd.append('Gambar', image)
+        fd.append('Barang', listId)
+        fd.append('NamaBarang', listName)
+        fd.append('Jumlah', listQty)
+        fd.append('Satuan', listCurrency)
+        fd.append('Pemohon_id', user.id)
+        fd.append('Lembaga_id', selectedLembaga)
+
+        axiosClient.post('/requestDonation', fd)
+            .then((res) => {
+                return navigate('/donasi', { state: { message: res.data } })
+            }
+            ).catch((error) => {
+                const response = error.response.data.errors
+                setErrorJudul('')
+                setErrorDeskripsi('')
+                setErrorLokasi('')
+                setErrorDeadline('')
+                setErrorGambar('')
+                setErrorLembaga('')
+                setErrorBarang('')
+
+                response.Judul ? setErrorJudul(response.Judul) : ""
+                response.Deskripsi ? setErrorDeskripsi(response.Deskripsi) : ""
+                response.Lokasi ? setErrorLokasi(response.Lokasi) : ""
+                response.Gambar ? setErrorGambar(response.Gambar) : ""
+                response.Deadline ? setErrorDeadline(response.Deadline) : ""
+                response.Barang ? setErrorBarang(response.Gambar) : ""
+                response.Lembaga_id ? setErrorLembaga(response.Lembaga_id) : ""
+            }
+            )
+    }
+
     useEffect(() => {
         axiosClient.get('/user')
             .then(({ data }) => {
@@ -144,9 +201,9 @@ export default function RequestDonasi() {
                             <Grid item sx={{ borderBottom: '2px solid' }}>
                                 <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Barang</p>
                             </Grid>
-                            {listName?.map((name)=>(
+                            {listName?.map((name) => (
                                 <Grid item>
-                                <p style={{ fontSize: '24px' }}>{name}</p>
+                                    <p style={{ fontSize: '24px' }}>{name}</p>
                                 </Grid>
                             ))}
                         </Grid>
@@ -154,9 +211,9 @@ export default function RequestDonasi() {
                             <Grid item sx={{ borderBottom: '2px solid' }}>
                                 <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Jumlah</p>
                             </Grid>
-                            {listQty?.map((qty)=>(
+                            {listQty?.map((qty) => (
                                 <Grid item>
-                                <p style={{ fontSize: '24px' }}>{qty}</p>
+                                    <p style={{ fontSize: '24px' }}>{qty}</p>
                                 </Grid>
                             ))}
                         </Grid>
@@ -164,9 +221,9 @@ export default function RequestDonasi() {
                             <Grid item sx={{ borderBottom: '2px solid' }}>
                                 <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Satuan</p>
                             </Grid>
-                            {listCurrency?.map((satuan)=>(
+                            {listCurrency?.map((satuan) => (
                                 <Grid item>
-                                <p style={{ fontSize: '24px' }}>{satuan}</p>
+                                    <p style={{ fontSize: '24px' }}>{satuan}</p>
                                 </Grid>
                             ))}
                         </Grid>
@@ -199,6 +256,7 @@ export default function RequestDonasi() {
                             onChange={event => setJudul(event.target.value)}
                         />
                     </Grid>
+                    {errorJudul ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorJudul}</small> : ""}
                     <Grid item>
                         <TextField
                             id="outlined-multiline-flexible"
@@ -210,6 +268,7 @@ export default function RequestDonasi() {
                             onChange={event => setKeterangan(event.target.value)}
                         />
                     </Grid>
+                    {errorDeskripsi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorDeskripsi}</small> : "" }
                     <Grid item>
                         <TextField
                             id="outlined-multiline-flexible"
@@ -221,6 +280,7 @@ export default function RequestDonasi() {
                             onChange={event => setLokasi(event.target.value)}
                         />
                     </Grid>
+                    {errorLokasi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorLokasi}</small> : "" }
                     <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
                         <Grid item >
                             <p style={{ fontWeight: 'lighter' }}>Tanggal Penyaluran Bantuan </p>
@@ -232,6 +292,7 @@ export default function RequestDonasi() {
                         </Grid>
 
                     </Grid>
+                    {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : "" }
                 </Grid>
 
                 {/* Right */}
@@ -250,7 +311,7 @@ export default function RequestDonasi() {
                         </Button>
 
                     </Grid>
-                    {/* {errorImage ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorImage}</small> : ""} */}
+                    {errorGambar ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorGambar}</small> : "" }
                     {preview ? (
                         <Grid item>
                             <img src={preview} style={{ width: '100px', height: '100px' }}></img>
@@ -273,6 +334,7 @@ export default function RequestDonasi() {
                             </Select>
                         </FormControl>
                     </Grid>
+                    {errorLembaga ? <small style={{ color: "#B00020", fontSize: '13px' }}>lembaga harus dipilih</small> : "" }
                     <Grid item sx={{ display: 'flex' }}>
                         <Button onClick={() => setAddFlagJenis(true)}>
                             Tambah Barang
@@ -281,6 +343,7 @@ export default function RequestDonasi() {
                             Lihat Barang
                         </Button>}
                     </Grid>
+                    {errorBarang ? <small style={{ color: "#B00020", fontSize: '13px' }}>barang harus ditambahkan</small> : "" }
                     {addFlagJenis && <Grid item>
                         <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Jenis Barang</InputLabel>
@@ -333,11 +396,16 @@ export default function RequestDonasi() {
                     }
                     {jumlah &&
                         <Grid item>
-                            <Button onClick={handleAddToList} variant="contained" style={{ backgroundColor: '#BEDAB1', color:'black' }}>
+                            <Button onClick={handleAddToList} variant="contained" style={{ backgroundColor: '#BEDAB1', color: 'black' }}>
                                 Tambah
                             </Button>
                         </Grid>
                     }
+                    <Grid item sx={{ display: 'flex' }}>
+                        <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#66AB92', color: 'black' }}>
+                            Buat Permohonan Donasi
+                        </Button>
+                    </Grid>
 
                 </Grid>
             </Grid>

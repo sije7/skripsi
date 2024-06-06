@@ -67,8 +67,6 @@ export default function Profile() {
 
     const updateData = () => {
         setLoading(true);
-        console.log("Submitting user data:", user);
-
         let formData = new FormData();
         formData.append('name', user.name);
         formData.append('email', user.email);
@@ -281,7 +279,7 @@ export default function Profile() {
                     </Grid>
                 )}
             </Container>
-            <Footer />
+            {/* <Footer /> */}
         </>
     );
 }

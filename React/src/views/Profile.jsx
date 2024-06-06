@@ -39,7 +39,6 @@ export default function Profile() {
             setLoading(true);
             axiosClient.get(`/user`)
                 .then(({ data }) => {
-                    console.log(data);
                     setRole(data.role);
                     setUser(data);
                     setLoading(false);
@@ -147,7 +146,7 @@ export default function Profile() {
                     </Grid>
                 )}
             </Container>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

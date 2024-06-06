@@ -67,7 +67,7 @@ export default function HeaderMain() {
                     <Link style={{ textDecoration: 'none', color: 'black' }} to='/donasi'><h1>Donasi</h1></Link>
                 </Grid>
                 <Grid item sx={{ fontSize: '10px' }}>
-                    <Link style={{ textDecoration: 'none', color: 'black' }} to='/beranda'><h1>Tentang Kami</h1></Link>
+                    <Link style={{ textDecoration: 'none', color: 'black' }} to='/aboutus'><h1>Tentang Kami</h1></Link>
                 </Grid>
                 <Grid item sx={{ fontSize: '10px' }}>
                     <Link style={{ textDecoration: 'none', color: 'black' }} to='/galangdana'><h1>Galang Dana</h1></Link>

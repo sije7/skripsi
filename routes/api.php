@@ -52,6 +52,8 @@ Route::post('/transaction/reject', [TransactionController::class, 'rejectTransac
 Route::post('/donations', [DonationController::class, 'getDonations']);
 Route::post('/donation/{id}', [DonationController::class, 'getDonation']);
 Route::post('/donation/update/{id}', [DonationController::class, 'updateDonationProgress']);
+Route::post('/requestDonation', [DonationController::class, 'requestDonation']);
+
 
 Route::get('/lembaga', [UserController::class, 'getLembaga']);
 Route::get('/subcategories', [DonationController::class, 'getSubCategories']);

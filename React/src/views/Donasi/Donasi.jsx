@@ -1,16 +1,39 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Snackbar, TextField } from "@mui/material";
 import CardDonasi from "../../components/Donasi/CardDonasi";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Donasi() {
     const [donation, setDonation] = useState([{}])
     const [loading, setLoading] = useState(false)
+    const [search, setSearch] = useState('')
+    const location = useLocation()
+    const [message, setMessage] = useState(null)
+    const [stateSnackbar] = useState({
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
+    });
+    const { vertical, horizontal } = stateSnackbar;
+    const [open, setOpen] = useState(false);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     useEffect(() => {
         setLoading(true)
+        location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
+        location.state ? location.state.message ? setOpen(true) : '' : ''
+        window.history.replaceState({}, '')
+
         let fd = new FormData()
         fd.append('status', 2)
         axiosClient.post('/donations', fd)
@@ -19,10 +42,18 @@ export default function Donasi() {
                 setLoading(false)
             })
     }, [])
-    
+
 
     return (
         <>
+            {message && <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                autoHideDuration={5000}
+                message={message}
+                key={vertical + horizontal}
+                onClose={handleClose}
+            />}
             {loading && <CircularIndeterminate />}
             {!loading && <Grid container direction={'row'}>
                 {/* Kategori */}
@@ -47,16 +78,28 @@ export default function Donasi() {
                 </Grid>
                 {/* Content */}
                 <Grid container md={10} direction={'column'}>
-                    <Grid item sx={{ textAlign: 'center', padding: '30px' }}>
-                        <h1>Donasi</h1>
+                    <Grid container direction={'row'} sx={{ marginTop: '20px', padding: '20px' }}>
+                        <Grid item xs={10} md={9} sx={{ display: 'flex', justifyContent: 'center', paddingLeft: '19%' }}>
+                            <h1>Donasi</h1>
+                        </Grid>
+                        <Grid item xs={12} md={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <TextField
+                                value={search}
+                                onChange={event => setSearch(event.target.value)}
+                                style={{ width: '230px' }}
+                                label="Search..."
+                                size="small"
+                            />
+                            <SearchIcon style={{ height: '40px', width: '40px' }} />
+                        </Grid>
                     </Grid>
                     {/* Buttons */}
                     <Grid container direction={'row'} sx={{ justifyContent: 'space-between', paddingLeft: '30px', paddingRight: '30px' }}>
                         <Grid item>
                             <Link to={'/donasi/request'}>
-                            <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                Request Donasi
-                            </Button>
+                                <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
+                                    Request Donasi
+                                </Button>
                             </Link>
                         </Grid>
                         <Grid item>
@@ -67,17 +110,19 @@ export default function Donasi() {
                     </Grid>
                     {/* Cards */}
                     <Grid container direction={'row'} sx={{ padding: '30px' }} spacing={3}>
-                        {donation.map((d) => (
+                        {donation.filter((d) => {
+                            return search.toLowerCase() === '' ? d : d.title.toLowerCase().includes(search) || d.username.toLowerCase().includes(search)
+                        }).map((d) => (
                             <Grid item>
                                 <CardDonasi
-                                key={d.id}
-                                id={d.id}
-                                title={d.title}
-                                progress={d.progress}
-                                deadline={d.deadline}
-                                username={d.username}
-                                image={d.image}
-                                subCategory = {d.sub_category}
+                                    key={d.id}
+                                    id={d.id}
+                                    title={d.title}
+                                    progress={d.progress}
+                                    deadline={d.deadline}
+                                    username={d.username}
+                                    image={d.image}
+                                    subCategory={d.sub_category}
                                 />
                             </Grid>
                         ))}

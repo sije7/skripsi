@@ -53,7 +53,7 @@ export default function SignUp() {
     const [errors, setErrors] = useState(null)
 
     const styles = {
-        backgroundColor: '#E1F3D8',
+        // backgroundColor: '#E1F3D8',
         padding: 4
     }
 

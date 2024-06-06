@@ -1,9 +1,10 @@
-import { Box, Button, Grid, Snackbar } from "@mui/material";
+import { Box, Button, Grid, Snackbar, TextField } from "@mui/material";
 import CardGalangDana from "../../components/GalangDana/CardGalangDana";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function GalangDana() {
 
@@ -27,6 +28,7 @@ export default function GalangDana() {
 
         setOpen(false);
     };
+    const [search, setSearch] = useState('')
 
     const [loading, setLoading] = useState(false)
 
@@ -68,10 +70,23 @@ export default function GalangDana() {
                 {/* Grid Content */}
                 <Grid item xs={6} md={12} sx={{ padding: '20px' }} >
                     {/* Header Content */}
-                    <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <h1>Galang Dana</h1>
+                    <Grid container direction={'row'}>
+                        <Grid item xs={10} md={10} sx={{ display: 'flex', justifyContent: 'center', paddingLeft:'19%' }}>
+                            <h1>Galang Dana</h1>
+                        </Grid>
+                        <Grid item xs={12} md={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            
+                            <TextField
+                                value={search}
+                                onChange={event => setSearch(event.target.value)}
+                                style={{ width:'320px'}}
+                                label="Search..."
+                                size="small"
+                            />
+                            <SearchIcon style={{height:'40px', width:'40px'}}/>
+                        </Grid>
                     </Grid>
-                    <Grid item>
+                    <Grid item sx={{marginTop:'20px'}}>
                         <Grid container direction={'row'} xs={6} md={12} spacing={3}>
                             <Grid container xs={12} md={6} spacing={3}>
                                 <Grid item sx={{ marginTop: '20px' }}>
@@ -102,7 +117,9 @@ export default function GalangDana() {
                     </Grid>
                     {/* Content*/}
                     <Grid container spacing={5} direction='row' sx={{ padding: '30px' }}>
-                        {crowdfunding.map(cr => (
+                        {crowdfunding.filter((cr)=>{
+                            return search.toLowerCase() === '' ? cr : cr.title.toLowerCase().includes(search) || cr.username.toLowerCase().includes(search)
+                        }).map(cr => (
                             <Grid item>
                                 <CardGalangDana
                                     key={cr.id}

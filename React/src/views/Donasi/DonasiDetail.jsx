@@ -11,6 +11,7 @@ export default function DonasiDetail() {
     const [detail, setDetail] = useState([{}])
     const id = useParams()
     const [role, setRole] = useState('')
+    const [userId, setUserId] = useState('')
     const navigate = useNavigate()
     const [subCategories, setSubCategories] = useState([])
     const [progressDonation, setprogressDonation] = useState([])
@@ -46,6 +47,7 @@ export default function DonasiDetail() {
         axiosClient.get('/user')
             .then(({ data }) => {
                 setRole(data.role)
+                setUserId(data.id)
             })
     }, [])
 
@@ -160,7 +162,7 @@ export default function DonasiDetail() {
                                             <Grid item sx={{ textAlign: 'center' }}>
                                                 <h2>Progress Donasi</h2>
                                             </Grid>
-                                            {role === 'user' && progressDonation ? progressDonation.map((pd, i) => (
+                                            {userId !== detail.user_id && progressDonation ? progressDonation.map((pd, i) => (
                                                 <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
                                                     <Checkbox 
                                                     checked={pd.status} 
@@ -171,7 +173,7 @@ export default function DonasiDetail() {
                                                     <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
                                                 </Grid>
                                             )) : ''}
-                                            {role !== 'user' && progressDonation ? progressDonation.map((pd, i) => (
+                                            {userId === detail.user_id || role === 'admin' && progressDonation ? progressDonation.map((pd, i) => (
                                                 <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
                                                     <Checkbox 
                                                     checked={pd.status} 
