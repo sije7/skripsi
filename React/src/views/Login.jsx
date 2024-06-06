@@ -20,8 +20,8 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'© '}
-            <Link style={{textDecoration:'none'}} color="inherit" to="/">
-            2024 All Right Reserved
+            <Link style={{ textDecoration: 'none' }} color="inherit" to="/">
+                2024 All Right Reserved
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -92,11 +92,11 @@ export default function Login() {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        {errors && <div className="alert">
-                            {Object.keys(errors).map(key=>(
-                                <p key={key}>{errors[key][0]}</p>
+                        {errors && <Box className="alert" mb={2}>
+                            {Object.keys(errors).map(key => (
+                                <Typography color="error" key={key}>{errors[key][0]}</Typography>
                             ))}
-                        </div>
+                        </Box>
                         }
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <input ref={emailRef} type="email" placeholder="Email" />
