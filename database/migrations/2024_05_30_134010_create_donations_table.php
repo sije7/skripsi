@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('status');
             $table->string('title');
             $table->longText('description');
-            $table->string('location');
+            $table->longText('location');
             $table->string('image');
 
             // $table->integer('count_progress');

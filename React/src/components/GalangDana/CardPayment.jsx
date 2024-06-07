@@ -66,11 +66,11 @@ export default function CardPayment(props) {
                             </Button>
                         </Grid>
                         <Grid item sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                            <Button variant="contained" color="success" onClick={handleApprove} style={{backgroundColor: '#66AB92'}} >
-                                Approve
-                            </Button>
                             <Button variant="contained" color="error" onClick={handleReject}>
                                 Reject
+                            </Button>
+                            <Button variant="contained" color="success" onClick={handleApprove} style={{backgroundColor: '#66AB92'}} >
+                                Approve
                             </Button>
                         </Grid>
                     </CardContent>

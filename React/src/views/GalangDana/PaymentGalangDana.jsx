@@ -8,7 +8,7 @@ import CurrencyInput from "react-currency-input-field";
 export default function PaymentGalangDana() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { detail } = location.state;
+  const [ detail, setDetail ] = useState('')
   const [username, setUsername] = useState('')
   const [preview, setPreview] = useState('')
   const [image, setImage] = useState()
@@ -21,6 +21,8 @@ export default function PaymentGalangDana() {
   const [errorDana, seterrorDana] = useState('')
 
   useEffect(() => {
+    location.state === null ? navigate('/') : setDetail(location.state)
+    
     axiosClient.get('/user')
       .then(({ data }) => {
         setUsername(data.name)

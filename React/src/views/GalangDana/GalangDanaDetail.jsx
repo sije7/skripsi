@@ -118,7 +118,7 @@ export default function GalangDanaDetail() {
                         <Grid item >
                             {detail.status === 1 &&
                                 <Link to='/galangdana/payment' state={{ detail: detail }}>
-                                    <Button variant="contained" style={{ backgroundColor: '#66AB92', width: '200px', height: '70px', fontSize: '18px' }}>
+                                    <Button variant="contained" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px', fontSize: '18px' }}>
                                         Beri Bantuan
                                     </Button>
                                 </Link>}
@@ -126,12 +126,12 @@ export default function GalangDanaDetail() {
                                 <>
                                     <Grid container spacing={3}>
                                         <Grid item>
-                                            <Button onClick={handleReject} color="error" variant="contained" style={{ width: '200px', height: '70px', fontSize: '18px' }}>
+                                            <Button onClick={handleReject} color="error" variant="contained" style={{ width: '200px', height: '50px', fontSize: '18px' }}>
                                                 Reject
                                             </Button>
                                         </Grid>
                                         <Grid item>
-                                            <Button onClick={handleApprove} color="success" variant="contained" style={{ backgroundColor: '#66AB92', width: '200px', height: '70px', fontSize: '18px' }}>
+                                            <Button onClick={handleApprove} color="success" variant="contained" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px', fontSize: '18px' }}>
                                                 Approve
                                             </Button>
                                         </Grid>

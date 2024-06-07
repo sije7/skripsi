@@ -29,6 +29,7 @@ export default function DefaultLayout() {
                 setUser(data)
             }).catch((err)=>{
                 return <Navigate to="/landingpage" />
+                // window.location.reload()
             })
     }, [])
 
@@ -36,7 +37,7 @@ export default function DefaultLayout() {
     return (
         <>
             <HeaderMain />
-            {/* <Button onClick={onLogout}>Logout</Button> */}
+            <Button onClick={onLogout}>Logout</Button>
                 <Outlet />
             <Footer />
         </>

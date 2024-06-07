@@ -15,7 +15,6 @@ class DonationController extends Controller
 {
     public function getDonations(GetDonationsRequest $request)
     {
-
         $data = $request->validated();
         $donations = DB::table('donations')->where('status', '=', $request->status)->get();
         foreach ($donations as $d) {
@@ -90,7 +89,7 @@ class DonationController extends Controller
         $donation->user_id = $request->Lembaga_id;
         $donation->pemohon_id = $request->Pemohon_id;
         $donation->deadline = $request->Deadline;
-        $donation->status = 2;
+        $donation->status = 1;
         $donation->title = $request->Judul;
         $donation->description = $request->Deskripsi;
         $donation->location = $request->Lokasi;
@@ -114,4 +113,24 @@ class DonationController extends Controller
         
         return 'Permohonan Donasi Berhasil';
     }
+
+    public function approveDonation(Request $request){
+        $donationId = $request->id;
+        $donation = Donation::find($donationId);
+        $donation->status = $request->status;
+        $donation->save();
+
+        return 'Approve Donasi Berhasil';
+
+    }
+
+    public function rejectDonation(Request $request){
+        $donationId = $request->id;
+        $donation = Donation::find($donationId);
+        $donation->status = 0;
+        $donation->save();
+
+        return 'Reject Donasi Berhasil';
+    }
+
 }
