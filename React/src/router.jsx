@@ -23,6 +23,7 @@ import DonasiDetail from './views/Donasi/DonasiDetail';
 import RequestDonasi from './views/Donasi/RequestDonasi';
 import UploadPembelajaran from './views/UploadPembelajaran';
 import AboutUs from './views/AboutUs';
+import ApproveDonasi from './views/Donasi/ApproveDonasi';
 
 const router = createBrowserRouter([
     {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
                 path: '/aboutus',
                 element: <AboutUs />
             },
+            {
+                path: '/donasi/approve',
+                element: <ApproveDonasi />
+            }
         ]
     },
     {

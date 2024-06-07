@@ -211,7 +211,7 @@ export default function Beranda() {
         // alignItems: 'top',
         justifyContent: 'left',
         height: '600px',
-        backgroundSize: 'cover',
+        backgroundSize: '100% 100%',
     }
 
     return (
@@ -265,8 +265,8 @@ export default function Beranda() {
                         <h1 style={{ margin: 0, fontSize: '70px' }}><b>SESAMA</b></h1>
                     </div>
                     <div style={{ display: 'inline-block', textAlign: 'right' }}>
-                        <p style={{ margin: 0, fontSize: '12px' }}>BERBUAT BAIK</p>
-                        <p style={{ margin: 0, fontSize: '12px' }}>HAL YANG MULIA</p>
+                        <p style={{ margin: 0, fontSize: '12px' }}><b>BERBUAT BAIK</b></p>
+                        <p style={{ margin: 0, fontSize: '12px' }}><b>HAL YANG MULIA</b></p>
                     </div>
                 </Box>
                 

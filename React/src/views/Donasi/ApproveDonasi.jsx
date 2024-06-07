@@ -3,10 +3,10 @@ import CardDonasi from "../../components/Donasi/CardDonasi";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 
-export default function Donasi() {
+export default function ApproveDonasi() {
     const [donation, setDonation] = useState([{}])
     const [loading, setLoading] = useState(false)
     const [search, setSearch] = useState('')
@@ -19,6 +19,7 @@ export default function Donasi() {
     });
     const { vertical, horizontal } = stateSnackbar;
     const [open, setOpen] = useState(false);
+    const [role, setRole] = useState('')
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -28,28 +29,49 @@ export default function Donasi() {
         setOpen(false);
     };
 
-    const [role, setRole] = useState('')
+    const navigate = useNavigate()
 
     useEffect(() => {
-        setLoading(true)
-        axiosClient.get('/user')
-        .then((res)=>{
-            setRole(res.data.role)
-            console.log(res)
-        })
-        location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
-        location.state ? location.state.message ? setOpen(true) : '' : ''
-        window.history.replaceState({}, '')
-        let fd = new FormData()
-        fd.append('status',3)
+        (async () => {
+            setLoading(true)
+            location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
+            location.state ? location.state.message ? setOpen(true) : '' : ''
+            window.history.replaceState({}, '')
 
-        
+            await axiosClient.get('/user')
+                .then(async ({ data }) => {
+                    if(data.role === 'user'){
+                        return navigate('/')
+                    }
+                    setRole(data.role)
+                    let fd = new FormData()
+                    if (data.role === 'lembaga') {
+                        fd.append('status', 2)
+                    } else {
+                        fd.append('status', 1)
+                    }
+                    await axiosClient.post('/donations', fd)
+                        .then(({ data }) => {
+                            setDonation(data.donations)
+                            setLoading(false)
+                        })
+                })
+        })()
 
-        axiosClient.post('/donations', fd)
-            .then(({ data }) => {
-                setDonation(data.donations)
-                setLoading(false)
-            })
+
+        // setTimeout(() => {
+        //     if(role === 'lembaga'){
+        //         fd.append('status',2)
+        //     }else{
+        //         fd.append('status', 1)
+        //     }
+        //     axiosClient.post('/donations', fd)
+        //     .then(({ data }) => {
+        //         setDonation(data.donations)
+        //         setLoading(false)
+        //     })
+        // }, 4000);
+
     }, [])
 
 
@@ -105,19 +127,17 @@ export default function Donasi() {
                     {/* Buttons */}
                     <Grid container direction={'row'} sx={{ justifyContent: 'space-between', paddingLeft: '30px', paddingRight: '30px' }}>
                         <Grid item>
-                            <Link to={'/donasi/request'}>
+                            <Link to={'/donasi'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                    Request Donasi
+                                    Donasi
                                 </Button>
                             </Link>
                         </Grid>
-                        {role !== 'user' && <Grid item>
-                            <Link to={'/donasi/approve'}>
-                                <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                    Approve Donasi
-                                </Button>
-                            </Link>
-                        </Grid>}
+                        {/* <Grid item>
+                            <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
+                                Approve Donasi
+                            </Button>
+                        </Grid> */}
                     </Grid>
                     {/* Cards */}
                     <Grid container direction={'row'} sx={{ padding: '30px' }} spacing={3}>

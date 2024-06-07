@@ -83,6 +83,34 @@ export default function DonasiDetail() {
             })
     }
 
+    function onApprove() {
+        let fd = new FormData()
+        if (detail.user_id === detail.pemohon_id && detail.status === 1) {
+            fd.append('status', 3)
+        } else if (role === 'lembaga') {
+            fd.append('status', 3)
+        }
+        else {
+            fd.append('status', 2)
+        }
+        fd.append('id', detail.id)
+        axiosClient.post('/approveDonation', fd)
+            .then((res) => {
+                return navigate('/donasi', { state: { message: res.data } })
+            })
+
+    }
+
+    function onReject() {
+        let fd = new FormData()
+        fd.append('id', detail.id)
+        axiosClient.post('/rejectDonation', fd)
+            .then((res) => {
+                return navigate('/donasi', { state: { message: res.data } })
+            })
+
+    }
+
 
     return (
         <>
@@ -162,37 +190,57 @@ export default function DonasiDetail() {
                                             <Grid item sx={{ textAlign: 'center' }}>
                                                 <h2>Progress Donasi</h2>
                                             </Grid>
-                                            {userId !== detail.user_id && progressDonation ? progressDonation.map((pd, i) => (
+                                            {userId !== detail.user_id || detail.status !== 3 && progressDonation ? progressDonation.map((pd, i) => (
                                                 <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
-                                                    <Checkbox 
-                                                    checked={pd.status} 
-                                                    color="secondary" 
-                                                    onChange={() => { onChangeCheckbox(pd, i) }}    
-                                                    disabled
+                                                    <Checkbox
+                                                        checked={pd.status}
+                                                        color="secondary"
+                                                        onChange={() => { onChangeCheckbox(pd, i) }}
+                                                        disabled
                                                     />
                                                     <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
                                                 </Grid>
                                             )) : ''}
-                                            {userId === detail.user_id || role === 'admin' && progressDonation ? progressDonation.map((pd, i) => (
+                                            {userId === detail.user_id && detail.status === 3 || role === 'admin' && detail.status === 3 && progressDonation ? progressDonation.map((pd, i) => (
                                                 <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
-                                                    <Checkbox 
-                                                    checked={pd.status} 
-                                                    color="secondary" 
-                                                    onChange={() => { onChangeCheckbox(pd, i) }}    
+                                                    <Checkbox
+                                                        checked={pd.status}
+                                                        color="secondary"
+                                                        onChange={() => { onChangeCheckbox(pd, i) }}
                                                     />
                                                     <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
                                                 </Grid>
-                                            )) : ''}
 
-                                            <Grid item sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
-                                                <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92' }} onClick={onUpdate}>
-                                                    Update Progress Donasi
-                                                    {/* <EditIcon /> */}
-                                                </Button>
-                                            </Grid>
+                                            )) : ''}
+                                            {detail.status === 3 &&
+                                                <Grid item sx={{ display: 'flex', justifyContent: 'right' }}>
+                                                    <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92' }} onClick={onUpdate}>
+                                                        Update Progress Donasi
+                                                        {/* <EditIcon /> */}
+                                                    </Button>
+                                                </Grid>
+                                            }
                                         </CardContent>
+
                                     </Grid>
                                 </Card>
+                                <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
+                                        {detail.status === 1 || detail.status === 2 && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
+                                            Reject Donasi
+                                            {/* <EditIcon /> */}
+                                        </Button>}
+                                    </Grid>
+                                    <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
+                                        {detail.status === 1 || detail.status === 2 && <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px' }} onClick={onApprove}>
+                                            Approve Donasi
+                                            {/* <EditIcon /> */}
+                                        </Button>}
+                                    </Grid>
+
+                                </Grid>
+
+
                             </Grid>
                         </Grid>
 

@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Snackbar } from "@mui/material";
 import CardGalangDana from "../../components/GalangDana/CardGalangDana";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
@@ -29,6 +29,7 @@ export default function ApproveGalangDana() {
     };
 
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true)
@@ -39,6 +40,9 @@ export default function ApproveGalangDana() {
         // setLoca
         axiosClient.get('/user')
             .then(({ data }) => {
+                if(data.role === 'user'){
+                    return navigate('/')
+                }
                 if (data.role !== 'admin') {
                     return <Navigate to='/' />
                 }
