@@ -59,3 +59,6 @@ Route::post('/rejectDonation',[DonationController::class, 'rejectDonation']);
 
 Route::get('/lembaga', [UserController::class, 'getLembaga']);
 Route::get('/subcategories', [DonationController::class, 'getSubCategories']);
+Route::get('/categories', [DonationController::class, 'getCategories']);
+Route::post('/getDonationBySubCategory', [DonationController::class, 'getDonationBySubCategory']);
+Route::post('/getDonationByCategory', [DonationController::class, 'getDonationByCategory']);
