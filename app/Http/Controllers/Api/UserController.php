@@ -103,4 +103,16 @@ class UserController extends Controller
         $lembaga = DB::table('users')->where('role', '=','lembaga')->get();
         return $lembaga;
     }
+
+    public function getUsersToApprove(){
+        $users = DB::table('users')->where('status', '=','0')->get();
+        return compact('users');
+    }
+    public function approveUser($id){
+        $user = User::find($id);
+        $user->status = 1;
+
+        $user->save();
+        return 'User Berhasil Diapprove';
+    }
 }

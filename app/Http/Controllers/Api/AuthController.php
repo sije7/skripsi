@@ -10,6 +10,7 @@ use App\Models\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -26,7 +27,8 @@ class AuthController extends Controller
             'jenis_kelamin' => $data['jenis_kelamin'],
             'umur' => $data['umur'],
             'nomor_telepon' => $data['nomor_telepon'],
-            'bank' => $data['bank']
+            'bank' => $data['bank'],
+            'status' => 1,
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
@@ -46,7 +48,8 @@ class AuthController extends Controller
             'nomor_telepon' => $data['nomor_telepon'],
             'lokasi' => $data['lokasi'],
             'penanggung_jawab' => $data['penanggung_jawab'],
-            'bank' => $data['bank']
+            'bank' => $data['bank'],
+            'status' => 0,
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
@@ -56,14 +59,22 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
+        // $user = DB::table('users')->where('email','=',$request->email)->get();
+        // error_log($user->status);
         if (!Auth::attempt($credentials)) {
             return response([
-                'message' => 'Provided email or password is incorrect'
+                'message' => 'Email atau Password Salah'
             ], 422);
         }
-
+        
+        
         /** @var \App\Models\User $user */
         $user = Auth::user();
+        if($user->status !== 1){
+            return response([
+                'message' => 'Akun belum aktif'
+            ], 422);
+        }
         $token = $user->createToken('main')->plainTextToken;
         return response(compact('user', 'token'));
     }

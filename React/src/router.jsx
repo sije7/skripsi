@@ -25,6 +25,7 @@ import UploadPembelajaran from './views/UploadPembelajaran';
 import AboutUs from './views/AboutUs';
 import ApproveDonasi from './views/Donasi/ApproveDonasi';
 import Pembelajaran from './views/Pembelajaran/Pembelajaran';
+import UsersPage from './views/Users';
 
 const router = createBrowserRouter([
     {
@@ -47,10 +48,10 @@ const router = createBrowserRouter([
                 path: '/beranda',
                 element: <Beranda /> //page
             },
-            // {
-            //     path: '/users',
-            //     element: <Users />
-            // },
+            {
+                path: '/users',
+                element: <UsersPage />
+            },
             {
                 path: '/users/new',
                 element: <UserForm key="userCreate" />

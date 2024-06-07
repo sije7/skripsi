@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import axiosClient from "../axios-client";
 import Footer from "../components/Footer";
 import HeaderMain from "../components/Header";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 
 export default function DefaultLayout() {
     const { user, token, notification, setUser, setToken } = useStateContext()
@@ -37,7 +37,9 @@ export default function DefaultLayout() {
     return (
         <>
             <HeaderMain />
-            <Button onClick={onLogout}>Logout</Button>
+            <Grid sx={{display:'flex', justifyContent:'right'}}>
+            <Button  onClick={onLogout}>Logout</Button>
+            </Grid>
                 <Outlet />
             <Footer />
         </>

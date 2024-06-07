@@ -66,9 +66,12 @@ export default function HeaderMain() {
                 <Grid item sx={{ fontSize: '10px' }}>
                     <Link style={{ textDecoration: 'none', color: 'black' }} to='/donasi'><h1>Donasi</h1></Link>
                 </Grid>
-                <Grid item sx={{ fontSize: '10px' }}>
+                {user.role !== 'admin' && <Grid item sx={{ fontSize: '10px' }}>
                     <Link style={{ textDecoration: 'none', color: 'black' }} to='/aboutus'><h1>Tentang Kami</h1></Link>
-                </Grid>
+                </Grid>}
+                {user.role === 'admin' && <Grid item sx={{ fontSize: '10px' }}>
+                    <Link style={{ textDecoration: 'none', color: 'black' }} to='/users'><h1>Users</h1></Link>
+                </Grid>}
                 <Grid item sx={{ fontSize: '10px' }}>
                     <Link style={{ textDecoration: 'none', color: 'black' }} to='/galangdana'><h1>Galang Dana</h1></Link>
                 </Grid>

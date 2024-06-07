@@ -32,6 +32,7 @@ class UserSeeder extends Seeder
             'lokasi'=>'',
             'penanggung_jawab'=>'',
             'bank'=>'',
+            'status'=> 1,
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]));
@@ -50,6 +51,7 @@ class UserSeeder extends Seeder
             'lokasi'=>'',
             'penanggung_jawab'=>'',
             'bank'=>'',
+            'status'=> 1,
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -68,6 +70,7 @@ class UserSeeder extends Seeder
             'lokasi'=>'',
             'penanggung_jawab'=>'',
             'bank'=>'',
+            'status'=> 1,
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -86,6 +89,7 @@ class UserSeeder extends Seeder
             'lokasi'=>'',
             'penanggung_jawab'=>'',
             'bank'=>'',
+            'status'=> 1,
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -103,6 +107,7 @@ class UserSeeder extends Seeder
             'lokasi'=>'Jl. Kebon Jeruk Raya No. 27, Kebon Jeruk, Jakarta Barat, 11530, INDONESIA',
             'penanggung_jawab'=>'',
             'bank'=>'BCA',
+            'status'=> 1,
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);

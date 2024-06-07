@@ -19,6 +19,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -57,6 +58,8 @@ export default function SignUp() {
         padding: 4
     }
 
+    const navigate = useNavigate()
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const payload = {
@@ -73,8 +76,7 @@ export default function SignUp() {
         }
         axiosClient.post('/signupLembaga', payload)
             .then(({ data }) => {
-                setUser(data.user)
-                setToken(data.token);
+                return navigate('/login')
             })
             .catch(err => {
                 const response = err.response;

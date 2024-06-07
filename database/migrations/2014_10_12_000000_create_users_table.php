@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('nomor_telepon')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('bank')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
