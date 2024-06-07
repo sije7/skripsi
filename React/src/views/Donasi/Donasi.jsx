@@ -3,7 +3,7 @@ import CardDonasi from "../../components/Donasi/CardDonasi";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
-import { Link, useLocation } from "react-router-dom";
+import { Form, Link, useLocation } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function Donasi() {
@@ -29,28 +29,53 @@ export default function Donasi() {
     };
 
     const [role, setRole] = useState('')
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
         setLoading(true)
         axiosClient.get('/user')
-        .then((res)=>{
-            setRole(res.data.role)
-            console.log(res)
-        })
+            .then((res) => {
+                setRole(res.data.role)
+            })
         location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
         location.state ? location.state.message ? setOpen(true) : '' : ''
         window.history.replaceState({}, '')
         let fd = new FormData()
-        fd.append('status',3)
-
-        
+        fd.append('status', 3)
 
         axiosClient.post('/donations', fd)
             .then(({ data }) => {
                 setDonation(data.donations)
                 setLoading(false)
             })
+
+        axiosClient.get('/categories')
+            .then(({ data }) => {
+                setCategories(data.categories)
+            })
+
     }, [])
+
+    function getBySubCategory(id){
+        let fd = new FormData()
+        fd.append('id',id)
+        fd.append('status',3)
+        axiosClient.post('/getDonationBySubCategory', fd)
+        .then(({data})=>{
+            setDonation(data.donations)
+        })
+
+    }
+    function getByCategory(id){
+        let fd = new FormData()
+        fd.append('id',id)
+        fd.append('status',3)
+        axiosClient.post('/getDonationByCategory', fd)
+        .then(({data})=>{
+            setDonation(data.donations)
+        })
+
+    }
 
 
     return (
@@ -68,22 +93,15 @@ export default function Donasi() {
                 {/* Kategori */}
                 <Grid container md={2} sx={{ borderRight: '1px solid', minHeight: '700px', padding: '30px' }} direction={'column'}>
                     <h2>Kategori</h2>
-                    <Grid item>
-                        <ul><b>Konsumsi</b>
-                            <li style={{ paddingLeft: '20px' }}>Makanan</li>
-                            <li style={{ paddingLeft: '20px' }}>Minuman</li>
-                            <li style={{ paddingLeft: '20px' }}>Obat-obatan</li>
-                        </ul>
-                    </Grid>
-                    <Grid item>
-                        <ul><b>Non-Konsumsi</b>
-                            <li style={{ paddingLeft: '20px' }}>Pakaian</li>
-                            <li style={{ paddingLeft: '20px' }}>Peralatan Medis</li>
-                            <li style={{ paddingLeft: '20px' }}>Peralatan Rumah Tangga</li>
-                            <li style={{ paddingLeft: '20px' }}>Mainan</li>
-                            <li style={{ paddingLeft: '20px' }}>Hiburan</li>
-                        </ul>
-                    </Grid>
+                    {categories ? categories.map((ct) => (
+                        <Grid item>
+                            <ul style={{cursor:'pointer'}}><b onClick={()=>getByCategory(ct.id)}>{ct.name}</b>
+                            {ct.subcategories ? ct.subcategories.map((sc)=>(
+                                <li style={{ paddingLeft: '20px', cursor:'pointer' }} onClick={()=>getBySubCategory(sc.id)}>{sc.name}</li>
+                            )) : ''}
+                            </ul>
+                        </Grid>
+                    )) : ''}
                 </Grid>
                 {/* Content */}
                 <Grid container md={10} direction={'column'}>

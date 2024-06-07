@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GetDonationsRequest;
 use App\Http\Requests\RequestDonationRequest;
+use App\Models\Category;
 use App\Models\Donation;
 use App\Models\Item;
 use App\Models\ProgressDonation;
 use App\Models\Subcategory;
+use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -133,4 +135,92 @@ class DonationController extends Controller
         return 'Reject Donasi Berhasil';
     }
 
+    public function getCategories(){
+        $categories = Category::all();
+        foreach($categories as $ct){
+            $id = $ct->id;
+            $ct->subcategories = Subcategory::where('category_id', '=', $id)->get();
+        }
+        return compact('categories');
+    }
+
+    public function getDonationBySubCategory(Request $request){
+        $arrayIdDonation = array();
+        $arrayIdItems = array();
+        $item = Item::where('subcategory_id','=',$request->id)->get();
+        foreach($item as $i){
+            array_push($arrayIdItems,$i->id);   
+        }
+        $progress = DB::table('progress_donations')->whereIn('item_id',$arrayIdItems)->get();
+        foreach($progress as $p){
+            if(!in_array($p->donation_id,$arrayIdDonation)){
+                array_push($arrayIdDonation, $p->donation_id);
+            }
+        }
+     
+        $donations = DB::table('donations')->where('status', '=', $request->status)->whereIn('id',$arrayIdDonation)->get();
+        foreach ($donations as $d) {
+            $d->progress_donation = DB::table('progress_donations')->where('donation_id', '=', $d->id)->get();
+            $d->username = DB::table('users')->where('id', '=', $d->user_id)->value('name');
+            $progress_tracker = 0;
+            $progress_count = 0;
+            foreach ($d->progress_donation as $pd) {
+                $pd->item = DB::table('items')->where('id', '=', $pd->item_id)->get(['name', 'currency', 'subcategory_id'])->first();
+                $d->sub_category[$progress_count] = DB::table('subcategories')->where('id', '=', $pd->item->subcategory_id)->value('name');
+                if ($pd->status === 1) {
+                    $progress_tracker++;
+                }
+                $progress_count++;
+            }
+            $d->progress = $progress_tracker * 100 / $progress_count;
+            $d->progress = round($d->progress, 2);
+            if ($d->progress > 100) {
+                $d->progress = 100;
+            }
+        }
+        return compact('donations');
+    }
+    public function getDonationByCategory(Request $request){
+        $arrayIdDonation = array();
+        $arrayIdItems = array();
+        $arrayIdSubCategories = array();
+
+        $subcategories = DB::table('subcategories')->where('category_id','=',$request->id)->get();
+        foreach($subcategories as $s){
+            array_push($arrayIdSubCategories, $s->id);
+        }
+
+        $item = DB::table('items')->whereIn('subcategory_id',$arrayIdSubCategories)->get();
+        foreach($item as $i){
+            array_push($arrayIdItems,$i->id);   
+        }
+        $progress = DB::table('progress_donations')->whereIn('item_id',$arrayIdItems)->get();
+        foreach($progress as $p){
+            if(!in_array($p->donation_id,$arrayIdDonation)){
+                array_push($arrayIdDonation, $p->donation_id);
+            }
+        }
+     
+        $donations = DB::table('donations')->where('status', '=', $request->status)->whereIn('id',$arrayIdDonation)->get();
+        foreach ($donations as $d) {
+            $d->progress_donation = DB::table('progress_donations')->where('donation_id', '=', $d->id)->get();
+            $d->username = DB::table('users')->where('id', '=', $d->user_id)->value('name');
+            $progress_tracker = 0;
+            $progress_count = 0;
+            foreach ($d->progress_donation as $pd) {
+                $pd->item = DB::table('items')->where('id', '=', $pd->item_id)->get(['name', 'currency', 'subcategory_id'])->first();
+                $d->sub_category[$progress_count] = DB::table('subcategories')->where('id', '=', $pd->item->subcategory_id)->value('name');
+                if ($pd->status === 1) {
+                    $progress_tracker++;
+                }
+                $progress_count++;
+            }
+            $d->progress = $progress_tracker * 100 / $progress_count;
+            $d->progress = round($d->progress, 2);
+            if ($d->progress > 100) {
+                $d->progress = 100;
+            }
+        }
+        return compact('donations');
+    }
 }
