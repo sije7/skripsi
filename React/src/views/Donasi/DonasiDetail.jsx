@@ -39,6 +39,7 @@ export default function DonasiDetail() {
         setLoading(true)
         axiosClient.post(`/donation/${id.id}`)
             .then(({ data }) => {
+                console.log(data.donation)
                 setDetail(data.donation)
                 setSubCategories(removeDuplicates(data.donation.sub_category))
                 setprogressDonation(data.donation.progress_donation)
@@ -185,7 +186,7 @@ export default function DonasiDetail() {
                         <Grid container xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'self-end' }}>
                             <Grid item >
                                 <Card sx={{ width: '550px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
-                                    <Grid container direction={'column'} sx={{ minHeight: '300px' }}>
+                                    <Grid container direction={'column'} sx={{ minHeight: '100px' }}>
                                         <CardContent>
                                             <Grid item sx={{ textAlign: 'center' }}>
                                                 <h2>Progress Donasi</h2>
@@ -212,7 +213,7 @@ export default function DonasiDetail() {
                                                 </Grid>
 
                                             )) : ''}
-                                            {detail.status === 3 &&
+                                            {userId === detail.user_id && detail.status === 3 &&
                                                 <Grid item sx={{ display: 'flex', justifyContent: 'right' }}>
                                                     <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92' }} onClick={onUpdate}>
                                                         Update Progress Donasi
@@ -226,13 +227,13 @@ export default function DonasiDetail() {
                                 </Card>
                                 <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
-                                        {detail.status === 1 || detail.status === 2 && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
+                                        {detail.status !== 3  && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
                                             Reject Donasi
                                             {/* <EditIcon /> */}
                                         </Button>}
                                     </Grid>
                                     <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
-                                        {detail.status === 1 || detail.status === 2 && <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px' }} onClick={onApprove}>
+                                        {detail.status !== 3 && <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px' }} onClick={onApprove}>
                                             Approve Donasi
                                             {/* <EditIcon /> */}
                                         </Button>}

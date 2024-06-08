@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Modal, OutlinedInput, Select, TextField, Typography, styled } from "@mui/material";
+import { Box, Button, FormControl, Grid, InputAdornment, InputLabel, MenuItem, Modal, OutlinedInput, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, styled } from "@mui/material";
 import axiosClient from "../../axios-client";
 import { useEffect, useState } from "react";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -25,6 +25,7 @@ export default function RequestDonasi() {
     const [addFlagJenis, setAddFlagJenis] = useState(false)
     const [addFlagBarang, setAddFlagBarang] = useState(false)
     const [addFlagJumlah, setAddFlagJumlah] = useState(false)
+    const [selectedDeskripsiLembaga, setSelectedDeskripsiLembaga] = useState('')
 
     const [listId, setListId] = useState([])
     const [listName, setListName] = useState([])
@@ -47,7 +48,7 @@ export default function RequestDonasi() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    
+
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
         clipPath: 'inset(50%)',
@@ -60,17 +61,6 @@ export default function RequestDonasi() {
         width: 1,
     });
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 800,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
 
     const handleImage = (e) => {
         const file = e.target.files[0]
@@ -189,47 +179,6 @@ export default function RequestDonasi() {
 
     return (
         <>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Grid container direction={'row'}>
-                        <Grid container direction={'column'} xs={6} md={6} sx={{ borderBlock: '2px solid' }}>
-                            <Grid item sx={{ borderBottom: '2px solid' }}>
-                                <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Barang</p>
-                            </Grid>
-                            {listName?.map((name) => (
-                                <Grid item>
-                                    <p style={{ fontSize: '24px' }}>{name}</p>
-                                </Grid>
-                            ))}
-                        </Grid>
-                        <Grid container direction={'column'} xs={3} md={3} sx={{ borderBlock: '2px solid' }}>
-                            <Grid item sx={{ borderBottom: '2px solid' }}>
-                                <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Jumlah</p>
-                            </Grid>
-                            {listQty?.map((qty) => (
-                                <Grid item>
-                                    <p style={{ fontSize: '24px' }}>{qty}</p>
-                                </Grid>
-                            ))}
-                        </Grid>
-                        <Grid container direction={'column'} xs={3} md={3} sx={{ borderBlock: '2px solid' }}>
-                            <Grid item sx={{ borderBottom: '2px solid' }}>
-                                <p style={{ fontSize: '24px', fontWeight: 'bold' }}>Satuan</p>
-                            </Grid>
-                            {listCurrency?.map((satuan) => (
-                                <Grid item>
-                                    <p style={{ fontSize: '24px' }}>{satuan}</p>
-                                </Grid>
-                            ))}
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Modal>
             <h1 style={{ textAlign: 'center', padding: '20px' }}>Request Donasi</h1>
             <Grid container xs={12} md={12} direction={'row'} sx={{ padding: '50px' }} component="form">
                 {/* Left */}
@@ -268,7 +217,7 @@ export default function RequestDonasi() {
                             onChange={event => setKeterangan(event.target.value)}
                         />
                     </Grid>
-                    {errorDeskripsi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorDeskripsi}</small> : "" }
+                    {errorDeskripsi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorDeskripsi}</small> : ""}
                     <Grid item>
                         <TextField
                             id="outlined-multiline-flexible"
@@ -280,23 +229,7 @@ export default function RequestDonasi() {
                             onChange={event => setLokasi(event.target.value)}
                         />
                     </Grid>
-                    {errorLokasi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorLokasi}</small> : "" }
-                    <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Grid item >
-                            <p style={{ fontWeight: 'lighter' }}>Tanggal Penyaluran Bantuan </p>
-                            <DatePicker
-                                selected={startDate}
-                                dateFormat="yyyy/MM/dd"
-                                value={startDate}
-                                onChange={(date) => setStartDate(date)} />
-                        </Grid>
-
-                    </Grid>
-                    {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : "" }
-                </Grid>
-
-                {/* Right */}
-                <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
+                    {errorLokasi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorLokasi}</small> : ""}
                     <Grid item>
                         <p style={{ fontWeight: 'lighter' }}>Upload Gambar</p>
                         <Button
@@ -311,13 +244,13 @@ export default function RequestDonasi() {
                         </Button>
 
                     </Grid>
-                    {errorGambar ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorGambar}</small> : "" }
+                    {errorGambar ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorGambar}</small> : ""}
                     {preview ? (
                         <Grid item>
                             <img src={preview} style={{ width: '100px', height: '100px' }}></img>
                         </Grid>
                     ) : " "}
-                    <Grid item>
+                     <Grid item>
                         <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Lembaga</InputLabel>
                             <Select
@@ -329,21 +262,62 @@ export default function RequestDonasi() {
                                 style={{ width: '50%' }}
                             >
                                 {lembaga.map((lembaga) => (
-                                    <MenuItem value={lembaga.id}>{lembaga.name}</MenuItem>
+                                    <MenuItem onClick={() => setSelectedDeskripsiLembaga(lembaga.deskripsi)} value={lembaga.id}>{lembaga.name}</MenuItem>
+
                                 ))}
+
                             </Select>
                         </FormControl>
                     </Grid>
-                    {errorLembaga ? <small style={{ color: "#B00020", fontSize: '13px' }}>lembaga harus dipilih</small> : "" }
+                    {selectedDeskripsiLembaga ? selectedDeskripsiLembaga : ''}
+                    {errorLembaga ? <small style={{ color: "#B00020", fontSize: '13px' }}>lembaga harus dipilih</small> : ""}
+
+                </Grid>
+
+                {/* Right */}
+                <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
+                    <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Grid item >
+                            <p style={{ fontWeight: 'lighter' }}>Tanggal Penyaluran Bantuan </p>
+                            <DatePicker
+                                selected={startDate}
+                                dateFormat="yyyy/MM/dd"
+                                value={startDate}
+                                onChange={(date) => setStartDate(date)} />
+                        </Grid>
+
+                    </Grid>
+                    {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
+                    {listId.length !== 0   && <TableContainer component={Paper} sx={{ maxHeight: '200px' }} >
+                        <Table sx={{ minWidth: 350, tableLayout: 'fixed  ' }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell width={'100px'}>Barang</TableCell>
+                                    <TableCell width={'100px'} align="left">Jumlah</TableCell>
+                                    <TableCell width={'100px'} align="left">Satuan</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {listId.map((row, i) => (
+                                    <TableRow
+                                        key={row.name}
+                                    >
+                                        <TableCell component="th" scope="row">
+                                            {listName[i]}
+                                        </TableCell>
+                                        <TableCell align="left">{listQty[i]}</TableCell>
+                                        <TableCell align="left">{listCurrency[i]}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>}
                     <Grid item sx={{ display: 'flex' }}>
                         <Button onClick={() => setAddFlagJenis(true)}>
                             Tambah Barang
                         </Button>
-                        {listId && <Button onClick={handleOpen} style={{ background: '#BEDAB1', color: 'black', marginLeft: '30px' }} >
-                            Lihat Barang
-                        </Button>}
                     </Grid>
-                    {errorBarang ? <small style={{ color: "#B00020", fontSize: '13px' }}>barang harus ditambahkan</small> : "" }
+                    {errorBarang ? <small style={{ color: "#B00020", fontSize: '13px' }}>barang harus ditambahkan</small> : ""}
                     {addFlagJenis && <Grid item>
                         <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Jenis Barang</InputLabel>

@@ -36,7 +36,8 @@ class User extends Authenticatable
         'profile_image',
         'penanggung_jawab',
         'lokasi',
-        'bank'
+        'bank',
+        'deskripsi'
     ];
 
     /**

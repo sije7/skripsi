@@ -43,7 +43,8 @@ class SignupLembagaRequest extends FormRequest
             'nomor_telepon' => ['nullable','string','regex:/^[0-9]{0,15}$/'],
             'lokasi' => ['required'],
             'penanggung_jawab' => ['required'],
-            'bank' => ['nullable','string']
+            'bank' => ['nullable','string'],
+            'deskripsi' => ['required'],
         ];
     }
 }

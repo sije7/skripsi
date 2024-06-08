@@ -167,7 +167,7 @@ export default function Beranda() {
             );
         } else {
             return (
-                <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '0px', paddingTop: '100px' }}>
+                <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
                     <Grid item xs={12} md={4}>
                         <Box
                             component="img"
@@ -211,7 +211,7 @@ export default function Beranda() {
         // alignItems: 'top',
         justifyContent: 'left',
         height: '600px',
-        backgroundSize: '100% 100%',
+        backgroundSize: 'cover',
     }
 
     return (
@@ -242,7 +242,7 @@ export default function Beranda() {
                 </div >
                
                 {/* Bagian Donasi Terkini */}
-                <Grid sx={{ justifyItems: 'start', marginLeft: '50px' }}>
+                <Grid sx={{ justifyItems: 'start', padding:'50px', paddingLeft:'200px' }}>
                     <Typography variant="h5" align="left"><b>Donasi Terkini</b></Typography>
                 </Grid>
                 {processedNonSlide}

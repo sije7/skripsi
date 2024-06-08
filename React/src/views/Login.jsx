@@ -123,7 +123,7 @@ export default function Login() {
                                     {/* <Link href="/signup" variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link> */}
-                                    <Link href="/pilihregis" variant="body2">
+                                    <Link href="/signupall" variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
