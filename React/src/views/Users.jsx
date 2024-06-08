@@ -58,32 +58,53 @@ export default function UsersPage() {
 
     return (
         <>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableContainer component={Paper} >
+                <Table sx={{ minWidth: 650, tableLayout: 'fixed  ' }} aria-label="simple table">
+                    {/* <colgroup>
+                        <col style={{ width: '10%' }} />
+                        <col style={{ width: '20%' }} />
+                        <col style={{ width: '20%' }} />
+                        <col style={{ width: '20%' }} />
+                        <col style={{ width: '20%' }} />
+                        <col style={{ width: '20%' }} />
+                    </colgroup> */}
                     <TableHead>
                         <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell align="right">Name</TableCell>
-                            <TableCell align="right">Penanggung Jawab</TableCell>
-                            <TableCell align="right">Email</TableCell>
-                            <TableCell align="right">Lokasi</TableCell>
-                            <TableCell align="right">No Telepon</TableCell>
-                            <TableCell align="right">No Rekening</TableCell>
+                            <TableCell width={'100px'}>Name</TableCell>
+                            <TableCell width={'100px'} align="left">Penanggung Jawab</TableCell>
+                            <TableCell width={'200px'} align="left">Email</TableCell>
+                            <TableCell width={'200px'} align="left">Lokasi</TableCell>
+                            <TableCell width={'150px'} align="left">No Telepon</TableCell>
+                            <TableCell width={'150px'} align="left">No Rekening</TableCell>
+                            <TableCell width={'500px'} align="left">Dekripsi</TableCell>
+                            <TableCell width={'100px'} align="left">Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {users.map((row) => (
                             <TableRow
                                 key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>
-                                <TableCell align="right">{row.calories}</TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
-                                <TableCell align="right">{row.protein}</TableCell>
+                                <TableCell align="left">{row.penanggung_jawab}</TableCell>
+                                <TableCell align="left">{row.email}</TableCell>
+                                <TableCell component="th" scope="row" align="left">{row.lokasi}</TableCell>
+                                <TableCell align="left">{row.nomor_telepon}</TableCell>
+                                <TableCell align="left">{row.no_req}({row.bank})</TableCell>
+                                <TableCell component="th" scope="row" align="left">{row.deskripsi}</TableCell>
+                                <TableCell component="th" scope="row" align="left">
+                                    <Button variant="contained" color="success" onClick={()=>onApprove(row)} style={{ backgroundColor: '#66AB92' }} >
+                                        Approve
+                                    </Button>
+                                    &nbsp;
+                                    <Button variant="contained" color="error" onClick={()=>onDelete(row)}>
+                                        Reject
+                                    </Button>
+
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

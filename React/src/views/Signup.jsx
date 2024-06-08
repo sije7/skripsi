@@ -25,7 +25,7 @@ function Copyright(props) {
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                HopefulHarbor
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -98,12 +98,12 @@ export default function SignUp() {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: '#132519' }}>
+                        {/* <Avatar sx={{ m: 1, bgcolor: '#132519' }}>
                             <LockOutlinedIcon />
-                        </Avatar>
-                        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, borderRadius: 10 }}>
+                        </Avatar> */}
+                        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, borderRadius: 10, width:'1000px' }}>
                             <Typography component="h1" variant="h5">
-                                Sign Up User
+                                {/* Sign Up User */}
                             </Typography>
                             {errors && <div className="alert">
                                 {Object.keys(errors).map(key => (
@@ -150,14 +150,17 @@ export default function SignUp() {
                                         <input ref={bankRef} type="" placeholder="Bank" />
                                     </Grid>
                                 </Grid>
+                                <Grid item sx={{justifyContent:'center', display:'flex'}}>
+
                                 <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Sign Up
-                                </Button>
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{ width: '400px' }}
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </Grid>
                                 <Grid container justifyContent="flex-end">
                                     <Grid item>
                                         <Link href="/login" variant="body2">

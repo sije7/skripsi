@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\LearningCategory;
 use App\Models\ProgressDonation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -28,5 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->Call(ItemSeeder::class);
         $this->call(DonationSeeder::class);
         $this->call(ProgressDonationSeeder::class);
+        $this->call(LearningCategorySeeder::class);
+        $this->call(LearningSubCategorySeeder::class);
     }
 }

@@ -50,6 +50,7 @@ class AuthController extends Controller
             'penanggung_jawab' => $data['penanggung_jawab'],
             'bank' => $data['bank'],
             'status' => 0,
+            'deskripsi'=> $data['deskripsi'],
         ]);
 
         $token = $user->createToken('main')->plainTextToken;

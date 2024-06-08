@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('profile_image')->nullable();
             $table->string('bank')->nullable();
             $table->integer('status')->default(0);
+            $table->longText('deskripsi')->nullable();
             $table->timestamps();
         });
     }

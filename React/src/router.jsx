@@ -26,6 +26,8 @@ import AboutUs from './views/AboutUs';
 import ApproveDonasi from './views/Donasi/ApproveDonasi';
 import Pembelajaran from './views/Pembelajaran/Pembelajaran';
 import UsersPage from './views/Users';
+import PembelajaranDetail from './views/Pembelajaran/PembelajaranDetail';
+import SignupAll from './views/SignupAll';
 
 const router = createBrowserRouter([
     {
@@ -111,7 +113,12 @@ const router = createBrowserRouter([
             {
                 path: '/pembelajaran',
                 element: <Pembelajaran />
-            }
+            },
+            {
+                path: '/pembelajaran/:id',
+                element: <PembelajaranDetail />
+            },
+           
         ]
     },
     {
@@ -138,6 +145,10 @@ const router = createBrowserRouter([
                 path: '/pilihregis',
                 element: <ChooseRegistration /> //page
             },
+            {
+                path: '/signupall',
+                element: <SignupAll />
+            }
         ]
     },
     {

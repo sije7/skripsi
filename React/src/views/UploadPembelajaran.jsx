@@ -96,6 +96,7 @@ export default function UploadPembelajaran(){
             <Grid item>
                 <TextField
                     required
+                    label='Judul'
                     style={{minWidth: '100%'}}
                     onChange={event => setTitle(event.target.value)}
                 />

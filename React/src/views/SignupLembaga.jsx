@@ -26,7 +26,7 @@ function Copyright(props) {
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                HopefulHarbor
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -49,6 +49,7 @@ export default function SignUp() {
     const penanggungRef = useRef()
     const lokasiRef = useRef()
     const bankRef = useRef()
+    const deskripsiRef = useRef()
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
@@ -73,6 +74,7 @@ export default function SignUp() {
             penanggung_jawab: penanggungRef.current.value,
             lokasi: lokasiRef.current.value,
             bank: bankRef.current.value,
+            deskripsi: deskripsiRef.current.value
         }
         axiosClient.post('/signupLembaga', payload)
             .then(({ data }) => {
@@ -100,12 +102,12 @@ export default function SignUp() {
                             alignItems: 'center',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: '#132519' }}>
+                        {/* <Avatar sx={{ m: 1, bgcolor: '#132519' }}>
                             <LockOutlinedIcon />
-                        </Avatar>
-                        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, borderRadius: 10 }}>
+                        </Avatar> */}
+                        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, borderRadius: 10, width: '1000px' }}>
                             <Typography component="h1" variant="h5">
-                                Sign Up Lembaga
+                                {/* Sign Up Lembaga */}
                             </Typography>
                             {errors && <div className="alert">
                                 {Object.keys(errors).map(key => (
@@ -131,6 +133,9 @@ export default function SignUp() {
                                         <input ref={penanggungRef} type="" placeholder="Nama Penanggung Jawab" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
+                                        <input ref={deskripsiRef} type="" placeholder="Deskripsi Lembaga" />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
                                         <input ref={noReqRef} type="" placeholder="No Rekening" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -143,14 +148,16 @@ export default function SignUp() {
                                         <input ref={bankRef} type="" placeholder="Bank" />
                                     </Grid>
                                 </Grid>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Sign Up
-                                </Button>
+                                <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{ width: '400px' }}
+                                    >
+                                        Sign Up
+                                    </Button>
+                                </Grid>
                                 <Grid container justifyContent="flex-end">
                                     <Grid item>
                                         <Link href="/login" variant="body2">
