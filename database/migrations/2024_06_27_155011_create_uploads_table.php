@@ -16,11 +16,14 @@ return new class extends Migration
         Schema::create('uploads', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('subcategory_id')->references('id')->on('learning_sub_categories')->onUpdate('cascade')->onDelete('cascade');
             $table->string('title');
             $table->string('upload_video');
             $table->string('title_description');
             $table->string('description');
             $table->string('upload_image');
+            $table->string('thumbnail');
+            $table->integer('status');
             $table->timestamps();
         });
     }
