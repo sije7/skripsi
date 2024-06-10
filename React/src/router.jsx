@@ -30,6 +30,7 @@ import PembelajaranDetail from './views/Pembelajaran/PembelajaranDetail';
 import SignupAll from './views/SignupAll';
 import UploadLearning from './views/Pembelajaran/PembelajaranUpload';
 import PembelajaranApprove from './views/Pembelajaran/PembelajaranApprove';
+import Geolocation from './views/Geolocation'
 
 const router = createBrowserRouter([
     {
