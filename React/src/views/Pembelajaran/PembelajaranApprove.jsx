@@ -1,15 +1,14 @@
 import { Button, Grid, Snackbar, TextField } from "@mui/material";
-import CardDonasi from "../../components/Donasi/CardDonasi";
 import { useEffect, useState } from "react";
-import axiosClient from "../../axios-client";
-import CircularIndeterminate from "../../components/CircularIndeterminate";
-import { Form, Link, useLocation } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
+import { Link, useLocation } from "react-router-dom";
+import axiosClient from "../../axios-client";
+import CardPembelajaran from "../../components/CardPembelajaran/CardPembelajaran";
+import CircularIndeterminate from "../../components/CircularIndeterminate";
 
-export default function Donasi() {
-    const [donation, setDonation] = useState([{}])
-    const [loading, setLoading] = useState(false)
+export default function PembelajaranApprove() {
     const [search, setSearch] = useState('')
+    const [role, setRole] = useState('')
     const location = useLocation()
     const [message, setMessage] = useState(null)
     const [stateSnackbar] = useState({
@@ -19,7 +18,8 @@ export default function Donasi() {
     });
     const { vertical, horizontal } = stateSnackbar;
     const [open, setOpen] = useState(false);
-
+    const [learnings, setLearnings] = useState([])
+    const [categories, setCategories] = useState([])
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -28,8 +28,7 @@ export default function Donasi() {
         setOpen(false);
     };
 
-    const [role, setRole] = useState('')
-    const [categories, setCategories] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setLoading(true)
@@ -40,42 +39,43 @@ export default function Donasi() {
         location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
         location.state ? location.state.message ? setOpen(true) : '' : ''
         window.history.replaceState({}, '')
-        let fd = new FormData()
-        fd.append('status', 3)
 
-        axiosClient.post('/donations', fd)
+        let fd = new FormData()
+        fd.append('status', 0)
+        axiosClient.post('/getLearnings', fd)
             .then(({ data }) => {
-                setDonation(data.donations)
+                setLearnings(data.learnings)
                 setLoading(false)
             })
 
-        axiosClient.get('/categories')
+        axiosClient.get('/getLearningCategories', fd)
             .then(({ data }) => {
                 setCategories(data.categories)
             })
-
     }, [])
 
-    function getBySubCategory(id){
+    function getBySubCategory(id) {
         let fd = new FormData()
-        fd.append('id',id)
-        fd.append('status',3)
-        axiosClient.post('/getDonationBySubCategory', fd)
-        .then(({data})=>{
-            setDonation(data.donations)
-        })
+        fd.append('id', id)
+        fd.append('status', 0)
+        axiosClient.post('/getLearningBySubCategory', fd)
+            .then(({ data }) => {
+                setLearnings(data.learnings)
+            })
 
     }
-    function getByCategory(id){
+    function getByCategory(id) {
         let fd = new FormData()
-        fd.append('id',id)
-        fd.append('status',3)
-        axiosClient.post('/getDonationByCategory', fd)
-        .then(({data})=>{
-            setDonation(data.donations)
-        })
+        console.log(id)
+        fd.append('id', id)
+        fd.append('status', 0)
+        axiosClient.post('/getLearningByCategory', fd)
+            .then(({ data }) => {
+                setLearnings(data.learnings)
+            })
 
     }
+
 
 
     return (
@@ -88,28 +88,29 @@ export default function Donasi() {
                 key={vertical + horizontal}
                 onClose={handleClose}
             />}
+
             {loading && <CircularIndeterminate />}
             {!loading && <Grid container direction={'row'}>
-                {/* Kategori */}
                 <Grid container md={2} sx={{ borderRight: '1px solid', minHeight: '700px', padding: '30px' }} direction={'column'}>
-                    <h2>Kategori</h2>
-                    {categories ? categories.map((ct) => (
-                        <Grid item>
-                            <ul style={{cursor:'pointer'}}><b onClick={()=>getByCategory(ct.id)}>{ct.name}</b>
-                            {ct.subcategories ? ct.subcategories.map((sc)=>(
-                                <li style={{ paddingLeft: '20px', cursor:'pointer' }} onClick={()=>getBySubCategory(sc.id)}>{sc.name}</li>
-                            )) : ''}
+                    <h1>Kategori</h1>
+                    <Grid item>
+                        {categories ? categories.map((c) => (
+                            <ul style={{ cursor: 'pointer' }} >
+                                <b onClick={() => getByCategory(c.id)}>{c.name}</b>
+                                {c.sub_categories ? c.sub_categories.map((sc) => (
+                                    <li style={{ paddingLeft: '20px', cursor: 'pointer' }} onClick={() => getBySubCategory(sc.id)}>{sc.name}</li>
+                                )) : ''}
                             </ul>
-                        </Grid>
-                    )) : ''}
+                        )) : ''}
+                    </Grid>
                 </Grid>
-                {/* Content */}
                 <Grid container md={10} direction={'column'}>
+                    {/* Header */}
                     <Grid container direction={'row'} sx={{ marginTop: '20px', padding: '20px' }}>
-                        <Grid item xs={10} md={9} sx={{ display: 'flex', justifyContent: 'center', paddingLeft: '19%' }}>
-                            <h1>Donasi</h1>
+                        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <h1>Approve Pembelajaran</h1>
                         </Grid>
-                        <Grid item xs={12} md={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Grid item xs={12}  sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <TextField
                                 value={search}
                                 onChange={event => setSearch(event.target.value)}
@@ -123,39 +124,34 @@ export default function Donasi() {
                     {/* Buttons */}
                     <Grid container direction={'row'} sx={{ justifyContent: 'space-between', paddingLeft: '30px', paddingRight: '30px' }}>
                         <Grid item>
-                            <Link to={'/donasi/request'}>
+                            <Link to={'/pembelajaran'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                    Request Donasi
+                                    Pembelajaran
                                 </Button>
                             </Link>
                         </Grid>
                         {role !== 'user' && <Grid item>
                             <Link to={'/donasi/approve'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                    Approve Donasi
+                                    Approve Pembelajaran
                                 </Button>
                             </Link>
                         </Grid>}
                     </Grid>
                     {/* Cards */}
                     <Grid container direction={'row'} sx={{ padding: '30px' }} spacing={3}>
-                        {donation.filter((d) => {
-                            return search.toLowerCase() === '' ? d : d.title.toLowerCase().includes(search) || d.username.toLowerCase().includes(search)
-                        }).map((d) => (
+                        {learnings ? learnings.map((l) => (
                             <Grid item>
-                                <CardDonasi
-                                    key={d.id}
-                                    id={d.id}
-                                    title={d.title}
-                                    progress={d.progress}
-                                    deadline={d.deadline}
-                                    username={d.username}
-                                    image={d.image}
-                                    subCategory={d.sub_category}
-                                    status={d.status}
+                                <CardPembelajaran
+                                    id={l.id}
+                                    image={l.thumbnail}
+                                    title={l.title}
+                                    year={l.created_at.slice(0, 4)}
+                                    username={l.username}
+                                    subCategory={l.sub_category}
                                 />
                             </Grid>
-                        ))}
+                        )) : ''}
                     </Grid>
                 </Grid>
             </Grid>}

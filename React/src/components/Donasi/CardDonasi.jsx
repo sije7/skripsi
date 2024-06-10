@@ -25,12 +25,15 @@ export default function CardDonasi(props) {
                             <Grid item sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center', minHeight: '70px' }}>
                                 <h2>{props.title}</h2>
                             </Grid>
+                            {props.status !== 1 && 
+                            <Grid>
                             <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
                                 <LinearDeterminate progress={props.progress} />
                             </Grid>
                             <Grid item sx={{ textAlign: 'center' }}>
                                 <p>{props.progress}%</p>
                             </Grid>
+                            </Grid>}
                         </Grid>
                     </CardContent>
                     <Grid container direction={'row'} spacing={1} sx={{ padding: '10px 20px 10px 20px' }}>

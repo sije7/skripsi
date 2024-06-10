@@ -44,6 +44,13 @@ Route::post('/crowdfunding/reject/{id}', [CrowdfundingController :: class, 'reje
 
 Route::post('/uploads',[UploadController::class, 'createUpload']);
 Route::get('/getLearningCategories',[UploadController::class, 'getLearningCategories']);
+Route::post('/getLearnings',[UploadController::class, 'getLearnings']);
+Route::post('/getLearning/{id}',[UploadController::class, 'getLearning']);
+Route::post('/getLearningByCategory',[UploadController::class, 'getLearningByCategory']);
+Route::post('/getLearningBySubCategory',[UploadController::class, 'getLearningBySubCategory']);
+Route::post('/approveLearning',[UploadController::class, 'approveLearning']);
+Route::post('/rejectLearning',[UploadController::class, 'rejectLearning']);
+
 
 Route::post('/crowdfunding/transaction/create', [TransactionController:: class,'createNewTransaction']);
 Route::post('/transactions', [TransactionController::class, 'getTransaction']);

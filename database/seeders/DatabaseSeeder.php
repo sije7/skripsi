@@ -31,5 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProgressDonationSeeder::class);
         $this->call(LearningCategorySeeder::class);
         $this->call(LearningSubCategorySeeder::class);
+        $this->call(UploadSeeder::class);
     }
 }

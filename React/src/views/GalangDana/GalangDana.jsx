@@ -131,6 +131,7 @@ export default function GalangDana() {
                                     target={null}
                                     deadline={cr.deadline}
                                     username={cr.username}
+                                    status={cr.status}
                                 />
                             </Grid>
                         ))}

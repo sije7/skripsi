@@ -103,6 +103,7 @@ export default function ApproveGalangDana() {
                                     target={cr.target ? cr.target.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : cr.target}
                                     deadline={cr.deadline}
                                     username={cr.username}
+                                    status={cr.status}
                                 />
                             </Grid>
                         ))}

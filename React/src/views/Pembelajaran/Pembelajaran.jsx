@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Link, useLocation } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import CardPembelajaran from "../../components/CardPembelajaran/CardPembelajaran";
+import CircularIndeterminate from "../../components/CircularIndeterminate";
 
 export default function Pembelajaran() {
     const [search, setSearch] = useState('')
@@ -17,7 +18,8 @@ export default function Pembelajaran() {
     });
     const { vertical, horizontal } = stateSnackbar;
     const [open, setOpen] = useState(false);
-
+    const [learnings, setLearnings] = useState([])
+    const [categories, setCategories] = useState([])
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -26,8 +28,10 @@ export default function Pembelajaran() {
         setOpen(false);
     };
 
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         axiosClient.get('/user')
             .then((res) => {
                 setRole(res.data.role)
@@ -40,14 +44,37 @@ export default function Pembelajaran() {
         fd.append('status', 1)
         axiosClient.post('/getLearnings', fd)
             .then(({ data }) => {
-                console.log(data)
+                setLearnings(data.learnings)
+                setLoading(false)
             })
 
-        axiosClient.get('/getLearningCategories', fd)
+        axiosClient.get('/getLearningCategories')
             .then(({ data }) => {
-                console.log(data)
+                setCategories(data.categories)
             })
     }, [])
+
+    function getBySubCategory(id) {
+        let fd = new FormData()
+        fd.append('id', id)
+        fd.append('status', 1)
+        axiosClient.post('/getLearningBySubCategory', fd)
+            .then(({ data }) => {
+                setLearnings(data.learnings)
+            })
+
+    }
+    function getByCategory(id) {
+        let fd = new FormData()
+        console.log(id)
+        fd.append('id', id)
+        fd.append('status', 1)
+        axiosClient.post('/getLearningByCategory', fd)
+            .then(({ data }) => {
+                setLearnings(data.learnings)
+            })
+
+    }
 
 
 
@@ -62,26 +89,19 @@ export default function Pembelajaran() {
                 onClose={handleClose}
             />}
 
-            <Grid container direction={'row'}>
+            {loading && <CircularIndeterminate />}
+            {!loading && <Grid container direction={'row'}>
                 <Grid container md={2} sx={{ borderRight: '1px solid', minHeight: '700px', padding: '30px' }} direction={'column'}>
                     <h1>Kategori</h1>
                     <Grid item>
-                        <ul style={{ cursor: 'pointer' }} >
-                            <b>Kategori 1</b>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 1</li>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 2</li>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 3</li>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 4</li>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 5</li>
-                        </ul>
-                        <ul style={{ cursor: 'pointer' }} >
-                            <b>Kategori 2</b>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 1</li>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 2</li>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 3</li>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 4</li>
-                            <li style={{ paddingLeft: '20px', cursor: 'pointer' }}>SubKategori 5</li>
-                        </ul>
+                        {categories ? categories.map((c) => (
+                            <ul style={{ cursor: 'pointer' }} >
+                                <b onClick={() => getByCategory(c.id)}>{c.name}</b>
+                                {c.sub_categories ? c.sub_categories.map((sc) => (
+                                    <li style={{ paddingLeft: '20px', cursor: 'pointer' }} onClick={() => getBySubCategory(sc.id)}>{sc.name}</li>
+                                )) : ''}
+                            </ul>
+                        )) : ''}
                     </Grid>
                 </Grid>
                 <Grid container md={10} direction={'column'}>
@@ -111,7 +131,7 @@ export default function Pembelajaran() {
                             </Link>
                         </Grid>
                         {role !== 'user' && <Grid item>
-                            <Link to={'/donasi/approve'}>
+                            <Link to={'/pembelajaran/approve'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                     Approve Pembelajaran
                                 </Button>
@@ -120,24 +140,21 @@ export default function Pembelajaran() {
                     </Grid>
                     {/* Cards */}
                     <Grid container direction={'row'} sx={{ padding: '30px' }} spacing={3}>
-                        <Grid item>
-                            <CardPembelajaran />
-                        </Grid>
-                        <Grid item>
-                            <CardPembelajaran />
-                        </Grid>
-                        <Grid item>
-                            <CardPembelajaran />
-                        </Grid>
-                        <Grid item>
-                            <CardPembelajaran />
-                        </Grid>
-                        <Grid item>
-                            <CardPembelajaran />
-                        </Grid>
+                        {learnings ? learnings.map((l) => (
+                            <Grid item>
+                                <CardPembelajaran
+                                    id={l.id}
+                                    image={l.thumbnail}
+                                    title={l.title}
+                                    year={l.created_at.slice(0, 4)}
+                                    username={l.username}
+                                    subCategory={l.sub_category}
+                                />
+                            </Grid>
+                        )) : ''}
                     </Grid>
                 </Grid>
-            </Grid>
+            </Grid>}
         </>
     )
 }
