@@ -28,6 +28,8 @@ import Pembelajaran from './views/Pembelajaran/Pembelajaran';
 import UsersPage from './views/Users';
 import PembelajaranDetail from './views/Pembelajaran/PembelajaranDetail';
 import SignupAll from './views/SignupAll';
+import UploadLearning from './views/Pembelajaran/PembelajaranUpload';
+import PembelajaranApprove from './views/Pembelajaran/PembelajaranApprove';
 
 const router = createBrowserRouter([
     {
@@ -115,9 +117,17 @@ const router = createBrowserRouter([
                 element: <Pembelajaran />
             },
             {
+                path: '/pembelajaran/approve',
+                element: <PembelajaranApprove />
+            },
+            {
                 path: '/pembelajaran/:id',
                 element: <PembelajaranDetail />
             },
+            {
+                path:'/pembelajaran/upload',
+                element: <UploadLearning />
+            }
            
         ]
     },

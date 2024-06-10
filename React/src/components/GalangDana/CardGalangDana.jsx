@@ -17,15 +17,17 @@ export default function CardGalangDana(props) {
                     </Grid>
                     <CardContent>
                         <Grid container direction='column' rowSpacing={1} >
-                            <Grid item sx={{ display: 'flex', justifyContent: 'center', textAlign:'center', minHeight:'70px' }}>
+                            <Grid item sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center', minHeight: '70px' }}>
                                 <h2>{props.title}</h2>
                             </Grid>
-                            <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
-                                <LinearDeterminate progress={props.progress} />
-                            </Grid>
-                            <Grid item sx={{ textAlign: 'center' }}>
-                                <p>{props.progress}%</p>
-                            </Grid>
+                            {props.status === 1 && <Grid>
+                                <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
+                                    <LinearDeterminate progress={props.progress} />
+                                </Grid>
+                                <Grid item sx={{ textAlign: 'center' }}>
+                                    <p>{props.progress}%</p>
+                                </Grid>
+                            </Grid>}
                             {props.fund !== null && <Grid container direction='row' style={{ justifyContent: 'space-between' }}>
                                 <Grid item>
                                     <p><b>Terkumpul</b></p>

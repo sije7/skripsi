@@ -20,6 +20,7 @@ export default function ApproveDonasi() {
     const { vertical, horizontal } = stateSnackbar;
     const [open, setOpen] = useState(false);
     const [role, setRole] = useState('')
+    const [categories, setCategories] = useState([])
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -40,7 +41,7 @@ export default function ApproveDonasi() {
 
             await axiosClient.get('/user')
                 .then(async ({ data }) => {
-                    if(data.role === 'user'){
+                    if (data.role === 'user') {
                         return navigate('/')
                     }
                     setRole(data.role)
@@ -56,23 +57,39 @@ export default function ApproveDonasi() {
                             setLoading(false)
                         })
                 })
+
+            axiosClient.get('/categories')
+                .then(({ data }) => {
+                    setCategories(data.categories)
+                })
         })()
-
-
-        // setTimeout(() => {
-        //     if(role === 'lembaga'){
-        //         fd.append('status',2)
-        //     }else{
-        //         fd.append('status', 1)
-        //     }
-        //     axiosClient.post('/donations', fd)
-        //     .then(({ data }) => {
-        //         setDonation(data.donations)
-        //         setLoading(false)
-        //     })
-        // }, 4000);
-
     }, [])
+
+    function getBySubCategory(id) {
+        let fd = new FormData()
+        fd.append('id', id)
+        if(role === 'admin'){
+            fd.append('status', 1)
+        }
+        if(role === 'lembaga'){
+            fd.append('status', 2)
+        }
+        axiosClient.post('/getDonationBySubCategory', fd)
+            .then(({ data }) => {
+                setDonation(data.donations)
+            })
+
+    }
+    function getByCategory(id) {
+        let fd = new FormData()
+        fd.append('id', id)
+        fd.append('status', 2)
+        axiosClient.post('/getDonationByCategory', fd)
+            .then(({ data }) => {
+                setDonation(data.donations)
+            })
+
+    }
 
 
     return (
@@ -90,22 +107,15 @@ export default function ApproveDonasi() {
                 {/* Kategori */}
                 <Grid container md={2} sx={{ borderRight: '1px solid', minHeight: '700px', padding: '30px' }} direction={'column'}>
                     <h2>Kategori</h2>
-                    <Grid item>
-                        <ul><b>Konsumsi</b>
-                            <li style={{ paddingLeft: '20px' }}>Makanan</li>
-                            <li style={{ paddingLeft: '20px' }}>Minuman</li>
-                            <li style={{ paddingLeft: '20px' }}>Obat-obatan</li>
-                        </ul>
-                    </Grid>
-                    <Grid item>
-                        <ul><b>Non-Konsumsi</b>
-                            <li style={{ paddingLeft: '20px' }}>Pakaian</li>
-                            <li style={{ paddingLeft: '20px' }}>Peralatan Medis</li>
-                            <li style={{ paddingLeft: '20px' }}>Peralatan Rumah Tangga</li>
-                            <li style={{ paddingLeft: '20px' }}>Mainan</li>
-                            <li style={{ paddingLeft: '20px' }}>Hiburan</li>
-                        </ul>
-                    </Grid>
+                    {categories ? categories.map((ct) => (
+                        <Grid item>
+                            <ul style={{cursor:'pointer'}}><b onClick={()=>getByCategory(ct.id)}>{ct.name}</b>
+                            {ct.subcategories ? ct.subcategories.map((sc)=>(
+                                <li style={{ paddingLeft: '20px', cursor:'pointer' }} onClick={()=>getBySubCategory(sc.id)}>{sc.name}</li>
+                            )) : ''}
+                            </ul>
+                        </Grid>
+                    )) : ''}
                 </Grid>
                 {/* Content */}
                 <Grid container md={10} direction={'column'}>
@@ -154,6 +164,7 @@ export default function ApproveDonasi() {
                                     username={d.username}
                                     image={d.image}
                                     subCategory={d.sub_category}
+                                    status={d.status}
                                 />
                             </Grid>
                         ))}

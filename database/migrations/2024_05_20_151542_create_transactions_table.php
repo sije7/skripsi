@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('crowdfunding_id')->references('id')->on('crowdfundings')->onUpdate('cascade')->onDelete('cascade');
-            $table->integer('fund');
+            $table->bigInteger('fund');
             $table->string('image');
             $table->integer('status')->default(0);
         });

@@ -24,11 +24,14 @@ class StoreUploadRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:55',
-            'upload_video' => 'required|mimes:flv,mp4,mov,wmv|max:50000',
-            'title_description' => 'required|string|max:55',
-            'description' => 'required|string|max:1000',
-            'upload_image'=> 'required|mimes:png,jpg|max:2048',
+            'Judul' => 'required|string|max:55',
+            'Video' => 'required|mimes:flv,mp4,mov,wmv',
+            'JudulKonten' => 'required|string|max:55',
+            'Konten' => 'required|string|max:1000',
+            'Gambar'=> 'required|mimes:png,jpg',
+            'Thumbnail'=> 'required|mimes:png,jpg',
+            'TipePembelajaran'=> 'required',
+            'JenisPembelajaran'=> 'required'
         ];
     }
 }
