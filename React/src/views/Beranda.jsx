@@ -247,7 +247,7 @@ export default function Beranda() {
                 </Grid>
                 {processedNonSlide}
                 <Box mt={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Link to=''>
+                    <Link to='/geolocation'>
                         <Button
                             variant="contained"
                             color="warning"
@@ -323,7 +323,7 @@ export default function Beranda() {
                 <br />
                 <br />
                 <br />
-
+                {/* <Geolocation /> */}
                 {/* <Footer /> */}
             </div>}
         </>

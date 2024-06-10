@@ -17,11 +17,9 @@ export default function PembelajaranDetail() {
 
         axiosClient.post(`/getLearning/${id.id}`)
             .then(({ data }) => {
-                // console.log(data.learning.upload_video)
                 setDetail(data.learning)
-                setVideo("http://localhost:8000" + data.learning.upload.video)
+                setVideo("http://localhost:8000" + data.learning.upload_video)
             })
-
     }, [])
 
     function onApprove() {
@@ -55,11 +53,11 @@ export default function PembelajaranDetail() {
                         <source src={video} type="video/mp4" />
                     </video>
                 </Grid>}
-                <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
+                {/* <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
                     <video width="750" height="500" controls>
                         <source src={"http://localhost:8000/storage/videos/videoplayback.mp4"} type="video/mp4" />
                     </video>
-                </Grid>
+                </Grid> */}
                 <Grid item>
                     <h1>{detail.title_description}</h1>
                 </Grid>
