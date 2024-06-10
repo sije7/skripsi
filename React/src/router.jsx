@@ -23,6 +23,7 @@ import DonasiDetail from './views/Donasi/DonasiDetail';
 import RequestDonasi from './views/Donasi/RequestDonasi';
 import UploadPembelajaran from './views/UploadPembelajaran';
 import AboutUs from './views/AboutUs';
+import Geolocation from './views/TestGeoLocation';
 
 const router = createBrowserRouter([
     {
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
             {
                 path: '/aboutus',
                 element: <AboutUs />
+            },
+            {
+                path: '/geo',
+                element: <Geolocation />
             },
         ]
     },

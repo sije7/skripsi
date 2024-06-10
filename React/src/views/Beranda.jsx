@@ -240,14 +240,14 @@ export default function Beranda() {
                         </Fade>
                     </div>
                 </div >
-               
+
                 {/* Bagian Donasi Terkini */}
                 <Grid sx={{ justifyItems: 'start', marginLeft: '50px' }}>
                     <Typography variant="h5" align="left"><b>Donasi Terkini</b></Typography>
                 </Grid>
                 {processedNonSlide}
                 <Box mt={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Link to=''>
+                    <Link to='/geo'>
                         <Button
                             variant="contained"
                             color="warning"
@@ -269,7 +269,7 @@ export default function Beranda() {
                         <p style={{ margin: 0, fontSize: '12px' }}>HAL YANG MULIA</p>
                     </div>
                 </Box>
-                
+
                 <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Grid item xs={12} md={1.5} sx={{ marginTop: "30px" }}>
                         {PictDown({ picture: I1 })}
