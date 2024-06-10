@@ -127,6 +127,10 @@ const router = createBrowserRouter([
             {
                 path:'/pembelajaran/upload',
                 element: <UploadLearning />
+            },
+            {
+                path:'/geolocation',
+                element: <Geolocation />
             }
            
         ]
