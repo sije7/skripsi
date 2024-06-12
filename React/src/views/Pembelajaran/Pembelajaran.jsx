@@ -124,11 +124,11 @@ export default function Pembelajaran() {
                     {/* Buttons */}
                     <Grid container direction={'row'} sx={{ justifyContent: 'space-between', paddingLeft: '30px', paddingRight: '30px' }}>
                         <Grid item>
-                            <Link to={'/pembelajaran/upload'}>
+                            {role !== 'admin' && <Link to={'/pembelajaran/upload'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                     Upload Pembelajaran
                                 </Button>
-                            </Link>
+                            </Link>}
                         </Grid>
                         {role !== 'user' && <Grid item>
                             <Link to={'/pembelajaran/approve'}>

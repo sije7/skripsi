@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import axiosClient from "../../axios-client"
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useNavigate } from "react-router-dom";
+import CircularIndeterminate from "../../components/CircularIndeterminate";
 
 export default function UploadLearning() {
     const [role, setRole] = useState('')
@@ -22,27 +23,32 @@ export default function UploadLearning() {
     const [selectedSubCategory, setSelectedSubCategory] = useState('')
 
     const navigate = useNavigate()
-
-
     //error
-    const[errorJudul, setErrorJudul] = useState('')
-    const[errorJudulKonten, setErrorJudulKonten] = useState('')
-    const[errorKonten, setErrorKonten] = useState('')
-    const[errorGambarKonten, setErrorGambarKonten] = useState('')
-    const[errorThumbnail, setErrorThumbnail] = useState('')
-    const[errorVideo, setErrorVideo] = useState('')
-    const[errorJenisPembelajaran, setErrorJenisPembelajaran] = useState('')
-    const[errorTipePembelajaran, setErrorTipePembelajaran] = useState('')
+    const [errorJudul, setErrorJudul] = useState('')
+    const [errorJudulKonten, setErrorJudulKonten] = useState('')
+    const [errorKonten, setErrorKonten] = useState('')
+    const [errorGambarKonten, setErrorGambarKonten] = useState('')
+    const [errorThumbnail, setErrorThumbnail] = useState('')
+    const [errorVideo, setErrorVideo] = useState('')
+    const [errorJenisPembelajaran, setErrorJenisPembelajaran] = useState('')
+    const [errorTipePembelajaran, setErrorTipePembelajaran] = useState('')
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         axiosClient.get('/user')
             .then(({ data }) => {
+                if (data.role === 'admin') {
+                    return navigate('/')
+                }
                 setUserId(data.id)
                 setRole(data.role)
+
             });
         axiosClient.get('/getLearningCategories')
             .then(({ data }) => {
                 setCategory(data.categories)
+                setLoading(false)
             })
     }, [])
 
@@ -83,7 +89,7 @@ export default function UploadLearning() {
         setSelectedCategory(e.target.value)
         setSelectedSubCategory('')
         for (let i = 0; i < category.length; i++) {
-            if(category[i].id === parseInt(e.target.value)){
+            if (category[i].id === parseInt(e.target.value)) {
                 setSubCategory(category[i].sub_categories)
             }
         }
@@ -106,37 +112,38 @@ export default function UploadLearning() {
         formData.append('TipePembelajaran', selectedSubCategory)
         formData.append('JenisPembelajaran', selectedCategory)
 
-        axiosClient.post('/uploads',formData)
-        .then((res)=>{
-            return navigate('/pembelajaran', { state: { message: res.data } })
-        }).catch((error)=>{
-            const response = error.response.data.errors
-            setErrorJudul('')
-            setErrorJudulKonten('')
-            setErrorKonten('')
-            setErrorGambarKonten('')
-            setErrorThumbnail('')
-            setErrorVideo('')
-            setErrorJenisPembelajaran('')
-            setErrorTipePembelajaran('')
+        axiosClient.post('/uploads', formData)
+            .then((res) => {
+                return navigate('/pembelajaran', { state: { message: res.data } })
+            }).catch((error) => {
+                const response = error.response.data.errors
+                setErrorJudul('')
+                setErrorJudulKonten('')
+                setErrorKonten('')
+                setErrorGambarKonten('')
+                setErrorThumbnail('')
+                setErrorVideo('')
+                setErrorJenisPembelajaran('')
+                setErrorTipePembelajaran('')
 
-            response.Judul ? setErrorJudul(response.Judul) : ""
-            response.JudulKonten ? setErrorJudulKonten(response.JudulKonten) : ""
-            response.Konten ? setErrorKonten(response.Konten) : ""
-            response.Gambar ? setErrorGambarKonten(response.Gambar) : ""
-            response.Thumbnail ? setErrorThumbnail(response.Thumbnail) : ""
-            response.Video ? setErrorVideo(response.Video) : ""
-            response.JenisPembelajaran ? setErrorJenisPembelajaran(response.JenisPembelajaran) : ""
-            response.TipePembelajaran ? setErrorTipePembelajaran(response.TipePembelajaran): ""
-            
-        })
+                response.Judul ? setErrorJudul(response.Judul) : ""
+                response.JudulKonten ? setErrorJudulKonten(response.JudulKonten) : ""
+                response.Konten ? setErrorKonten(response.Konten) : ""
+                response.Gambar ? setErrorGambarKonten(response.Gambar) : ""
+                response.Thumbnail ? setErrorThumbnail(response.Thumbnail) : ""
+                response.Video ? setErrorVideo(response.Video) : ""
+                response.JenisPembelajaran ? setErrorJenisPembelajaran(response.JenisPembelajaran) : ""
+                response.TipePembelajaran ? setErrorTipePembelajaran(response.TipePembelajaran) : ""
+
+            })
 
 
     }
 
     return (
         <>
-            <Grid container direction='column' sx={{ minHeight: '700px', padding: '0px' }}>
+            {loading && <CircularIndeterminate />}
+            {!loading && <Grid container direction='column' sx={{ minHeight: '700px', padding: '0px' }}>
                 <Grid item sx={{ textAlign: 'center' }}>
                     <h1>Upload Pembelajaran</h1>
                 </Grid>
@@ -153,7 +160,7 @@ export default function UploadLearning() {
                                 onChange={event => setJudul(event.target.value)}
                             />
                         </Grid>
-                        {errorJudul ? <small style={{ color: "#B00020", fontSize: '13px', marginLeft:'50px' }}>{errorJudul}</small> : ""}
+                        {errorJudul ? <small style={{ color: "#B00020", fontSize: '13px', marginLeft: '50px' }}>{errorJudul}</small> : ""}
                         <Grid item>
                             <TextField
                                 required
@@ -165,7 +172,7 @@ export default function UploadLearning() {
                                 onChange={event => setJudulDeskripsi(event.target.value)}
                             />
                         </Grid>
-                        {errorJudulKonten ? <small style={{ color: "#B00020", fontSize: '13px', marginLeft:'50px' }}>{errorJudulKonten}</small> : ""}
+                        {errorJudulKonten ? <small style={{ color: "#B00020", fontSize: '13px', marginLeft: '50px' }}>{errorJudulKonten}</small> : ""}
                         <Grid item>
                             <TextField
                                 required
@@ -177,7 +184,7 @@ export default function UploadLearning() {
                                 onChange={event => setDeskripsi(event.target.value)}
                             />
                         </Grid>
-                        {errorKonten ? <small style={{ color: "#B00020", fontSize: '13px', marginLeft:'50px' }}>{errorKonten}</small> : ""}
+                        {errorKonten ? <small style={{ color: "#B00020", fontSize: '13px', marginLeft: '50px' }}>{errorKonten}</small> : ""}
                         <Grid item>
                             <Button
                                 component="label"
@@ -190,7 +197,7 @@ export default function UploadLearning() {
                                 <VisuallyHiddenInput type="file" onChange={handleImage} />
                             </Button>
                         </Grid>
-                        {errorGambarKonten ? <small style={{ color: "#B00020", fontSize: '13px', marginLeft:'50px' }}>{errorGambarKonten}</small> : ""}
+                        {errorGambarKonten ? <small style={{ color: "#B00020", fontSize: '13px', marginLeft: '50px' }}>{errorGambarKonten}</small> : ""}
                         {preview ? (
                             <Grid item>
                                 <img src={preview} style={{ width: '100px', height: '100px' }}></img>
@@ -211,7 +218,7 @@ export default function UploadLearning() {
                                 <VisuallyHiddenInput type="file" onChange={handleThumbnail} />
                             </Button>
                         </Grid>
-                        {errorThumbnail ? <small style={{ color: "#B00020", fontSize: '13px'}}>{errorThumbnail}</small> : ""}
+                        {errorThumbnail ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorThumbnail}</small> : ""}
                         {thumbnailPreview ? (
                             <Grid item>
                                 <img src={thumbnailPreview} style={{ width: '100px', height: '100px' }}></img>
@@ -230,7 +237,7 @@ export default function UploadLearning() {
                                 <VisuallyHiddenInput type="file" onChange={handleVideo} />
                             </Button>
                         </Grid>
-                        {errorVideo ? <small style={{ color: "#B00020", fontSize: '13px'}}>{errorVideo}</small> : ""}
+                        {errorVideo ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorVideo}</small> : ""}
                         {previewVideo ? (
                             <Grid item>
                                 <b>{previewVideo}</b>
@@ -253,7 +260,7 @@ export default function UploadLearning() {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        {errorJenisPembelajaran ? <small style={{ color: "#B00020", fontSize: '13px'}}>{errorJenisPembelajaran}</small> : ""}
+                        {errorJenisPembelajaran ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorJenisPembelajaran}</small> : ""}
                         {subCategory.length !== 0 && <Grid item sx={{ marginTop: '30px' }}>
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Tipe Pembelajaran</InputLabel>
@@ -272,7 +279,7 @@ export default function UploadLearning() {
                             </FormControl>
                         </Grid>
                         }
-                        {errorTipePembelajaran ? <small style={{ color: "#B00020", fontSize: '13px'}}>{errorTipePembelajaran}</small> : ""}
+                        {errorTipePembelajaran ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorTipePembelajaran}</small> : ""}
                         <Grid item sx={{ display: 'flex', marginTop: '50px' }}>
                             <Button onClick={onSubmit} variant="contained" style={{ backgroundColor: '#66AB92', color: 'black' }}>
                                 Upload Pembelajaran
@@ -282,7 +289,7 @@ export default function UploadLearning() {
                     </Grid>
 
                 </Grid>
-            </Grid>
+            </Grid>}
         </>
     )
 }

@@ -127,6 +127,9 @@ export default function DonasiDetail() {
             />}
             {!loading &&
                 <Grid>
+                    <Button variant="contained" sx={{width:'100px', marginLeft:"30px", backgroundColor: '#FFD438', color:'black'}} onClick={()=>navigate(-1)}>
+                    Back
+                </Button>
                     <Grid container direction={'row'} sx={{ padding: '100px', paddingBottom: '0' }}>
                         <Grid container md={6} xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                             <Box

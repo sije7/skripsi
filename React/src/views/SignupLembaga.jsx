@@ -54,6 +54,12 @@ export default function SignUp() {
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
 
+    const [location, setLocation] = useState({ lat: null, lon: null });
+    const [destination, setDestination] = useState({ lat: '', lon: '' }); // Destination input state
+    const [route, setRoute] = useState([]);
+    const [distance, setDistance] = useState(null);
+    const [destinationName, setDestinationName] = useState("Enter coordinates to get name");
+
     const styles = {
         // backgroundColor: '#E1F3D8',
         padding: 4
@@ -74,7 +80,9 @@ export default function SignUp() {
             penanggung_jawab: penanggungRef.current.value,
             lokasi: lokasiRef.current.value,
             bank: bankRef.current.value,
-            deskripsi: deskripsiRef.current.value
+            deskripsi: deskripsiRef.current.value,
+            latitude: location.lat,
+            longitude:location.lon
         }
         axiosClient.post('/signupLembaga', payload)
             .then(({ data }) => {
@@ -88,6 +96,29 @@ export default function SignUp() {
             })
 
     }
+
+    React.useEffect(() => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setLocation({
+                lat: position.coords.latitude,
+                lon: position.coords.longitude,
+              });
+            },
+            (error) => {
+              console.error("Error obtaining geolocation:", error);
+              // Fallback ke lokasi manual jika geolocation gagal
+              const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
+              setLocation(jakartaCoords);
+            }
+          );
+        } else {
+          // Fallback ke lokasi manual jika geolocation tidak didukung
+          const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
+          setLocation(jakartaCoords);
+        }
+      }, []);
 
     return (
         <div style={styles}>

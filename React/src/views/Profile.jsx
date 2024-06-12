@@ -53,17 +53,15 @@ export default function Profile() {
         <>
             <Container>
                 <Typography variant="h3" align="center" gutterBottom>Profile</Typography>
-                <Link to={'/users'}>
                     <Button
                         variant="contained"
                         color="primary"
                         startIcon={<ArrowBackIcon />}
                         loading
                         // fullWidth
-                        onClick={() => navigate('/')}>
+                        onClick={() => navigate(-1)}>
                         Back
                     </Button>
-                </Link>
 
                 {loading ? (
                     <Typography variant="h6" align="center">Loading...</Typography>

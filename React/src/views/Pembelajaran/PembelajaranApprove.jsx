@@ -130,13 +130,13 @@ export default function PembelajaranApprove() {
                                 </Button>
                             </Link>
                         </Grid>
-                        {role !== 'user' && <Grid item>
+                        {/* {role !== 'user' && <Grid item>
                             <Link to={'/donasi/approve'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                     Approve Pembelajaran
                                 </Button>
                             </Link>
-                        </Grid>}
+                        </Grid>} */}
                     </Grid>
                     {/* Cards */}
                     <Grid container direction={'row'} sx={{ padding: '30px' }} spacing={3}>
