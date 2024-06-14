@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axiosClient from "../axios-client"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useStateContext } from "../context/ContextProvider"
 import { Button, Grid } from "@mui/material"
 import Table from '@mui/material/Table';
@@ -15,8 +15,19 @@ export default function UsersPage() {
     const [users, setUsers] = useState([{}])
     const [loading, setLoading] = useState(false)
     const { setNotification } = useStateContext()
+    const navigate = useNavigate()
 
     useEffect(() => {
+        axiosClient.get(`/user`)
+            .then(({ data }) => {
+                if(data.role !== 'admin'){
+                    return navigate('/')
+                }
+                setLoading(false);
+            })
+            .catch(err => {
+                setLoading(false);
+            })
         getUsers()
     }, [])
 
@@ -47,7 +58,6 @@ export default function UsersPage() {
         setLoading(true)
         axiosClient.get('/usersToApprove')
             .then(({ data }) => {
-                console.log(data.users)
                 setUsers(data.users)
                 setLoading(false)
             })
@@ -96,11 +106,11 @@ export default function UsersPage() {
                                 <TableCell align="left">{row.no_req}({row.bank})</TableCell>
                                 <TableCell component="th" scope="row" align="left">{row.deskripsi}</TableCell>
                                 <TableCell component="th" scope="row" align="left">
-                                    <Button variant="contained" color="success" onClick={()=>onApprove(row)} style={{ backgroundColor: '#66AB92' }} >
+                                    <Button variant="contained" color="success" onClick={() => onApprove(row)} style={{ backgroundColor: '#66AB92' }} >
                                         Approve
                                     </Button>
                                     &nbsp;
-                                    <Button variant="contained" color="error" onClick={()=>onDelete(row)}>
+                                    <Button variant="contained" color="error" onClick={() => onDelete(row)}>
                                         Reject
                                     </Button>
 

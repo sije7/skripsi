@@ -16,26 +16,26 @@ class CrowdfundingSeeder extends Seeder
     public function run()
     {
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('1'),
-            'title'=>'Gunung Meletus Kabupaten Merapi',
-            'description'=>'Pellentesque ac tortor mi. Aenean pulvinar vitae augue scelerisque blandit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris massa erat, porta vel lacinia et, dictum eu nisi. Suspendisse auctor sit amet erat eget viverra. Aliquam erat volutpat. Aenean rhoncus sit amet turpis nec venenatis. Vestibulum laoreet ex felis. In accumsan varius est, ac tristique arcu molestie sit amet. Praesent vulputate aliquam malesuada. Vestibulum eu enim quis massa gravida consequat. Vivamus consectetur tortor laoreet, tempus tortor non, posuere sem. Nulla eget lectus nunc. Nulla erat ex, rutrum ut rutrum eget, semper venenatis sem. Sed lobortis finibus ante quis auctor.',
+            'user_id'=> ('5'),
+            'title'=>'Gunung Sinabung Meletus',
+            'description'=>'Dalam tampilan dramatis kekuatan alam, Gunung Sinabung meletus dengan dahsyat pada hari Selasa, menyemburkan kolom besar abu dan asap setinggi lebih dari 15.000 kaki ke langit. Letusan yang terjadi pada pukul 15:45 waktu setempat, memaksa evakuasi segera desa-desa terdekat dan mendorong pihak berwenang untuk mengeluarkan tingkat peringatan tertinggi. Abu tebal menyelimuti daerah tersebut, mengganggu perjalanan udara dan menimbulkan risiko kesehatan yang signifikan bagi penduduk. Layanan darurat berada dalam kondisi siaga tinggi karena getaran terus mengguncang area tersebut, menimbulkan kekhawatiran akan aktivitas vulkanik lebih lanjut. Ini menandai letusan paling parah dari Gunung Sinabung dalam beberapa tahun terakhir, menarik perhatian global terhadap ketidakstabilan geologis yang sedang berlangsung di wilayah tersebut.',
             'image'=>'/storage/images/meletup.jpg',
-            'fund'=>(123),
-            'target'=>(123),
+            'fund'=>(12000),
+            'target'=>(123000),
             'deadline'=> 5,
             'status'=> 1,
             'nama_rekening'=>'Danielson',
             'no_rekening'=>'6020910274',
             'bank'=>'BCA',
-            'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
+            'location'=>'Kuta Gugung, Naman Teran, Karo Regency, Sumatera Utara',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('1'),
+            'user_id'=> ('6'),
             'title'=>'Banjir Bandang Tangerang Selatan',
-            'description'=>'Donec tempor mauris lectus, vestibulum viverra augue cursus eu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean placerat mauris id est vehicula, posuere volutpat dui congue. Quisque id sapien elit. Quisque sed posuere massa, vel sollicitudin metus. Nulla facilisi. Phasellus ultrices quis sem sed sagittis. Sed ullamcorper vel metus eu interdum. Morbi eu viverra sapien. Praesent posuere mi eget ullamcorper auctor.',
+            'description'=>'Banjir besar melanda Tangerang Selatan pada Rabu pagi setelah hujan deras mengguyur kawasan itu selama lebih dari 12 jam. Ribuan rumah terendam air setinggi satu hingga dua meter, memaksa ribuan penduduk mengungsi ke tempat yang lebih aman. Jalan-jalan utama tidak dapat dilalui, menyebabkan kemacetan lalu lintas yang parah dan mengganggu aktivitas sehari-hari. Tim penyelamat dan relawan dikerahkan untuk membantu evakuasi dan mendistribusikan bantuan kepada korban banjir. Pihak berwenang telah mengumumkan keadaan darurat dan memperingatkan warga untuk tetap waspada terhadap kemungkinan banjir susulan. Kejadian ini menyoroti masalah drainase yang kronis di wilayah tersebut dan mendesak tindakan segera untuk pencegahan bencana di masa depan.',
             'image'=>'/storage/images/banjir.jpg',
             'fund'=>(200000),
             'target'=>(400000),
@@ -44,15 +44,15 @@ class CrowdfundingSeeder extends Seeder
             'nama_rekening'=>'Danielson',
             'no_rekening'=>'6020910274',
             'bank'=>'BCA',
-            'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
+            'location'=>'Tangerang Selatan',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('1'),
+            'user_id'=> ('3'),
             'title'=>'Kebakaran Hutan Bandung Utara',
-            'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus elit. Etiam vel efficitur elit. Donec id iaculis nisl, sit amet maximus lorem. Praesent non arcu sem. Integer molestie sem eu neque tempus, et condimentum quam posuere. Pellentesque sem elit, tristique a nunc ac, luctus hendrerit metus. Duis augue justo, interdum vitae sapien in, cursus convallis felis. Nullam bibendum mauris vel dui dictum, eu eleifend felis sagittis. Pellentesque vitae ultricies metus. Nunc ullamcorper, arcu et volutpat tincidunt, ante nisl lacinia est, quis porttitor purus ipsum quis orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque quis vulputate dolor.',
+            'description'=>'Kebakaran hutan hebat melanda wilayah Bandung Utara pada Kamis sore, menghanguskan ratusan hektar lahan hutan dan memaksa evakuasi penduduk setempat. Api yang dipicu oleh cuaca panas ekstrem dan angin kencang, dengan cepat menyebar, menimbulkan kepulan asap tebal yang mengganggu kualitas udara di daerah sekitarnya. Tim pemadam kebakaran bekerja tanpa henti untuk mengendalikan kobaran api, sementara pihak berwenang memperingatkan warga untuk menghindari area yang terkena dampak. Sejumlah rumah dan fasilitas umum dilaporkan rusak akibat kebakaran tersebut. Hingga saat ini, belum ada laporan korban jiwa, namun kerugian materiil diperkirakan sangat besar. Insiden ini kembali menyoroti perlunya langkah-langkah pencegahan yang lebih ketat untuk mengurangi risiko kebakaran hutan di masa depan.',
             'image'=>'/storage/images/bakar.jpg',
             'fund'=>0,
             'target'=>(100000),
@@ -61,15 +61,15 @@ class CrowdfundingSeeder extends Seeder
             'nama_rekening'=>'Danielson',
             'no_rekening'=>'6020910274',
             'bank'=>'BCA',
-            'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
+            'location'=>'Bandung Utara',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('1'),
+            'user_id'=> ('4'),
             'title'=>'Gempa Bumi Kota Emas',
-            'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus elit. Etiam vel efficitur elit. Donec id iaculis nisl, sit amet maximus lorem. Praesent non arcu sem. Integer molestie sem eu neque tempus, et condimentum quam posuere. Pellentesque sem elit, tristique a nunc ac, luctus hendrerit metus. Duis augue justo, interdum vitae sapien in, cursus convallis felis. Nullam bibendum mauris vel dui dictum, eu eleifend felis sagittis. Pellentesque vitae ultricies metus. Nunc ullamcorper, arcu et volutpat tincidunt, ante nisl lacinia est, quis porttitor purus ipsum quis orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque quis vulputate dolor.',
+            'description'=>'Gempa bumi berkekuatan 6,8 skala Richter mengguncang Kota Emas pada Jumat dini hari, menyebabkan kerusakan luas dan kepanikan di kalangan penduduk. Getaran kuat yang berlangsung sekitar 30 detik tersebut merobohkan bangunan, merusak infrastruktur, dan menyebabkan aliran listrik terputus di banyak daerah. Ribuan warga terpaksa meninggalkan rumah mereka dan mengungsi ke tempat yang lebih aman. Tim SAR dan relawan segera dikerahkan untuk melakukan evakuasi dan penyelamatan, sementara rumah sakit setempat kewalahan menangani korban luka-luka. Pihak berwenang memperingatkan adanya potensi gempa susulan dan mendesak masyarakat untuk tetap waspada. Bencana ini menimbulkan keprihatinan akan kesiapsiagaan dan mitigasi bencana di wilayah tersebut, mendorong seruan untuk peningkatan upaya pencegahan dan penanganan darurat.',
             'image'=>'/storage/images/gempa1.jpg',
             'fund'=>0,
             'target'=>(100000000),
@@ -78,15 +78,15 @@ class CrowdfundingSeeder extends Seeder
             'nama_rekening'=>'Danielson',
             'no_rekening'=>'6020910274',
             'bank'=>'BCA',
-            'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
+            'location'=>'Kota Emas',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('4'),
+            'user_id'=> ('7'),
             'title'=>'Banjir Bandang Kota Jakarta Utara',
-            'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus elit. Etiam vel efficitur elit. Donec id iaculis nisl, sit amet maximus lorem. Praesent non arcu sem. Integer molestie sem eu neque tempus, et condimentum quam posuere. Pellentesque sem elit, tristique a nunc ac, luctus hendrerit metus. Duis augue justo, interdum vitae sapien in, cursus convallis felis. Nullam bibendum mauris vel dui dictum, eu eleifend felis sagittis. Pellentesque vitae ultricies metus. Nunc ullamcorper, arcu et volutpat tincidunt, ante nisl lacinia est, quis porttitor purus ipsum quis orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque quis vulputate dolor.',
+            'description'=>'Banjir besar melanda Jakarta Utara pada Senin pagi setelah hujan deras mengguyur ibu kota selama lebih dari 24 jam tanpa henti. Air setinggi lebih dari dua meter menggenangi ribuan rumah dan fasilitas umum, memaksa ribuan warga mengungsi ke tempat penampungan sementara. Jalan-jalan utama dan akses transportasi lumpuh total, menyebabkan kemacetan parah dan menghambat evakuasi serta distribusi bantuan. Tim penyelamat dan relawan bekerja keras mengevakuasi warga yang terjebak dan menyediakan kebutuhan dasar seperti makanan dan air bersih. Pihak berwenang telah mengeluarkan status darurat dan meminta bantuan nasional untuk menangani bencana ini. Kejadian ini menggarisbawahi perlunya perbaikan sistem drainase dan upaya mitigasi banjir yang lebih efektif di Jakarta Utara, untuk mencegah terulangnya tragedi serupa di masa depan.',
             'image'=>'/storage/images/banjir1.jpg',
             'fund'=>(200000),
             'target'=>(400000),
@@ -95,15 +95,15 @@ class CrowdfundingSeeder extends Seeder
             'nama_rekening'=>'Danielson',
             'no_rekening'=>'6020910274',
             'bank'=>'BCA',
-            'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
+            'location'=>'Jakarta Utara',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
 
         ]));
         DB::table('crowdfundings')->insert(([
-            'user_id'=> ('1'),
+            'user_id'=> ('5'),
             'title'=>'Gempa Bumi Desa Jarilo',
-            'description'=>'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eu luctus elit. Etiam vel efficitur elit. Donec id iaculis nisl, sit amet maximus lorem. Praesent non arcu sem. Integer molestie sem eu neque tempus, et condimentum quam posuere. Pellentesque sem elit, tristique a nunc ac, luctus hendrerit metus. Duis augue justo, interdum vitae sapien in, cursus convallis felis. Nullam bibendum mauris vel dui dictum, eu eleifend felis sagittis. Pellentesque vitae ultricies metus. Nunc ullamcorper, arcu et volutpat tincidunt, ante nisl lacinia est, quis porttitor purus ipsum quis orci. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque quis vulputate dolor.',
+            'description'=>'Gempa bumi berkekuatan 7,2 skala Richter mengguncang Desa Jarilo pada Rabu malam, menghancurkan bangunan dan menimbulkan kepanikan di kalangan penduduk. Getaran kuat yang berlangsung sekitar 40 detik itu merobohkan banyak rumah dan fasilitas umum, serta memicu tanah longsor di beberapa area perbukitan di sekitarnya. Ribuan warga terpaksa mengungsi ke tempat yang lebih aman, sementara tim penyelamat dan relawan segera dikerahkan untuk melakukan operasi pencarian dan penyelamatan. Beberapa jalan utama tertutup puing-puing, menghambat upaya evakuasi dan distribusi bantuan. Hingga saat ini, dilaporkan sejumlah korban luka-luka dan kerugian material yang sangat besar. Pihak berwenang memperingatkan adanya potensi gempa susulan dan mendesak warga untuk tetap waspada. Tragedi ini menggarisbawahi pentingnya kesiapsiagaan dan respons cepat dalam menghadapi bencana alam di wilayah tersebut.',
             'image'=>'/storage/images/gempa2.jpg',
             'fund'=>0,
             'target'=>(500000),
@@ -112,7 +112,7 @@ class CrowdfundingSeeder extends Seeder
             'nama_rekening'=>'Danielson',
             'no_rekening'=>'6020910274',
             'bank'=>'BCA',
-            'location'=>'Jl. Petemon IV No.32-A, RT 014/RW 008 (Gang Sebelah Bank BCA), Kel. Petemon, Kec. Sawahan, Kota Surabaya, Jawa Timur, 60252',
+            'location'=>'Desa Jarilo, Kabupaten Kenangan, Jawa Tengah',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
 

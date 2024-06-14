@@ -82,7 +82,7 @@ export default function HeaderMain() {
                             sx={{
                                 height: '60px',
                                 width: '60px',
-                                backgroundColor: '#4287f5',
+                                // backgroundColor: '#4287f5',
                                 borderRadius: '50px',
                             }}
                             src={`http://localhost:8000${user.profile_image}`}

@@ -66,7 +66,6 @@ export default function Pembelajaran() {
     }
     function getByCategory(id) {
         let fd = new FormData()
-        console.log(id)
         fd.append('id', id)
         fd.append('status', 1)
         axiosClient.post('/getLearningByCategory', fd)
@@ -74,6 +73,16 @@ export default function Pembelajaran() {
                 setLearnings(data.learnings)
             })
 
+    }
+
+    function getAll() {
+        let fd = new FormData()
+        fd.append('status', 1)
+        axiosClient.post('/getLearnings', fd)
+            .then(({ data }) => {
+                setLearnings(data.learnings)
+                setLoading(false)
+            })
     }
 
 
@@ -92,7 +101,9 @@ export default function Pembelajaran() {
             {loading && <CircularIndeterminate />}
             {!loading && <Grid container direction={'row'}>
                 <Grid container md={2} sx={{ borderRight: '1px solid', minHeight: '700px', padding: '30px' }} direction={'column'}>
+                    <Grid onClick={() => getAll()} sx={{cursor: 'pointer'}}>
                     <h1>Kategori</h1>
+                    </Grid>
                     <Grid item>
                         {categories ? categories.map((c) => (
                             <ul style={{ cursor: 'pointer' }} >
@@ -124,11 +135,11 @@ export default function Pembelajaran() {
                     {/* Buttons */}
                     <Grid container direction={'row'} sx={{ justifyContent: 'space-between', paddingLeft: '30px', paddingRight: '30px' }}>
                         <Grid item>
-                            <Link to={'/pembelajaran/upload'}>
+                            {role !== 'admin' && <Link to={'/pembelajaran/upload'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                     Upload Pembelajaran
                                 </Button>
-                            </Link>
+                            </Link>}
                         </Grid>
                         {role !== 'user' && <Grid item>
                             <Link to={'/pembelajaran/approve'}>

@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('bank')->nullable();
             $table->integer('status')->default(0);
             $table->longText('deskripsi')->nullable();
+            $table->decimal('latitude',20,7)->nullable();
+            $table->decimal('longitude',20,7)->nullable();
             $table->timestamps();
         });
     }

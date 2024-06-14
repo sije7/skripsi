@@ -123,11 +123,11 @@ export default function Donasi() {
                     {/* Buttons */}
                     <Grid container direction={'row'} sx={{ justifyContent: 'space-between', paddingLeft: '30px', paddingRight: '30px' }}>
                         <Grid item>
-                            <Link to={'/donasi/request'}>
+                            {role !== 'admin' &&<Link to={'/donasi/request'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                     Request Donasi
                                 </Button>
-                            </Link>
+                            </Link>}
                         </Grid>
                         {role !== 'user' && <Grid item>
                             <Link to={'/donasi/approve'}>

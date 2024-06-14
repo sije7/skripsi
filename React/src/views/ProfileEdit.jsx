@@ -120,8 +120,9 @@ export default function Profile() {
                         variant="contained"
                         color="primary"
                         startIcon={<ArrowBackIcon />}
+                        style={{backgroundColor:'#66AB92'}}
                         loading
-                        onClick={() => navigate('/')}>
+                        onClick={() => navigate('/profile')}>
                         Back
                     </Button>
                 </Link>
@@ -272,7 +273,7 @@ export default function Profile() {
                                 )
                                 }
                                 <Box mt={2}>
-                                    <Button type="submit" variant="contained" color="primary" fullWidth>Save Data</Button>
+                                    <Button style={{backgroundColor:'#66AB92'}} type="submit" variant="contained" color="primary" fullWidth>Save Data</Button>
                                 </Box>
                             </form>
                         </Grid>

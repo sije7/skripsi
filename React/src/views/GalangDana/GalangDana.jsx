@@ -90,11 +90,11 @@ export default function GalangDana() {
                         <Grid container direction={'row'} xs={6} md={12} spacing={3}>
                             <Grid container xs={12} md={6} spacing={3}>
                                 <Grid item sx={{ marginTop: '20px' }}>
-                                    <Link to='/galangdana/request'>
+                                    {role !== 'admin' && <Link to='/galangdana/request'>
                                         <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                             Request Galang Dana
                                         </Button>
-                                    </Link>
+                                    </Link>}
                                 </Grid>
                             </Grid>
                             <Grid container xs={12} md={6} sx={{ justifyContent: 'right' }} spacing={3}>

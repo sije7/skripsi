@@ -1,9 +1,10 @@
-import { Box, Button, Grid, Snackbar } from "@mui/material";
+import { Box, Button, Grid, Snackbar, TextField } from "@mui/material";
 import CardGalangDana from "../../components/GalangDana/CardGalangDana";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axios-client";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function ApproveGalangDana() {
 
@@ -30,6 +31,7 @@ export default function ApproveGalangDana() {
 
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         setLoading(true)
@@ -71,15 +73,28 @@ export default function ApproveGalangDana() {
             {loading && <CircularIndeterminate />}
             {!loading && <Grid container sx={{ direction: 'row', padding: '10px' }}>
                 {/* Grid Content */}
-                <Grid item xs={6} md={12} sx={{ direction: 'column', padding: '20px' }} >
+                <Grid item xs={6} md={12} sx={{ padding: '20px' }} >
                     {/* Header Content */}
-                    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <h1>Approve Request Galang Dana</h1>
+                    <Grid container direction={'row'}>
+                        <Grid item xs={10} md={10} sx={{ display: 'flex', justifyContent: 'center', paddingLeft:'19%' }}>
+                            <h1>Approve Galang Dana</h1>
+                        </Grid>
+                        <Grid item xs={12} md={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            
+                            <TextField
+                                value={search}
+                                onChange={event => setSearch(event.target.value)}
+                                style={{ width:'320px'}}
+                                label="Search..."
+                                size="small"
+                            />
+                            <SearchIcon style={{height:'40px', width:'40px'}}/>
+                        </Grid>
                     </Grid>
-                    <Grid item sx={{ direction: 'row' }}>
-                        <Grid container direction={'row'} xs={12}  spacing={3}>
+                    <Grid item sx={{marginTop:'20px'}}>
+                        <Grid container direction={'row'} xs={6} md={12} spacing={3}>
                             <Grid container xs={12} md={6} spacing={3}>
-                                <Grid item>
+                                <Grid item sx={{ marginTop: '20px' }}>
                                     <Link to='/galangdana'>
                                         <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                             Galang Dana
@@ -87,11 +102,14 @@ export default function ApproveGalangDana() {
                                     </Link>
                                 </Grid>
                             </Grid>
+                            
                         </Grid>
                     </Grid>
                     {/* Content*/}
                     <Grid container spacing={5} direction='row' sx={{ padding: '30px' }}>
-                        {crowdfunding.map(cr => (
+                        {crowdfunding.filter((cr)=>{
+                            return search.toLowerCase() === '' ? cr : cr.title.toLowerCase().includes(search) || cr.username.toLowerCase().includes(search)
+                        }).map(cr => (
                             <Grid item>
                                 <CardGalangDana
                                     key={cr.id}
@@ -99,7 +117,7 @@ export default function ApproveGalangDana() {
                                     title={cr.title}
                                     image={cr.image}
                                     progress={cr.progress}
-                                    fund = {null}
+                                    fund={null}
                                     target={cr.target ? cr.target.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : cr.target}
                                     deadline={cr.deadline}
                                     username={cr.username}

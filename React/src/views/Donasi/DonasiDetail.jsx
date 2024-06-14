@@ -52,6 +52,25 @@ export default function DonasiDetail() {
             })
     }, [])
 
+    useEffect(() => {
+        if(role !== 'admin'){
+            if(detail.status !== 3){
+                if(role === 'user'){
+                    return navigate('/')
+                }
+                if(detail.status === 2){
+                    if(role === 'lembaga'){
+                        if(detail.user_id !== userId){
+                            return('/')
+                        }
+                    }
+                }
+            }
+        }
+      
+    }, [userId])
+    
+
     function removeDuplicates(arr) {
         return [...new Set(arr)];
     }
@@ -127,6 +146,9 @@ export default function DonasiDetail() {
             />}
             {!loading &&
                 <Grid>
+                    <Button variant="contained" sx={{ width: '100px', marginLeft: "30px", backgroundColor: '#66AB92'}} onClick={() => navigate(-1)}>
+                        Back
+                    </Button>
                     <Grid container direction={'row'} sx={{ padding: '100px', paddingBottom: '0' }}>
                         <Grid container md={6} xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                             <Box
@@ -185,13 +207,104 @@ export default function DonasiDetail() {
                         {/* Right */}
                         <Grid container xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'self-end' }}>
                             <Grid item >
-                                <Card sx={{ width: '550px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+                                {role !== 'admin' &&
+                                    <Card sx={{ width: '550px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+                                        <Grid container direction={'column'} sx={{ minHeight: '100px' }}>
+                                            <CardContent>
+                                                <Grid item sx={{ textAlign: 'center' }}>
+                                                    <h2>Progress Donasi</h2>
+                                                </Grid>
+                                                {userId !== detail.user_id && detail.status !== 3 && progressDonation ? progressDonation.map((pd, i) => (
+                                                    <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+                                                        <Checkbox
+                                                            checked={pd.status}
+                                                            color="secondary"
+                                                            onChange={() => { onChangeCheckbox(pd, i) }}
+                                                            disabled
+                                                        />
+                                                        <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
+                                                    </Grid>
+                                                )) : ''}
+                                                {userId !== detail.user_id && detail.status === 3 && progressDonation ? progressDonation.map((pd, i) => (
+                                                    <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+                                                        <Checkbox
+                                                            checked={pd.status}
+                                                            color="secondary"
+                                                            onChange={() => { onChangeCheckbox(pd, i) }}
+                                                            disabled
+                                                        />
+                                                        <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
+                                                    </Grid>
+                                                )) : ''}
+                                                {userId === detail.user_id && detail.status === 3 && progressDonation ? progressDonation.map((pd, i) => (
+                                                    <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+                                                        <Checkbox
+                                                            checked={pd.status}
+                                                            color="secondary"
+                                                            onChange={() => { onChangeCheckbox(pd, i) }}
+                                                        />
+                                                        <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
+                                                    </Grid>
+
+                                                )) : ''}
+                                                {userId === detail.user_id && detail.status === 3 &&
+                                                    <Grid item sx={{ display: 'flex', justifyContent: 'right' }}>
+                                                        <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92' }} onClick={onUpdate}>
+                                                            Update Progress Donasi
+                                                            {/* <EditIcon /> */}
+                                                        </Button>
+                                                    </Grid>
+                                                }
+                                            </CardContent>
+                                        </Grid>
+                                    </Card>}
+                                {role === 'admin' &&
+                                    <Card sx={{ width: '550px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+                                        <Grid container direction={'column'} sx={{ minHeight: '100px' }}>
+                                            <CardContent>
+                                                <Grid item sx={{ textAlign: 'center' }}>
+                                                    <h2>Progress Donasi</h2>
+                                                </Grid>
+                                                {detail.status !== 3 && progressDonation ? progressDonation.map((pd, i) => (
+                                                    <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+                                                        <Checkbox
+                                                            checked={pd.status}
+                                                            color="secondary"
+                                                            onChange={() => { onChangeCheckbox(pd, i) }}
+                                                            disabled
+                                                        />
+                                                        <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
+                                                    </Grid>
+                                                )) : ''}
+                                                {detail.status === 3 && progressDonation ? progressDonation.map((pd, i) => (
+                                                    <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+                                                        <Checkbox
+                                                            checked={pd.status}
+                                                            color="secondary"
+                                                            onChange={() => { onChangeCheckbox(pd, i) }}
+                                                        />
+                                                        <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
+                                                    </Grid>
+
+                                                )) : ''}
+                                                {detail.status === 3 &&
+                                                    <Grid item sx={{ display: 'flex', justifyContent: 'right' }}>
+                                                        <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92' }} onClick={onUpdate}>
+                                                            Update Progress Donasi
+                                                            {/* <EditIcon /> */}
+                                                        </Button>
+                                                    </Grid>
+                                                }
+                                            </CardContent>
+                                        </Grid>
+                                    </Card>}
+                                {/* <Card sx={{ width: '550px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
                                     <Grid container direction={'column'} sx={{ minHeight: '100px' }}>
                                         <CardContent>
                                             <Grid item sx={{ textAlign: 'center' }}>
                                                 <h2>Progress Donasi</h2>
                                             </Grid>
-                                            {userId !== detail.user_id || detail.status !== 3 && progressDonation ? progressDonation.map((pd, i) => (
+                                            {userId !== detail.user_id && role !== 'admin' || detail.status !== 3 && role !== 'admin' && progressDonation ? progressDonation.map((pd, i) => (
                                                 <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
                                                     <Checkbox
                                                         checked={pd.status}
@@ -211,23 +324,20 @@ export default function DonasiDetail() {
                                                     />
                                                     <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
                                                 </Grid>
-
                                             )) : ''}
-                                            {userId === detail.user_id && detail.status === 3 &&
+                                            {userId === detail.user_id && detail.status === 3 || role === 'admin' &&
                                                 <Grid item sx={{ display: 'flex', justifyContent: 'right' }}>
                                                     <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92' }} onClick={onUpdate}>
                                                         Update Progress Donasi
-                                                        {/* <EditIcon /> */}
                                                     </Button>
                                                 </Grid>
                                             }
                                         </CardContent>
-
                                     </Grid>
-                                </Card>
+                                </Card> */}
                                 <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
-                                        {detail.status !== 3  && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
+                                        {detail.status !== 3 && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
                                             Reject Donasi
                                             {/* <EditIcon /> */}
                                         </Button>}

@@ -7,7 +7,7 @@ import 'react-slideshow-image/dist/styles.css';
 import { Fade, Zoom, Slide } from 'react-slideshow-image';
 import Footer from '../components/Footer';
 import axiosClient from '../axios-client';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from '@mui/material/Card';
 import BanjirBandang from '../assets/Beranda/BanjirBandang.jpg'
 import BanjirBandang2 from '../assets/Beranda/BanjirBandang2.jpg'
@@ -30,7 +30,12 @@ export default function Beranda() {
     const [loading, setLoading] = useState(false);
     const [statusRequest] = useState([1]);
     const [role, setRole] = useState('');
+    const [donations, setDonations] = useState([])
+    const [donation1, setDonation1] = useState({})
+    const [donation2, setDonation2] = useState({})
+    const [donation3, setDonation3] = useState({})
     // const [activeStep, setActiveStep] = useState(0);
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true)
@@ -38,7 +43,19 @@ export default function Beranda() {
         axiosClient.get('/user')
             .then(({ data }) => {
                 setRole(data.role);
-                setLoading(false);
+            })
+
+        let formData = new FormData()
+        formData.append('status', 3)
+
+        axiosClient.post('/donations', formData)
+            .then(({ data }) => {
+                let len = data.donations.length
+                setDonation1(data.donations[len - 1])
+                setDonation2(data.donations[len - 2])
+                setDonation3(data.donations[len - 3])
+                setDonations(data.donations)
+                setLoading(false)
             })
 
         const fd = new FormData()
@@ -240,14 +257,94 @@ export default function Beranda() {
                         </Fade>
                     </div>
                 </div >
-               
+
                 {/* Bagian Donasi Terkini */}
-                <Grid sx={{ justifyItems: 'start', padding:'50px', paddingLeft:'200px' }}>
+                <Grid sx={{ justifyItems: 'start', padding: '50px', paddingLeft: '200px' }}>
                     <Typography variant="h5" align="left"><b>Donasi Terkini</b></Typography>
                 </Grid>
-                {processedNonSlide}
+                {/* {processedNonSlide} */}
+                {donation1 &&<Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
+                    <Grid item xs={12} md={4}>
+                        <Box
+                            component="img"
+                            sx={{
+                                height: 300,
+                                width: '100%',
+                                boxShadow: '20px 20px'
+                            }}
+                            src={`http://localhost:8000${donation1.image}`}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <h1>{donation1.title}</h1>
+                        <p style={{ marginTop: '30px', fontSize: '16px' }}>{donation1.description}</p>
+                        <Grid item sx={{display:'flex',justifyContent:'right', marginTop:'20px'}}>
+                            <Button
+                                variant="contained"
+                                color="warning" 
+                                onClick={()=>navigate(`/donasi/${donation1.id}`)}>
+                                Donation
+                            </Button>
+                        </Grid>
+                        {/* <p style={{ fontWeight: 'bold', fontSize: '16px', marginTop: '10px' }}>Ingatlah, upaya bersama kita dapat menyembuhkan dan memulihkan. Mari berdiri bersatu, saling mendukung melalui badai kehidupan.</p> */}
+                    </Grid>
+                </Grid>}
+
+                {donation2 && <Grid rowSpacing={{xs: 6}} container sx={{justifyContent:'space-evenly', paddingBottom: '100px'  }}>
+                <Grid item xs={12} md={4}>
+                    <h1>{donation2.title}</h1>
+                    <p style={{marginTop:'30px', fontSize:'16px'}}>{donation2.description}</p>
+                    <Grid item sx={{display:'flex',justifyContent:'left', marginTop:'20px'}}>
+                            <Button
+                                variant="contained"
+                                color="warning"
+                                onClick={()=>navigate(`/donasi/${donation2.id}`)}>
+                                Donation
+                            </Button>
+                        </Grid>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <Box
+                        component="img"
+                        sx={{
+                            height: 300,
+                            width: '100%',
+                            minWidth: '400px',
+                            boxShadow: '20px 20px'
+                        }}
+                        src={`http://localhost:8000${donation2.image}`}
+                    />
+                </Grid>
+            </Grid>}
+
+                {donation3 && <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '20px' }}>
+                    <Grid item xs={12} md={4}>
+                        <Box
+                            component="img"
+                            sx={{
+                                height: 300,
+                                width: '100%',
+                                boxShadow: '20px 20px'
+                            }}
+                            src={`http://localhost:8000${donation3.image}`}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <h1>{donation3.title}</h1>
+                        <p style={{ marginTop: '30px', fontSize: '16px' }}>{donation3.description}</p>
+                        <Grid item sx={{display:'flex',justifyContent:'right', marginTop:'20px'}}>
+                            <Button
+                                variant="contained"
+                                color="warning"
+                                onClick={()=>navigate(`/donasi/${donation3.id}`)}>
+                                Donation
+                            </Button>
+                        </Grid>
+                        {/* <p style={{ fontWeight: 'bold', fontSize: '16px', marginTop: '10px' }}>Ingatlah, upaya bersama kita dapat menyembuhkan dan memulihkan. Mari berdiri bersatu, saling mendukung melalui badai kehidupan.</p> */}
+                    </Grid>
+                </Grid>}
                 <Box mt={6} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Link to=''>
+                    <Link to='/donasi'>
                         <Button
                             variant="contained"
                             color="warning"
@@ -269,7 +366,7 @@ export default function Beranda() {
                         <p style={{ margin: 0, fontSize: '12px' }}><b>HAL YANG MULIA</b></p>
                     </div>
                 </Box>
-                
+
                 <Grid container spacing={2} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Grid item xs={12} md={1.5} sx={{ marginTop: "30px" }}>
                         {PictDown({ picture: I1 })}
@@ -323,7 +420,7 @@ export default function Beranda() {
                 <br />
                 <br />
                 <br />
-
+                {/* <Geolocation /> */}
                 {/* <Footer /> */}
             </div>}
         </>

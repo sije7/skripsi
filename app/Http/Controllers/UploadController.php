@@ -11,6 +11,7 @@ use App\Models\Subcategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class UploadController extends Controller
 {
@@ -56,8 +57,8 @@ class UploadController extends Controller
     {
         $learnings = Upload::where('status', $request->status)->get();
         foreach ($learnings as $l) {
-            $l->username = User::find($l->user_id)->value('name');
-            $l->sub_category = LearningSubcategory::find($l->subcategory_id)->value('name');
+            $l->username = DB::table('users')->where('id',$l->user_id)->value('name');
+            $l->sub_category = DB::table('learning_sub_categories')->where('id',$l->subcategory_id)->value('name');
         }
         return compact('learnings');
     }
@@ -69,26 +70,26 @@ class UploadController extends Controller
     }
 
     public function getLearningByCategory(Request $request){
-        $sub_categories = Subcategory::where('category_id', $request->id)->get();
+        $sub_categories = LearningSubcategory::where('category_id', $request->id)->get();
         $ids = array();
         foreach($sub_categories as $s){
             array_push($ids, $s->id);
         }
         
-        $learnings = Upload::where('status', 1)->where('subcategory_id',$ids)->get();
+        $learnings = Upload::whereIn('subcategory_id',$ids)->where('status',$request->status)->get();
         foreach ($learnings as $l) {
-            $l->username = User::find($l->user_id)->value('name');
-            $l->sub_category = LearningSubcategory::find($l->subcategory_id)->value('name');
+            $l->username = DB::table('users')->where('id',$l->user_id)->value('name');
+            $l->sub_category = DB::table('learning_sub_categories')->where('id',$l->subcategory_id)->value('name');
         }
-        return compact('learnings');
+        return compact('learnings','sub_categories');
     }
 
     public function getLearningBySubCategory(Request $request){
         
-        $learnings = Upload::where('status', 1)->where('subcategory_id',$request->id)->get();
+        $learnings = Upload::where('subcategory_id',$request->id)->where('status', $request->status)->get();
         foreach ($learnings as $l) {
-            $l->username = User::find($l->user_id)->value('name');
-            $l->sub_category = LearningSubcategory::find($l->subcategory_id)->value('name');
+            $l->username = DB::table('users')->where('id',$l->user_id)->value('name');
+            $l->sub_category = DB::table('learning_sub_categories')->where('id',$l->subcategory_id)->value('name');
         }
         return compact('learnings');
     }

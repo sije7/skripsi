@@ -51,6 +51,8 @@ class AuthController extends Controller
             'bank' => $data['bank'],
             'status' => 0,
             'deskripsi'=> $data['deskripsi'],
+            'latitude'=>$data['latitude'],
+            'longitude'=>$data['longitude'],
         ]);
 
         $token = $user->createToken('main')->plainTextToken;

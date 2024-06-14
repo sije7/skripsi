@@ -21,9 +21,15 @@ export default function PaymentGalangDana() {
   const [errorDana, seterrorDana] = useState('')
 
   useEffect(() => {
+    if(location.state === null){
+      return navigate('/')
+    }
 
     axiosClient.get('/user')
       .then(({ data }) => {
+        if(data.role === 'admin'){
+          return navigate('/')
+        }
         setUsername(data.name)
         setuserId(data.id)
       })
@@ -169,10 +175,11 @@ export default function PaymentGalangDana() {
               />
             </FormControl>
           </Grid>
+          {errorDana ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorDana}</small> : ""}
           <Grid item>
 
             <Button onClick={onSubmit} variant="contained" style={{ backgroundColor: '#66AB92' }}>
-              Melakukan Pembayaran
+              Kirim Bukti Pembayaran
             </Button>
           </Grid>
         </Grid>

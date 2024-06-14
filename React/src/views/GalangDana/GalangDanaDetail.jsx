@@ -21,10 +21,23 @@ export default function GalangDanaDetail() {
 
         axiosClient.get(`/crowdfunding/${id.id}`)
             .then(({ data }) => {
+                if(data.crowdfunding === null){
+                    return navigate('/')
+                }
                 setDetail(data.crowdfunding)
                 setLoading(false)
             })
+            .catch((err)=>{
+                return navigate('/')
+            })
     }, [])
+
+    useEffect(() => {
+      if(detail.status === 0 && role !== 'admin'){
+        return navigate('/')
+      }
+    }, [detail])
+    
 
     let image = `http://localhost:8000${detail.image}`
 
@@ -47,9 +60,13 @@ export default function GalangDanaDetail() {
         <>
             {loading && <CircularIndeterminate />}
             {!loading && <Grid>
-                <Grid container direction={'row'} sx={{ padding: '100px', paddingBottom: '0' }}>
+                <Button variant="contained" sx={{width:'100px', marginLeft:"30px", backgroundColor: '#66AB92'}} onClick={()=>navigate(-1)}>
+                    Back
+                </Button>
+                <Grid container direction={'row'} sx={{ padding: '100px', paddingBottom: '0', paddingTop:'50px' }}>
                     {/* {Left Side} */}
-                    <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    
+                    <Grid item xs={12} md={6} sx={{ }}>
                         <Box
                             component="img"
                             sx={{
@@ -116,7 +133,7 @@ export default function GalangDanaDetail() {
                     {/* Right */}
                     <Grid container xs={12} md={4} sx={{ display: 'flex', justifyContent: 'right', alignItems: 'self-end' }}>
                         <Grid item >
-                            {detail.status === 1 &&
+                            {detail.status === 1 && role!== 'admin' &&
                                 <Link to='/galangdana/payment' state={{ detail: detail }}>
                                     <Button variant="contained" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px', fontSize: '18px' }}>
                                         Beri Bantuan
