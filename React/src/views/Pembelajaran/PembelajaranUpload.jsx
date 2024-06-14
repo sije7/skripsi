@@ -101,6 +101,7 @@ export default function UploadLearning() {
 
 
     const onSubmit = () => {
+        setLoading(true)
         let formData = new FormData();
         formData.append('Judul', judul)
         formData.append('JudulKonten', judulDeskripsi)
@@ -115,6 +116,7 @@ export default function UploadLearning() {
         axiosClient.post('/uploads', formData)
             .then((res) => {
                 return navigate('/pembelajaran', { state: { message: res.data } })
+
             }).catch((error) => {
                 const response = error.response.data.errors
                 setErrorJudul('')
@@ -134,9 +136,9 @@ export default function UploadLearning() {
                 response.Video ? setErrorVideo(response.Video) : ""
                 response.JenisPembelajaran ? setErrorJenisPembelajaran(response.JenisPembelajaran) : ""
                 response.TipePembelajaran ? setErrorTipePembelajaran(response.TipePembelajaran) : ""
+                setLoading(false)
 
             })
-
 
     }
 

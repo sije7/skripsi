@@ -57,6 +57,7 @@ export default function Profile() {
                         variant="contained"
                         color="primary"
                         startIcon={<ArrowBackIcon />}
+                        style={{backgroundColor:'#66AB92'}}
                         loading
                         // fullWidth
                         onClick={() => navigate(-1)}>
@@ -135,6 +136,7 @@ export default function Profile() {
                                         color="primary"
                                         loading
                                         fullWidth
+                                        style={{backgroundColor:'#66AB92'}}
                                         onClick={() => navigate('/')}>
                                         Edit Profile
                                     </Button>

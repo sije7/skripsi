@@ -21,10 +21,23 @@ export default function GalangDanaDetail() {
 
         axiosClient.get(`/crowdfunding/${id.id}`)
             .then(({ data }) => {
+                if(data.crowdfunding === null){
+                    return navigate('/')
+                }
                 setDetail(data.crowdfunding)
                 setLoading(false)
             })
+            .catch((err)=>{
+                return navigate('/')
+            })
     }, [])
+
+    useEffect(() => {
+      if(detail.status === 0 && role !== 'admin'){
+        return navigate('/')
+      }
+    }, [detail])
+    
 
     let image = `http://localhost:8000${detail.image}`
 
@@ -47,7 +60,7 @@ export default function GalangDanaDetail() {
         <>
             {loading && <CircularIndeterminate />}
             {!loading && <Grid>
-                <Button variant="contained" sx={{width:'100px', marginLeft:"30px", backgroundColor: '#FFD438', color:'black'}} onClick={()=>navigate(-1)}>
+                <Button variant="contained" sx={{width:'100px', marginLeft:"30px", backgroundColor: '#66AB92'}} onClick={()=>navigate(-1)}>
                     Back
                 </Button>
                 <Grid container direction={'row'} sx={{ padding: '100px', paddingBottom: '0', paddingTop:'50px' }}>

@@ -323,26 +323,7 @@ export default function RequestDonasi() {
                         />
                     </Grid>
                     {errorLokasi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorLokasi}</small> : ""}
-                    <Grid item>
-                        <p style={{ fontWeight: 'lighter' }}>Upload Gambar</p>
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            tabIndex={-1}
-                            startIcon={<CloudUploadIcon />}
-                        >
-                            Upload file
-                            <VisuallyHiddenInput type="file" onChange={handleImage} />
-                        </Button>
 
-                    </Grid>
-                    {errorGambar ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorGambar}</small> : ""}
-                    {preview ? (
-                        <Grid item>
-                            <img src={preview} style={{ width: '100px', height: '100px' }}></img>
-                        </Grid>
-                    ) : " "}
                     <Grid item>
                         <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">Lembaga</InputLabel>
@@ -355,7 +336,8 @@ export default function RequestDonasi() {
                                 style={{ width: '50%' }}
                             >
                                 {lembaga.map((lembaga) => (
-                                    <MenuItem onClick={() => onChooseLembaga(lembaga)} value={lembaga.id}>{lembaga.name} {lembaga.distance}km</MenuItem>
+                                    
+                                    <MenuItem onClick={() => onChooseLembaga(lembaga)} value={lembaga.id}>{lembaga.name} {lembaga.distance ?lembaga.distance+ ' km' : ''}</MenuItem>
 
                                 ))}
 
@@ -389,7 +371,28 @@ export default function RequestDonasi() {
                 </Grid>
 
                 {/* Right */}
+
                 <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
+                    <Grid item>
+                        <p style={{ fontWeight: 'lighter' }}>Upload Gambar</p>
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            tabIndex={-1}
+                            startIcon={<CloudUploadIcon />}
+                        >
+                            Upload file
+                            <VisuallyHiddenInput type="file" onChange={handleImage} />
+                        </Button>
+
+                    </Grid>
+                    {errorGambar ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorGambar}</small> : ""}
+                    {preview ? (
+                        <Grid item>
+                            <img src={preview} style={{ width: '100px', height: '100px' }}></img>
+                        </Grid>
+                    ) : " "}
                     <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
                         <Grid item >
                             <p style={{ fontWeight: 'lighter' }}>Tanggal Penyaluran Bantuan </p>

@@ -78,19 +78,19 @@ class ProgressDonationSeeder extends Seeder
         DB::table('progress_donations')->insert([
             'item_id'=>2,
             'status'=>0,
-            'donation_id'=>4,
+            'donation_id'=>3,
             'quantity'=>50
         ]);
         DB::table('progress_donations')->insert([
             'item_id'=>2,
             'status'=>0,
-            'donation_id'=>4,
+            'donation_id'=>2,
             'quantity'=>30
         ]);
         DB::table('progress_donations')->insert([
             'item_id'=>2,
             'status'=>0,
-            'donation_id'=>4,
+            'donation_id'=>3,
             'quantity'=>10
         ]);
     }

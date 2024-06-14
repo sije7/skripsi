@@ -1,7 +1,7 @@
 import { Button, Grid, Snackbar, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axiosClient from "../../axios-client";
 import CardPembelajaran from "../../components/CardPembelajaran/CardPembelajaran";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
@@ -29,11 +29,15 @@ export default function PembelajaranApprove() {
     };
 
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true)
         axiosClient.get('/user')
             .then((res) => {
+                if(res.data.role !== 'admin'){
+                    return navigate('/')
+                }
                 setRole(res.data.role)
             })
         location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
@@ -66,7 +70,6 @@ export default function PembelajaranApprove() {
     }
     function getByCategory(id) {
         let fd = new FormData()
-        console.log(id)
         fd.append('id', id)
         fd.append('status', 0)
         axiosClient.post('/getLearningByCategory', fd)
@@ -74,6 +77,17 @@ export default function PembelajaranApprove() {
                 setLearnings(data.learnings)
             })
 
+    }
+
+    
+    function getAll() {
+        let fd = new FormData()
+        fd.append('status', 0)
+        axiosClient.post('/getLearnings', fd)
+            .then(({ data }) => {
+                setLearnings(data.learnings)
+                setLoading(false)
+            })
     }
 
 
@@ -92,7 +106,9 @@ export default function PembelajaranApprove() {
             {loading && <CircularIndeterminate />}
             {!loading && <Grid container direction={'row'}>
                 <Grid container md={2} sx={{ borderRight: '1px solid', minHeight: '700px', padding: '30px' }} direction={'column'}>
+                <Grid onClick={() => getAll()} sx={{cursor: 'pointer'}}>
                     <h1>Kategori</h1>
+                    </Grid>
                     <Grid item>
                         {categories ? categories.map((c) => (
                             <ul style={{ cursor: 'pointer' }} >
