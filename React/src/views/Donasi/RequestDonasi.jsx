@@ -354,12 +354,12 @@ export default function RequestDonasi() {
                             />
                             {location.lat && location.lon && (
                                 <Marker position={[location.lat, location.lon]}>
-                                    <Popup>Your Location</Popup>
+                                    <Popup>Lokasi User</Popup>
                                 </Marker>
                             )}
                             {selectedDestinationLat && selectedDestinationLon && (
                                 <Marker position={[selectedDestinationLat, selectedDestinationLon]}>
-                                    <Popup>Hehe</Popup>
+                                    <Popup>Lokasi Lembaga</Popup>
                                     {/* <Popup>{destinationName}</Popup> */}
                                 </Marker>
                             )}

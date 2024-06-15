@@ -46,6 +46,8 @@ class DonationController extends Controller
         $donation = DB::table('donations')->where('id', '=', $id)->first();
         $donation->progress_donation = DB::table('progress_donations')->where('donation_id', '=', $donation->id)->get();
         $donation->username = DB::table('users')->where('id', '=', $donation->user_id)->value('name');
+        $donation->latitude = DB::table('users')->where('id', '=', $donation->user_id)->value('latitude');
+        $donation->longitude = DB::table('users')->where('id', '=', $donation->user_id)->value('longitude');
         $progress_tracker = 0;
         $progress_count = 0;
         foreach ($donation->progress_donation as $pd) {
@@ -61,6 +63,7 @@ class DonationController extends Controller
         if ($donation->progress > 100) {
             $donation->progress = 100;
         }
+        
         return compact('donation');
     }
 
