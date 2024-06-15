@@ -223,4 +223,112 @@ class DonationController extends Controller
         }
         return compact('donations');
     }
+
+    public function getDonationsAsLembaga(Request $request){
+        $donations = DB::table('donations')->where('status', 2)->where('user_id',$request->id)->get();
+        foreach ($donations as $d) {
+            $d->progress_donation = DB::table('progress_donations')->where('donation_id', '=', $d->id)->get();
+            $d->username = DB::table('users')->where('id', '=', $d->user_id)->value('name');
+            $progress_tracker = 0;
+            $progress_count = 0;
+            foreach ($d->progress_donation as $pd) {
+                $pd->item = DB::table('items')->where('id', '=', $pd->item_id)->get(['name', 'currency', 'subcategory_id'])->first();
+                $d->sub_category[$progress_count] = DB::table('subcategories')->where('id', '=', $pd->item->subcategory_id)->value('name');
+                if ($pd->status === 1) {
+                    $progress_tracker++;
+                }
+                $progress_count++;
+            }
+            $d->progress = $progress_tracker * 100 / $progress_count;
+            $d->progress = round($d->progress, 2);
+            if ($d->progress > 100) {
+                $d->progress = 100;
+            }
+        }
+        return compact('donations');
+    }
+
+    public function getDonationBySubCategoryAsLembaga(Request $request){
+        $arrayIdDonation = array();
+        $arrayIdItems = array();
+        $item = Item::where('subcategory_id','=',$request->id)->get();
+        foreach($item as $i){
+            array_push($arrayIdItems,$i->id);   
+        }
+        error_log($item[0]->subcategory_id);
+        $progress = DB::table('progress_donations')->whereIn('item_id',$arrayIdItems)->get();
+        foreach($progress as $p){
+            if(!in_array($p->donation_id,$arrayIdDonation)){
+                array_push($arrayIdDonation, $p->donation_id);
+            }
+        }
+        $donations = DB::table('donations')->where('status', 2)->where('user_id',$request->user_id)->get();
+        // $donations = DB::table('donations')->where('status', '=', $request->status)->whereIn('id',$arrayIdDonation)->get();
+        foreach ($donations as $d) {
+            $d->progress_donation = DB::table('progress_donations')->where('donation_id', '=', $d->id)->get();
+            $d->username = DB::table('users')->where('id', '=', $d->user_id)->value('name');
+            $progress_tracker = 0;
+            $progress_count = 0;
+            foreach ($d->progress_donation as $pd) {
+                $pd->item = DB::table('items')->where('id', '=', $pd->item_id)->get(['name', 'currency', 'subcategory_id'])->first();
+                $d->sub_category[$progress_count] = DB::table('subcategories')->where('id', '=', $pd->item->subcategory_id)->value('name');
+                if ($pd->status === 1) {
+                    $progress_tracker++;
+                }
+                $progress_count++;
+            }
+            $d->progress = $progress_tracker * 100 / $progress_count;
+            $d->progress = round($d->progress, 2);
+            if ($d->progress > 100) {
+                $d->progress = 100;
+            }
+        }
+        return compact('donations');
+    }
+
+    public function getDonationByCategoryAsLembaga(Request $request){
+        $arrayIdDonation = array();
+        $arrayIdItems = array();
+        $arrayIdSubCategories = array();
+
+        $subcategories = DB::table('subcategories')->where('category_id','=',$request->user_id)->get();
+        foreach($subcategories as $s){
+            array_push($arrayIdSubCategories, $s->id);
+        }
+        error_log($arrayIdSubCategories[0]);
+        $item = DB::table('items')->whereIn('subcategory_id',$arrayIdSubCategories)->get();
+        foreach($item as $i){
+            array_push($arrayIdItems,$i->id);   
+        }
+        // error_log($arrayIdItems[0]->id);
+        $progress = DB::table('progress_donations')->whereIn('item_id',$arrayIdItems)->get();
+        foreach($progress as $p){
+            if(!in_array($p->donation_id,$arrayIdDonation)){
+                array_push($arrayIdDonation, $p->donation_id);
+            }
+        }
+        // error_log($arrayIdDonation[0]->id);
+        $donations = DB::table('donations')->where('status', 2)->where('user_id',$request->id)->get();
+        // $donations = DB::table('donations')->where('status', '=', $request->status)->whereIn('id',$arrayIdDonation)->get();
+        foreach ($donations as $d) {
+            $d->progress_donation = DB::table('progress_donations')->where('donation_id', '=', $d->id)->get();
+            $d->username = DB::table('users')->where('id', '=', $d->user_id)->value('name');
+            $progress_tracker = 0;
+            $progress_count = 0;
+            foreach ($d->progress_donation as $pd) {
+                $pd->item = DB::table('items')->where('id', '=', $pd->item_id)->get(['name', 'currency', 'subcategory_id'])->first();
+                $d->sub_category[$progress_count] = DB::table('subcategories')->where('id', '=', $pd->item->subcategory_id)->value('name');
+                if ($pd->status === 1) {
+                    $progress_tracker++;
+                }
+                $progress_count++;
+            }
+            $d->progress = $progress_tracker * 100 / $progress_count;
+            $d->progress = round($d->progress, 2);
+            if ($d->progress > 100) {
+                $d->progress = 100;
+            }
+        }
+        return compact('donations');
+    }
 }

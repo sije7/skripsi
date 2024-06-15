@@ -39,11 +39,17 @@ export default function DonasiDetail() {
         setLoading(true)
         axiosClient.post(`/donation/${id.id}`)
             .then(({ data }) => {
+                if(data.donation === null){
+                    return navigate('/')
+                }
                 console.log(data.donation)
                 setDetail(data.donation)
                 setSubCategories(removeDuplicates(data.donation.sub_category))
                 setprogressDonation(data.donation.progress_donation)
                 setLoading(false)
+            })
+            .catch((err)=>{
+                return navigate('/')
             })
         axiosClient.get('/user')
             .then(({ data }) => {
@@ -116,7 +122,7 @@ export default function DonasiDetail() {
         fd.append('id', detail.id)
         axiosClient.post('/approveDonation', fd)
             .then((res) => {
-                return navigate('/donasi', { state: { message: res.data } })
+                return navigate('/donasi/approve', { state: { message: res.data } })
             })
 
     }
@@ -126,7 +132,7 @@ export default function DonasiDetail() {
         fd.append('id', detail.id)
         axiosClient.post('/rejectDonation', fd)
             .then((res) => {
-                return navigate('/donasi', { state: { message: res.data } })
+                return navigate('/donasi/approve', { state: { message: res.data } })
             })
 
     }
@@ -247,6 +253,18 @@ export default function DonasiDetail() {
                                                     </Grid>
 
                                                 )) : ''}
+                                                {userId === detail.user_id && detail.status !== 3 && progressDonation ? progressDonation.map((pd, i) => (
+                                                    <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+                                                        <Checkbox
+                                                            checked={pd.status}
+                                                            color="secondary"
+                                                            onChange={() => { onChangeCheckbox(pd, i) }}
+                                                            disabled
+                                                        />
+                                                        <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
+                                                    </Grid>
+
+                                                )) : ''}
                                                 {userId === detail.user_id && detail.status === 3 &&
                                                     <Grid item sx={{ display: 'flex', justifyContent: 'right' }}>
                                                         <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92' }} onClick={onUpdate}>
@@ -335,7 +353,7 @@ export default function DonasiDetail() {
                                         </CardContent>
                                     </Grid>
                                 </Card> */}
-                                <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                {role === 'admin' && <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
                                         {detail.status !== 3 && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
                                             Reject Donasi
@@ -348,8 +366,22 @@ export default function DonasiDetail() {
                                             {/* <EditIcon /> */}
                                         </Button>}
                                     </Grid>
+                                </Grid>}
+                                {role === 'lembaga' && <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
+                                        {detail.status === 2 && detail.user_id === userId && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
+                                            Reject Donasi
+                                            {/* <EditIcon /> */}
+                                        </Button>}
+                                    </Grid>
+                                    <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
+                                        {detail.status === 2 && detail.user_id === userId && <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px' }} onClick={onApprove}>
+                                            Approve Donasi
+                                            {/* <EditIcon /> */}
+                                        </Button>}
+                                    </Grid>
+                                </Grid>}
 
-                                </Grid>
 
 
                             </Grid>
