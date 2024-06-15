@@ -141,7 +141,7 @@ export default function Pembelajaran() {
                                 </Button>
                             </Link>}
                         </Grid>
-                        {role !== 'user' && <Grid item>
+                        {role === 'admin' && <Grid item>
                             <Link to={'/pembelajaran/approve'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
                                     Approve Pembelajaran

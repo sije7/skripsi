@@ -5,6 +5,8 @@ import { useEffect, useReducer, useState } from "react";
 import axiosClient from "../../axios-client";
 import { useNavigate, useParams } from "react-router-dom";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
+import { MapContainer, Marker, Polyline, Popup, TileLayer } from "react-leaflet";
+import { parse } from "date-fns";
 
 export default function DonasiDetail() {
 
@@ -27,6 +29,16 @@ export default function DonasiDetail() {
     const { vertical, horizontal } = stateSnackbar;
     const [open, setOpen] = useState(false);
 
+    const [location, setLocation] = useState({ lat: null, lon: null });
+    const [destination, setDestination] = useState({ lat: '', lon: '' }); // Destination input state
+    const [route, setRoute] = useState([]);
+    const [distance, setDistance] = useState(null);
+    const [deslat, setDeslat] = useState('')
+    const [deslon, setDeslon] = useState('')
+    // const [destinationName, setDestinationName] = useState("Enter coordinates to get name");
+    const [flag, setFlag] = useState(0)
+
+
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -36,40 +48,111 @@ export default function DonasiDetail() {
     };
 
     useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setLocation({
+                        lat: position.coords.latitude,
+                        lon: position.coords.longitude,
+                    })
+
+                },
+                (error) => {
+                    console.error("Error obtaining geolocation:", error);
+                    // Fallback ke lokasi manual jika geolocation gagal
+                    const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
+                    setLocation(jakartaCoords)
+                }
+            )
+        } else {
+            // Fallback ke lokasi manual jika geolocation tidak didukung
+            const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
+            setLocation(jakartaCoords);
+        }
+    }, [])
+
+    const handleCalculateDistance = async () => {
+        console.log('yes')
+        console.log(location.lat, location.lon , parseFloat(deslat), parseFloat(deslon))
+        if (location.lat !== null && location.lon !== null && deslat && deslon) {
+            const url = `http://router.project-osrm.org/route/v1/driving/${location.lon},${location.lat};${deslon},${deslat}?overview=full&geometries=geojson`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.routes && data.routes.length > 0) {
+                    const routeCoords = data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                    setRoute(routeCoords);
+                    setDistance(data.routes[0].distance / 1000); // distance in kilometers
+                } else {
+                    console.error("No route found or invalid response structure");
+                    setRoute([]);
+                    setDistance(null);
+                }
+            } catch (error) {
+                console.error("Error fetching route data:", error);
+                setRoute([]);
+                setDistance(null);
+            }
+        } else {
+            alert("Please enter valid coordinates for destination.");
+        }
+    };
+
+    useEffect(() => {
         setLoading(true)
         axiosClient.post(`/donation/${id.id}`)
             .then(({ data }) => {
-                console.log(data.donation)
+                if (data.donation === null) {
+                    return navigate('/')
+                }
+                // console.log(data.donation)
                 setDetail(data.donation)
                 setSubCategories(removeDuplicates(data.donation.sub_category))
                 setprogressDonation(data.donation.progress_donation)
+                setDeslat(data.donation.latitude)
+                setDeslon(data.donation.longitude)
                 setLoading(false)
             })
+            // .catch((err) => {
+            //     return navigate('/')
+            // })
         axiosClient.get('/user')
             .then(({ data }) => {
                 setRole(data.role)
                 setUserId(data.id)
             })
-    }, [])
+    }, [location])
 
     useEffect(() => {
-        if(role !== 'admin'){
-            if(detail.status !== 3){
-                if(role === 'user'){
+       
+        if (role !== 'admin') {
+            if (detail.status !== 3) {
+                if (role === 'user') {
                     return navigate('/')
                 }
-                if(detail.status === 2){
-                    if(role === 'lembaga'){
-                        if(detail.user_id !== userId){
-                            return('/')
+                if (detail.status === 2) {
+                    if (role === 'lembaga') {
+                        if (detail.user_id !== userId) {
+                            return ('/')
                         }
                     }
                 }
             }
         }
-      
-    }, [userId])
+        
+       
+
+    }, [location])
+
+    useEffect(() => {
+        if(deslat && deslon && location){
+            handleCalculateDistance()
+        }
+        
+    }, [deslat, deslon, location])
     
+
 
     function removeDuplicates(arr) {
         return [...new Set(arr)];
@@ -116,7 +199,7 @@ export default function DonasiDetail() {
         fd.append('id', detail.id)
         axiosClient.post('/approveDonation', fd)
             .then((res) => {
-                return navigate('/donasi', { state: { message: res.data } })
+                return navigate('/donasi/approve', { state: { message: res.data } })
             })
 
     }
@@ -126,14 +209,20 @@ export default function DonasiDetail() {
         fd.append('id', detail.id)
         axiosClient.post('/rejectDonation', fd)
             .then((res) => {
-                return navigate('/donasi', { state: { message: res.data } })
+                return navigate('/donasi/approve', { state: { message: res.data } })
             })
 
     }
 
+    // function onTest(){
+    //     console.log(deslat, deslon)
+    //     console.log(location)
+    // }
+
 
     return (
         <>
+        {/* <Button onClick={onTest}>Test</Button> */}
             {loading &&
                 <CircularIndeterminate />}
             {message && <Snackbar
@@ -146,7 +235,7 @@ export default function DonasiDetail() {
             />}
             {!loading &&
                 <Grid>
-                    <Button variant="contained" sx={{ width: '100px', marginLeft: "30px", backgroundColor: '#66AB92'}} onClick={() => navigate(-1)}>
+                    <Button variant="contained" sx={{ width: '100px', marginLeft: "30px", backgroundColor: '#66AB92' }} onClick={() => navigate(-1)}>
                         Back
                     </Button>
                     <Grid container direction={'row'} sx={{ padding: '100px', paddingBottom: '0' }}>
@@ -193,6 +282,27 @@ export default function DonasiDetail() {
                             </Grid>
                         </Grid>
 
+                    </Grid>
+                    <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px' }} spacing={1}>
+                        {location.lat && location.lon && (
+                            <MapContainer center={[location.lat, location.lon]} zoom={8} style={{ height: '300px', width: '100%' }}>
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                />
+                                {location.lat && location.lon && (
+                                    <Marker position={[location.lat, location.lon]}>
+                                        <Popup>Lokasi User</Popup>
+                                    </Marker>
+                                )}
+                                {deslat && deslon  && (
+                                    <Marker position={[deslat, deslon]}>
+                                        <Popup>Lokasi Lembaga</Popup>
+                                    </Marker>
+                                )}
+                                {route.length > 0 && <Polyline positions={route} color="blue" />}
+                            </MapContainer>
+                        )}
                     </Grid>
                     <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px' }} spacing={1}>
                         {/* {Left} */}
@@ -242,6 +352,18 @@ export default function DonasiDetail() {
                                                             checked={pd.status}
                                                             color="secondary"
                                                             onChange={() => { onChangeCheckbox(pd, i) }}
+                                                        />
+                                                        <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
+                                                    </Grid>
+
+                                                )) : ''}
+                                                {userId === detail.user_id && detail.status !== 3 && progressDonation ? progressDonation.map((pd, i) => (
+                                                    <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+                                                        <Checkbox
+                                                            checked={pd.status}
+                                                            color="secondary"
+                                                            onChange={() => { onChangeCheckbox(pd, i) }}
+                                                            disabled
                                                         />
                                                         <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
                                                     </Grid>
@@ -335,7 +457,7 @@ export default function DonasiDetail() {
                                         </CardContent>
                                     </Grid>
                                 </Card> */}
-                                <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                {role === 'admin' && <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
                                         {detail.status !== 3 && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
                                             Reject Donasi
@@ -348,8 +470,22 @@ export default function DonasiDetail() {
                                             {/* <EditIcon /> */}
                                         </Button>}
                                     </Grid>
+                                </Grid>}
+                                {role === 'lembaga' && <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
+                                        {detail.status === 2 && detail.user_id === userId && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
+                                            Reject Donasi
+                                            {/* <EditIcon /> */}
+                                        </Button>}
+                                    </Grid>
+                                    <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
+                                        {detail.status === 2 && detail.user_id === userId && <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px' }} onClick={onApprove}>
+                                            Approve Donasi
+                                            {/* <EditIcon /> */}
+                                        </Button>}
+                                    </Grid>
+                                </Grid>}
 
-                                </Grid>
 
 
                             </Grid>
