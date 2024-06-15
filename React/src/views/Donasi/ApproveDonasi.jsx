@@ -108,7 +108,7 @@ export default function ApproveDonasi() {
         }
         if (role === 'lembaga') {
             fd.append('user_id', userId)
-            axiosClient.post('/donationByCategoryAsLembaga')
+            axiosClient.post('/donationByCategoryAsLembaga',fd)
                 .then(({ data }) => {
                     setDonation(data.donations)
                 })

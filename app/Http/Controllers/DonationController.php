@@ -255,15 +255,14 @@ class DonationController extends Controller
         foreach($item as $i){
             array_push($arrayIdItems,$i->id);   
         }
-        error_log($item[0]->subcategory_id);
         $progress = DB::table('progress_donations')->whereIn('item_id',$arrayIdItems)->get();
         foreach($progress as $p){
             if(!in_array($p->donation_id,$arrayIdDonation)){
                 array_push($arrayIdDonation, $p->donation_id);
             }
         }
-        $donations = DB::table('donations')->where('status', 2)->where('user_id',$request->user_id)->get();
-        // $donations = DB::table('donations')->where('status', '=', $request->status)->whereIn('id',$arrayIdDonation)->get();
+     
+        $donations = DB::table('donations')->where('status', 2)->whereIn('id',$arrayIdDonation)->where('user_id',$request->user_id)->get();
         foreach ($donations as $d) {
             $d->progress_donation = DB::table('progress_donations')->where('donation_id', '=', $d->id)->get();
             $d->username = DB::table('users')->where('id', '=', $d->user_id)->value('name');
@@ -291,25 +290,23 @@ class DonationController extends Controller
         $arrayIdItems = array();
         $arrayIdSubCategories = array();
 
-        $subcategories = DB::table('subcategories')->where('category_id','=',$request->user_id)->get();
+        $subcategories = DB::table('subcategories')->where('category_id','=',$request->id)->get();
         foreach($subcategories as $s){
             array_push($arrayIdSubCategories, $s->id);
         }
-        error_log($arrayIdSubCategories[0]);
+
         $item = DB::table('items')->whereIn('subcategory_id',$arrayIdSubCategories)->get();
         foreach($item as $i){
             array_push($arrayIdItems,$i->id);   
         }
-        // error_log($arrayIdItems[0]->id);
         $progress = DB::table('progress_donations')->whereIn('item_id',$arrayIdItems)->get();
         foreach($progress as $p){
             if(!in_array($p->donation_id,$arrayIdDonation)){
                 array_push($arrayIdDonation, $p->donation_id);
             }
         }
-        // error_log($arrayIdDonation[0]->id);
-        $donations = DB::table('donations')->where('status', 2)->where('user_id',$request->id)->get();
-        // $donations = DB::table('donations')->where('status', '=', $request->status)->whereIn('id',$arrayIdDonation)->get();
+     
+        $donations = DB::table('donations')->where('status',2)->whereIn('id',$arrayIdDonation)->where('user_id', $request->user_id)->get();
         foreach ($donations as $d) {
             $d->progress_donation = DB::table('progress_donations')->where('donation_id', '=', $d->id)->get();
             $d->username = DB::table('users')->where('id', '=', $d->user_id)->value('name');
