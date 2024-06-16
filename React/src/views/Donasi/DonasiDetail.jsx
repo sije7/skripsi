@@ -283,9 +283,18 @@ export default function DonasiDetail() {
                         </Grid>
 
                     </Grid>
-                    <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px', paddingBottom:'10px' }} spacing={1}>
-                        <h1>Lokasi Donasi
-                        </h1>
+                    {role !== 'lembaga' && <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px', paddingBottom:'10px' }} spacing={1}>
+                        <Grid container sx={{display:'flex', justifyContent:'space-between'}}>
+                            <Grid>
+                            <h1>Lokasi Donasi </h1>
+                            </Grid>
+                            <Grid>
+                            <h3>Jarak : {parseInt(distance)}km</h3>
+                            </Grid>
+                       
+                        </Grid>
+                       
+                       
                         {location.lat && location.lon && (
                             <MapContainer center={[location.lat, location.lon]} zoom={8} style={{ height: '300px', width: '100%' }}>
                                 <TileLayer
@@ -305,7 +314,7 @@ export default function DonasiDetail() {
                                 {route.length > 0 && <Polyline positions={route} color="blue" />}
                             </MapContainer>
                         )}
-                    </Grid>
+                    </Grid>}
                     <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px' }} spacing={1}>
                         {/* {Left} */}
                         <Grid container xs={12} md={6} sx={{ display: 'block' }}>
