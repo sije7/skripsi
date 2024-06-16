@@ -263,7 +263,7 @@ export default function Beranda() {
                     <Typography variant="h5" align="left"><b>Donasi Terkini</b></Typography>
                 </Grid>
                 {/* {processedNonSlide} */}
-                {donation1 &&<Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
+                {donation1 && <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
                     <Grid item xs={12} md={4}>
                         <Box
                             component="img"
@@ -278,44 +278,46 @@ export default function Beranda() {
                     <Grid item xs={12} md={4}>
                         <h1>{donation1.title}</h1>
                         <p style={{ marginTop: '30px', fontSize: '16px' }}>{donation1.description}</p>
-                        <Grid item sx={{display:'flex',justifyContent:'right', marginTop:'20px'}}>
+                        <Grid item sx={{ display: 'flex', justifyContent: 'right', marginTop: '20px' }}>
                             <Button
                                 variant="contained"
-                                color="warning" 
-                                onClick={()=>navigate(`/donasi/${donation1.id}`)}>
-                                Donation
+                                color="warning"
+                                style={{ backgroundColor: '#66AB92' }}
+                                onClick={() => navigate(`/donasi/${donation1.id}`)}>
+                                Donasi
                             </Button>
                         </Grid>
                         {/* <p style={{ fontWeight: 'bold', fontSize: '16px', marginTop: '10px' }}>Ingatlah, upaya bersama kita dapat menyembuhkan dan memulihkan. Mari berdiri bersatu, saling mendukung melalui badai kehidupan.</p> */}
                     </Grid>
                 </Grid>}
 
-                {donation2 && <Grid rowSpacing={{xs: 6}} container sx={{justifyContent:'space-evenly', paddingBottom: '100px'  }}>
-                <Grid item xs={12} md={4}>
-                    <h1>{donation2.title}</h1>
-                    <p style={{marginTop:'30px', fontSize:'16px'}}>{donation2.description}</p>
-                    <Grid item sx={{display:'flex',justifyContent:'left', marginTop:'20px'}}>
+                {donation2 && <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
+                    <Grid item xs={12} md={4}>
+                        <h1>{donation2.title}</h1>
+                        <p style={{ marginTop: '30px', fontSize: '16px' }}>{donation2.description}</p>
+                        <Grid item sx={{ display: 'flex', justifyContent: 'left', marginTop: '20px', }}>
                             <Button
+                                style={{ backgroundColor: '#66AB92' }}
                                 variant="contained"
                                 color="warning"
-                                onClick={()=>navigate(`/donasi/${donation2.id}`)}>
-                                Donation
+                                onClick={() => navigate(`/donasi/${donation2.id}`)}>
+                                Donasi
                             </Button>
                         </Grid>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Box
-                        component="img"
-                        sx={{
-                            height: 300,
-                            width: '100%',
-                            minWidth: '400px',
-                            boxShadow: '20px 20px'
-                        }}
-                        src={`http://localhost:8000${donation2.image}`}
-                    />
-                </Grid>
-            </Grid>}
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Box
+                            component="img"
+                            sx={{
+                                height: 300,
+                                width: '100%',
+                                minWidth: '400px',
+                                boxShadow: '20px 20px'
+                            }}
+                            src={`http://localhost:8000${donation2.image}`}
+                        />
+                    </Grid>
+                </Grid>}
 
                 {donation3 && <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '20px' }}>
                     <Grid item xs={12} md={4}>
@@ -332,12 +334,13 @@ export default function Beranda() {
                     <Grid item xs={12} md={4}>
                         <h1>{donation3.title}</h1>
                         <p style={{ marginTop: '30px', fontSize: '16px' }}>{donation3.description}</p>
-                        <Grid item sx={{display:'flex',justifyContent:'right', marginTop:'20px'}}>
+                        <Grid item sx={{ display: 'flex', justifyContent: 'right', marginTop: '20px' }}>
                             <Button
+                                style={{ backgroundColor: '#66AB92' }}
                                 variant="contained"
                                 color="warning"
-                                onClick={()=>navigate(`/donasi/${donation3.id}`)}>
-                                Donation
+                                onClick={() => navigate(`/donasi/${donation3.id}`)}>
+                                Donasi
                             </Button>
                         </Grid>
                         {/* <p style={{ fontWeight: 'bold', fontSize: '16px', marginTop: '10px' }}>Ingatlah, upaya bersama kita dapat menyembuhkan dan memulihkan. Mari berdiri bersatu, saling mendukung melalui badai kehidupan.</p> */}
@@ -348,6 +351,7 @@ export default function Beranda() {
                         <Button
                             variant="contained"
                             color="warning"
+                            style={{ backgroundColor: '#66AB92' }}
                             loading>
                             Lihat Semua
                         </Button>

@@ -275,7 +275,7 @@ export default function DonasiDetail() {
                                 )) : ''}
                             </Grid>
                             <Grid item>
-                                <h2>Lokasi Donasi</h2>
+                                <h2>Lokasi Bencana</h2>
                             </Grid>
                             <Grid item>
                                 <h4>{detail.location}</h4>
@@ -283,7 +283,9 @@ export default function DonasiDetail() {
                         </Grid>
 
                     </Grid>
-                    <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px' }} spacing={1}>
+                    <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px', paddingBottom:'10px' }} spacing={1}>
+                        <h1>Lokasi Donasi
+                        </h1>
                         {location.lat && location.lon && (
                             <MapContainer center={[location.lat, location.lon]} zoom={8} style={{ height: '300px', width: '100%' }}>
                                 <TileLayer
