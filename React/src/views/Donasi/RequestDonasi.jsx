@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from "react-leaflet";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 export default function RequestDonasi() {
     const [user, setUser] = useState('')
@@ -268,6 +269,13 @@ export default function RequestDonasi() {
 
     }
 
+    function deleteFromList(i){
+        setListId(listId.filter((ids, index) => index !== i))
+        setListName(listName.filter((ids,index) => index !== i))
+        setListQty(listQty.filter((ids,index) => index !== i))
+        setListCurrency(listCurrency.filter((ids,index) => index !== i))
+    }
+
 
     return (
         <>
@@ -280,12 +288,12 @@ export default function RequestDonasi() {
                         <TextField
                             required
                             id="outlined-required"
-                            // label="Penanggung Jawab"
+                            label="Pemohon"
                             style={{ minWidth: '60%', backgroundColor: 'white' }}
                             InputProps={{
                                 readOnly: true,
                             }}
-                            value={user.name + ' (Pemohon)'}
+                            value={user.name}
                         />
                     </Grid>
                     <Grid item>
@@ -314,7 +322,7 @@ export default function RequestDonasi() {
                     <Grid item>
                         <TextField
                             id="outlined-multiline-flexible"
-                            label="Lokasi Donasi *"
+                            label="Lokasi Bencana *"
                             multiline
                             style={{ minWidth: '100%', backgroundColor: 'white' }}
                             maxRows={4}
@@ -359,7 +367,7 @@ export default function RequestDonasi() {
                             )}
                             {selectedDestinationLat && selectedDestinationLon && (
                                 <Marker position={[selectedDestinationLat, selectedDestinationLon]}>
-                                    <Popup>Lokasi Lembaga</Popup>
+                                    <Popup>Lokasi Lembaga </Popup>
                                     {/* <Popup>{destinationName}</Popup> */}
                                 </Marker>
                             )}
@@ -412,6 +420,7 @@ export default function RequestDonasi() {
                                     <TableCell width={'100px'}>Barang</TableCell>
                                     <TableCell width={'100px'} align="left">Jumlah</TableCell>
                                     <TableCell width={'100px'} align="left">Satuan</TableCell>
+                                    <TableCell width={'100px'} align="left">Aksi</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -424,6 +433,7 @@ export default function RequestDonasi() {
                                         </TableCell>
                                         <TableCell align="left">{listQty[i]}</TableCell>
                                         <TableCell align="left">{listCurrency[i]}</TableCell>
+                                        <TableCell align="left" onClick={()=>deleteFromList(i)} > <DeleteOutlinedIcon /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
