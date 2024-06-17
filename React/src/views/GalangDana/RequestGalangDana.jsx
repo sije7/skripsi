@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axiosClient from "../../axios-client";
 import { useNavigate } from "react-router-dom";
 import CurrencyInput from 'react-currency-input-field';
+import CircularIndeterminate from "../../components/CircularIndeterminate";
 
 export default function RequestGalangDana() {
     const [startDate, setStartDate] = useState(new Date());
@@ -34,12 +35,18 @@ export default function RequestGalangDana() {
     const [errorBank, seterrorBank] = useState('')
     const [errorDeadline, setErrorDeadline] = useState('')
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         axiosClient.get('/user')
             .then(({ data }) => {
+                if(data.role === 'admin'){
+                    return navigate('/')
+                }
                 setUser(data)
                 setuserId(data.id)
+                setLoading(false)
             })
     }, [])
 
@@ -119,7 +126,8 @@ export default function RequestGalangDana() {
     return (
         <>
             <h1 style={{ textAlign: 'center', padding: '20px' }}>Request Galang Dana</h1>
-            <Grid container direction='row' sx={{ padding: '50px' }} component="form">
+            {loading && <CircularIndeterminate />}
+            {!loading && <Grid container direction='row' sx={{ padding: '50px' }} component="form">
                 {/* Left Side*/}
                 <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
                     <Grid item>
@@ -266,7 +274,7 @@ export default function RequestGalangDana() {
                         </Button>
                     </Grid>
                 </Grid>
-            </Grid>
+            </Grid>}
         </>
     )
 }

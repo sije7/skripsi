@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DatePicker from "react-datepicker";
 import { useNavigate } from "react-router-dom";
+import CircularIndeterminate from "../../components/CircularIndeterminate";
+import { MapContainer, Marker, Polyline, Popup, TileLayer } from "react-leaflet";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 export default function RequestDonasi() {
     const [user, setUser] = useState('')
@@ -42,6 +45,19 @@ export default function RequestDonasi() {
     const [errorBarang, setErrorBarang] = useState('')
 
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
+
+    const [location, setLocation] = useState({ lat: null, lon: null });
+    const [destination, setDestination] = useState({ lat: '', lon: '' }); // Destination input state
+    const [route, setRoute] = useState([]);
+    const [distance, setDistance] = useState(null);
+    const [destinationName, setDestinationName] = useState("Enter coordinates to get name");
+
+    const [selectedDestinationLat, setSelectedDestinationLat] = useState('')
+    const [selectedDestinationLon, setSelectedDestinationLon] = useState('')
+    const [selectedRoute, setSelectedRoute] = useState([])
+
+
 
 
     //modal
@@ -60,6 +76,30 @@ export default function RequestDonasi() {
         whiteSpace: 'nowrap',
         width: 1,
     });
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setLocation({
+                        lat: position.coords.latitude,
+                        lon: position.coords.longitude,
+                    })
+
+                },
+                (error) => {
+                    console.error("Error obtaining geolocation:", error);
+                    // Fallback ke lokasi manual jika geolocation gagal
+                    const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
+                    setLocation(jakartaCoords)
+                }
+            )
+        } else {
+            // Fallback ke lokasi manual jika geolocation tidak didukung
+            const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
+            setLocation(jakartaCoords);
+        }
+    }, [])
 
 
     const handleImage = (e) => {
@@ -160,39 +200,100 @@ export default function RequestDonasi() {
             )
     }
 
+    const handleCalculateDistance = async (data) => {
+        let deslat = parseFloat(data.latitude)
+        let deslon = parseFloat(data.longitude)
+        if (location.lat !== null && location.lon !== null && deslat && deslon) {
+            const url = `http://router.project-osrm.org/route/v1/driving/${location.lon},${location.lat};${deslon},${deslat}?overview=full&geometries=geojson`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                let temp = []
+                if (data.routes && data.routes.length > 0) {
+                    const routeCoords = data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                    let res = [data.routes[0].distance / 1000, data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]])]
+                    return res
+                } else {
+                    console.error("No route found or invalid response structure");
+                    setRoute([]);
+                    setDistance(null);
+                }
+            } catch (error) {
+                console.error("Error fetching route data:", error);
+                setRoute([]);
+                setDistance(null);
+            }
+        } else {
+            alert("Please enter valid coordinates for destination.");
+        }
+    };
+
     useEffect(() => {
+        setLoading(true)
         axiosClient.get('/user')
             .then(({ data }) => {
                 setUser(data)
-            })
-        axiosClient.get('/lembaga')
-            .then(({ data }) => {
-                setLembaga(data)
+                if (data.role === 'admin') {
+                    return navigate('/')
+                }
             })
 
         axiosClient.get('/subcategories')
             .then(({ data }) => {
                 setJenis(data.subcategories)
+
             })
-    }, [])
+
+        if (location.lat !== null && location.lon !== null) {
+            axiosClient.get('/lembaga')
+                .then(({ data }) => {
+                    data.forEach(data => {
+                        if (data) {
+                            handleCalculateDistance(data).then((res) => {
+                                data.distance = Math.floor(res[0]).toString()
+                                data.route = res[1]
+                            })
+                        }
+                    });
+                    setLembaga(data)
+                    setLoading(false)
+                })
+        }
+    }, [location])
+
+    function onChooseLembaga(lembaga) {
+        setSelectedDeskripsiLembaga(lembaga.deskripsi)
+        setSelectedDestinationLat(lembaga.latitude)
+        setSelectedDestinationLon(lembaga.longitude)
+        setSelectedRoute(lembaga.route)
+
+    }
+
+    function deleteFromList(i){
+        setListId(listId.filter((ids, index) => index !== i))
+        setListName(listName.filter((ids,index) => index !== i))
+        setListQty(listQty.filter((ids,index) => index !== i))
+        setListCurrency(listCurrency.filter((ids,index) => index !== i))
+    }
 
 
     return (
         <>
             <h1 style={{ textAlign: 'center', padding: '20px' }}>Request Donasi</h1>
-            <Grid container xs={12} md={12} direction={'row'} sx={{ padding: '50px' }} component="form">
+            {loading && <CircularIndeterminate />}
+            {!loading && <Grid container xs={12} md={12} direction={'row'} sx={{ padding: '50px' }} component="form">
                 {/* Left */}
                 <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
                     <Grid item>
                         <TextField
                             required
                             id="outlined-required"
-                            // label="Penanggung Jawab"
+                            label="Pemohon"
                             style={{ minWidth: '60%', backgroundColor: 'white' }}
                             InputProps={{
                                 readOnly: true,
                             }}
-                            value={user.name + ' (Pemohon)'}
+                            value={user.name}
                         />
                     </Grid>
                     <Grid item>
@@ -221,7 +322,7 @@ export default function RequestDonasi() {
                     <Grid item>
                         <TextField
                             id="outlined-multiline-flexible"
-                            label="Lokasi Donasi *"
+                            label="Lokasi Bencana *"
                             multiline
                             style={{ minWidth: '100%', backgroundColor: 'white' }}
                             maxRows={4}
@@ -230,6 +331,56 @@ export default function RequestDonasi() {
                         />
                     </Grid>
                     {errorLokasi ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorLokasi}</small> : ""}
+
+                    <Grid item>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Lembaga</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={selectedLembaga}
+                                label="Lembaga"
+                                onChange={handleChange}
+                                style={{ width: '50%' }}
+                            >
+                                {lembaga.map((lembaga) => (
+                                    
+                                    <MenuItem onClick={() => onChooseLembaga(lembaga)} value={lembaga.id}>{lembaga.name} {lembaga.distance ?lembaga.distance+ ' km' : ''}</MenuItem>
+
+                                ))}
+
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    {selectedDeskripsiLembaga ? selectedDeskripsiLembaga : ''}
+                    {errorLembaga ? <small style={{ color: "#B00020", fontSize: '13px' }}>lembaga harus dipilih</small> : ""}
+                    {location.lat !== null && location.lon !== null && <Grid item>
+                        <MapContainer center={[location?.lat, location?.lon]} zoom={8} style={{ height: '400px' }}>
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            {location.lat && location.lon && (
+                                <Marker position={[location.lat, location.lon]}>
+                                    <Popup>Lokasi User</Popup>
+                                </Marker>
+                            )}
+                            {selectedDestinationLat && selectedDestinationLon && (
+                                <Marker position={[selectedDestinationLat, selectedDestinationLon]}>
+                                    <Popup>Lokasi Lembaga </Popup>
+                                    {/* <Popup>{destinationName}</Popup> */}
+                                </Marker>
+                            )}
+                            {selectedRoute.length > 0 && <Polyline positions={selectedRoute} color="blue" />}
+                        </MapContainer>
+
+                    </Grid>}
+
+                </Grid>
+
+                {/* Right */}
+
+                <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
                     <Grid item>
                         <p style={{ fontWeight: 'lighter' }}>Upload Gambar</p>
                         <Button
@@ -250,32 +401,6 @@ export default function RequestDonasi() {
                             <img src={preview} style={{ width: '100px', height: '100px' }}></img>
                         </Grid>
                     ) : " "}
-                     <Grid item>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Lembaga</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={selectedLembaga}
-                                label="Lembaga"
-                                onChange={handleChange}
-                                style={{ width: '50%' }}
-                            >
-                                {lembaga.map((lembaga) => (
-                                    <MenuItem onClick={() => setSelectedDeskripsiLembaga(lembaga.deskripsi)} value={lembaga.id}>{lembaga.name}</MenuItem>
-
-                                ))}
-
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    {selectedDeskripsiLembaga ? selectedDeskripsiLembaga : ''}
-                    {errorLembaga ? <small style={{ color: "#B00020", fontSize: '13px' }}>lembaga harus dipilih</small> : ""}
-
-                </Grid>
-
-                {/* Right */}
-                <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
                     <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
                         <Grid item >
                             <p style={{ fontWeight: 'lighter' }}>Tanggal Penyaluran Bantuan </p>
@@ -288,13 +413,14 @@ export default function RequestDonasi() {
 
                     </Grid>
                     {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
-                    {listId.length !== 0   && <TableContainer component={Paper} sx={{ maxHeight: '200px' }} >
+                    {listId.length !== 0 && <TableContainer component={Paper} sx={{ maxHeight: '200px' }} >
                         <Table sx={{ minWidth: 350, tableLayout: 'fixed  ' }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell width={'100px'}>Barang</TableCell>
                                     <TableCell width={'100px'} align="left">Jumlah</TableCell>
                                     <TableCell width={'100px'} align="left">Satuan</TableCell>
+                                    <TableCell width={'100px'} align="left">Aksi</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -307,6 +433,7 @@ export default function RequestDonasi() {
                                         </TableCell>
                                         <TableCell align="left">{listQty[i]}</TableCell>
                                         <TableCell align="left">{listCurrency[i]}</TableCell>
+                                        <TableCell align="left" onClick={()=>deleteFromList(i)} > <DeleteOutlinedIcon /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -382,7 +509,7 @@ export default function RequestDonasi() {
                     </Grid>
 
                 </Grid>
-            </Grid>
+            </Grid>}
         </>
     )
 }

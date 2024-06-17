@@ -25,7 +25,7 @@ export default function CardPembelajaran(props) {
                             <p><b>{props.subCategory}</b></p>
                         </Grid>
                     </Grid>
-                    <Grid sx={{ backgroundColor: '#66AB92', textAlign: 'center' }}><h2>By - Me</h2></Grid>
+                    <Grid sx={{ backgroundColor: '#66AB92', textAlign: 'center' }}><h2>{props.username}</h2></Grid>
                 </Card>
             </Link>
         </>

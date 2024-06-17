@@ -100,7 +100,7 @@ class UserController extends Controller
     }
 
     public function getLembaga(){
-        $lembaga = DB::table('users')->where('role', '=','lembaga')->get();
+        $lembaga = DB::table('users')->where('role', '=','lembaga')->where('status', 1)->get();
         return $lembaga;
     }
 

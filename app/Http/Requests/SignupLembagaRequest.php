@@ -45,6 +45,8 @@ class SignupLembagaRequest extends FormRequest
             'penanggung_jawab' => ['required'],
             'bank' => ['nullable','string'],
             'deskripsi' => ['required'],
+            'latitude' =>['required'],
+            'longitude' =>['required'],
         ];
     }
 }

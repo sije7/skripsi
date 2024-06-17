@@ -37,7 +37,9 @@ class User extends Authenticatable
         'penanggung_jawab',
         'lokasi',
         'bank',
-        'deskripsi'
+        'deskripsi',
+        'latitude',
+        'longitude'
     ];
 
     /**

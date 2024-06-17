@@ -78,20 +78,93 @@ class ProgressDonationSeeder extends Seeder
         DB::table('progress_donations')->insert([
             'item_id'=>2,
             'status'=>0,
-            'donation_id'=>4,
+            'donation_id'=>3,
             'quantity'=>50
         ]);
         DB::table('progress_donations')->insert([
             'item_id'=>2,
             'status'=>0,
-            'donation_id'=>4,
+            'donation_id'=>2,
             'quantity'=>30
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>3,
+            'quantity'=>10
+        ]);
+
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>5,
+            'quantity'=>70
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>6,
+            'quantity'=>80
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>7,
+            'quantity'=>90
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>8,
+            'quantity'=>100
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>9,
+            'quantity'=>50
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>10,
+            'quantity'=>40
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>11,
+            'quantity'=>12
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>12,
+            'quantity'=>10
         ]);
         DB::table('progress_donations')->insert([
             'item_id'=>2,
             'status'=>0,
             'donation_id'=>4,
             'quantity'=>10
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>2,
+            'quantity'=>20
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>9,
+            'quantity'=>100
+        ]);
+        DB::table('progress_donations')->insert([
+            'item_id'=>2,
+            'status'=>0,
+            'donation_id'=>11,
+            'quantity'=>70
         ]);
     }
 }

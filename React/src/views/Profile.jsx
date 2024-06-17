@@ -53,17 +53,16 @@ export default function Profile() {
         <>
             <Container>
                 <Typography variant="h3" align="center" gutterBottom>Profile</Typography>
-                <Link to={'/users'}>
                     <Button
                         variant="contained"
                         color="primary"
                         startIcon={<ArrowBackIcon />}
+                        style={{backgroundColor:'#66AB92'}}
                         loading
                         // fullWidth
-                        onClick={() => navigate('/')}>
+                        onClick={() => navigate(-1)}>
                         Back
                     </Button>
-                </Link>
 
                 {loading ? (
                     <Typography variant="h6" align="center">Loading...</Typography>
@@ -137,6 +136,7 @@ export default function Profile() {
                                         color="primary"
                                         loading
                                         fullWidth
+                                        style={{backgroundColor:'#66AB92'}}
                                         onClick={() => navigate('/')}>
                                         Edit Profile
                                     </Button>

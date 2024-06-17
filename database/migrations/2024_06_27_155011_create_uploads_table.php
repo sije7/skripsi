@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('upload_video');
             $table->string('title_description');
-            $table->string('description');
+            $table->longText('description');
             $table->string('upload_image');
             $table->string('thumbnail');
             $table->integer('status');

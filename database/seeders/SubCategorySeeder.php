@@ -44,7 +44,7 @@ class SubCategorySeeder extends Seeder
         ]);
         DB::table('subcategories')->insert([
             'category_id'=>'2',
-            'name'=>'Mainan'
+            'name'=>'Hiburan'
         ]);
 
     }

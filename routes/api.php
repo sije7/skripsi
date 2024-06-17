@@ -63,6 +63,9 @@ Route::post('/donation/update/{id}', [DonationController::class, 'updateDonation
 Route::post('/requestDonation', [DonationController::class, 'requestDonation']);
 Route::post('/approveDonation',[DonationController::class, 'approveDonation']);
 Route::post('/rejectDonation',[DonationController::class, 'rejectDonation']);
+Route::post('/donationaslembaga',[DonationController::class, 'getDonationsAsLembaga']);
+Route::post('/donationByCategoryAsLembaga',[DonationController::class, 'getDonationByCategoryAsLembaga']);
+Route::post('/donationBySubCategoryAsLembaga',[DonationController::class, 'getDonationBySubCategoryAsLembaga']);
 
 
 Route::get('/lembaga', [UserController::class, 'getLembaga']);

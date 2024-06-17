@@ -29,65 +29,90 @@ export default function ApproveDonasi() {
 
         setOpen(false);
     };
+    const [userId, setUserId] = useState('')
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        (async () => {
-            setLoading(true)
-            location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
-            location.state ? location.state.message ? setOpen(true) : '' : ''
-            window.history.replaceState({}, '')
+        setLoading(true)
+        location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
+        location.state ? location.state.message ? setOpen(true) : '' : ''
+        window.history.replaceState({}, '')
 
-            await axiosClient.get('/user')
-                .then(async ({ data }) => {
-                    if (data.role === 'user') {
-                        return navigate('/')
-                    }
-                    setRole(data.role)
+        axiosClient.get('/user')
+            .then(async ({ data }) => {
+                if (data.role === 'user') {
+                    return navigate('/')
+                }
+                setRole(data.role)
+                setUserId(data.id)
+                if (data.role === 'lembaga') {
                     let fd = new FormData()
-                    if (data.role === 'lembaga') {
-                        fd.append('status', 2)
-                    } else {
-                        fd.append('status', 1)
-                    }
-                    await axiosClient.post('/donations', fd)
+                    // fd.append('status', 1)
+                    fd.append('id', data.id)
+
+                    axiosClient.post('/donationaslembaga', fd)
                         .then(({ data }) => {
                             setDonation(data.donations)
                             setLoading(false)
                         })
-                })
+                } else {
+                    let fd = new FormData()
+                    fd.append('status', 1)
 
-            axiosClient.get('/categories')
-                .then(({ data }) => {
-                    setCategories(data.categories)
-                })
-        })()
+                    axiosClient.post('/donations', fd)
+                        .then(({ data }) => {
+                            setDonation(data.donations)
+                            setLoading(false)
+                        })
+                }
+
+            })
+
+        axiosClient.get('/categories')
+            .then(({ data }) => {
+                setCategories(data.categories)
+            })
     }, [])
 
     function getBySubCategory(id) {
         let fd = new FormData()
         fd.append('id', id)
-        if(role === 'admin'){
+        if (role === 'admin') {
             fd.append('status', 1)
+            axiosClient.post('/getDonationBySubCategory', fd)
+                .then(({ data }) => {
+                    setDonation(data.donations)
+                })
         }
-        if(role === 'lembaga'){
-            fd.append('status', 2)
-        }
-        axiosClient.post('/getDonationBySubCategory', fd)
+        if (role === 'lembaga') {
+            fd.append('user_id', userId)
+            axiosClient.post('/donationBySubCategoryAsLembaga', fd)
             .then(({ data }) => {
                 setDonation(data.donations)
             })
+        }
+
 
     }
     function getByCategory(id) {
         let fd = new FormData()
         fd.append('id', id)
-        fd.append('status', 2)
-        axiosClient.post('/getDonationByCategory', fd)
-            .then(({ data }) => {
-                setDonation(data.donations)
-            })
+
+        if (role === 'admin') {
+            fd.append('status', 1)
+            axiosClient.post('/getDonationByCategory', fd)
+                .then(({ data }) => {
+                    setDonation(data.donations)
+                })
+        }
+        if (role === 'lembaga') {
+            fd.append('user_id', userId)
+            axiosClient.post('/donationByCategoryAsLembaga',fd)
+                .then(({ data }) => {
+                    setDonation(data.donations)
+                })
+        }
 
     }
 
@@ -109,10 +134,10 @@ export default function ApproveDonasi() {
                     <h2>Kategori</h2>
                     {categories ? categories.map((ct) => (
                         <Grid item>
-                            <ul style={{cursor:'pointer'}}><b onClick={()=>getByCategory(ct.id)}>{ct.name}</b>
-                            {ct.subcategories ? ct.subcategories.map((sc)=>(
-                                <li style={{ paddingLeft: '20px', cursor:'pointer' }} onClick={()=>getBySubCategory(sc.id)}>{sc.name}</li>
-                            )) : ''}
+                            <ul style={{ cursor: 'pointer' }}><b onClick={() => getByCategory(ct.id)}>{ct.name}</b>
+                                {ct.subcategories ? ct.subcategories.map((sc) => (
+                                    <li style={{ paddingLeft: '20px', cursor: 'pointer' }} onClick={() => getBySubCategory(sc.id)}>{sc.name}</li>
+                                )) : ''}
                             </ul>
                         </Grid>
                     )) : ''}
