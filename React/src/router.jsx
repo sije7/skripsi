@@ -31,6 +31,8 @@ import SignupAll from './views/SignupAll';
 import UploadLearning from './views/Pembelajaran/PembelajaranUpload';
 import PembelajaranApprove from './views/Pembelajaran/PembelajaranApprove';
 import Geolocation from './views/Geolocation'
+import Faq from './views/Faq';
+import Lembagas from './views/Lembagas';
 
 const router = createBrowserRouter([
     {
@@ -132,6 +134,14 @@ const router = createBrowserRouter([
             {
                 path:'/geolocation',
                 element: <Geolocation />
+            },
+            {
+                path:'/faq',
+                element: <Faq />
+            },
+            {
+                path:'/lembagas',
+                element: <Lembagas />
             }
            
         ]
