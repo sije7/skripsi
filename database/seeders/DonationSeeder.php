@@ -16,7 +16,7 @@ class DonationSeeder extends Seeder
     public function run()
     {
         DB::table('donations')->insert([
-            'user_id'=>'4',
+            'user_id'=>'5',
             'pemohon_id'=>'1',
             'status'=>3,
             'deadline'=>19,
