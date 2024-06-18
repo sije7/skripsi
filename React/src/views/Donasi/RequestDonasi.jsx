@@ -293,6 +293,7 @@ export default function RequestDonasi() {
                             InputProps={{
                                 readOnly: true,
                             }}
+                            InputLabelProps={{ shrink: true }}  
                             value={user.name}
                         />
                     </Grid>
