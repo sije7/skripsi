@@ -156,7 +156,7 @@ export default function SignUp() {
                                         type="submit"
                                         fullWidth
                                         variant="contained"
-                                        sx={{ width: '400px' }}
+                                        sx={{ width: '400px', backgroundColor:'#66AB92' }}
                                     >
                                         Sign Up
                                     </Button>
