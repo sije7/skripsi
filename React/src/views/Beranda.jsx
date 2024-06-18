@@ -147,76 +147,76 @@ export default function Beranda() {
         )
     }
 
-    const processedNonSlide = latestNonSlide.map(d => {
-        if (d.id % 2 === 0) {
-            return (
-                <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '0px', paddingTop: '100px' }}>
-                    <Grid item xs={12} md={4}>
-                        <div key={d.id}>
-                            <Typography variant='h6' align="left"><b>{d.title}</b></Typography>
-                            {/* Konten tambahan untuk id genap */}
-                            <p>{d.description}</p>
-                        </div>
-                        <Box mt={2} display="flex" justifyContent="flex-start">
-                            <Link to=''>
-                                <Button
-                                    variant="contained"
-                                    color="warning">
-                                    Donation
-                                </Button>
-                            </Link>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box
-                            component="img"
-                            sx={{
-                                height: 350,
-                                width: '100%',
-                                minWidth: '400px',
-                                borderRadius: '10%',
-                            }}
-                            src={`http://localhost:8000${d.image}`}
-                        />
+    // const processedNonSlide = latestNonSlide.map(d => {
+    //     if (d.id % 2 === 0) {
+    //         return (
+    //             <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '0px', paddingTop: '100px' }}>
+    //                 <Grid item xs={12} md={4}>
+    //                     <div key={d.id}>
+    //                         <Typography variant='h6' align="left"><b>{d.title}</b></Typography>
+    //                         {/* Konten tambahan untuk id genap */}
+    //                         <p>{d.description}</p>
+    //                     </div>
+    //                     <Box mt={2} display="flex" justifyContent="flex-start">
+    //                         <Link to=''>
+    //                             <Button
+    //                                 variant="contained"
+    //                                 color="warning">
+    //                                 Donation
+    //                             </Button>
+    //                         </Link>
+    //                     </Box>
+    //                 </Grid>
+    //                 <Grid item xs={12} md={4}>
+    //                     <Box
+    //                         component="img"
+    //                         sx={{
+    //                             height: 350,
+    //                             width: '100%',
+    //                             minWidth: '400px',
+    //                             borderRadius: '10%',
+    //                         }}
+    //                         src={`http://localhost:8000${d.image}`}
+    //                     />
 
-                    </Grid>
-                </Grid>
-            );
-        } else {
-            return (
-                <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
-                    <Grid item xs={12} md={4}>
-                        <Box
-                            component="img"
-                            sx={{
-                                height: 350,
-                                width: '100%',
-                                minWidth: '300px',
-                                borderRadius: '10%',
-                            }}
-                            src={`http://localhost:8000${d.image}`}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <div>
-                            <Typography variant='h6' align="right"><b>{d.title}</b></Typography>
-                            {/* Konten tambahan untuk id ganjil */}
-                            <p>{d.description}</p>
-                        </div>
-                        <Box mt={2} display="flex" justifyContent="flex-end">
-                            <Link to=''>
-                                <Button
-                                    variant="contained"
-                                    color="warning">
-                                    Donation
-                                </Button>
-                            </Link>
-                        </Box>
-                    </Grid>
-                </Grid>
-            );
-        }
-    });
+    //                 </Grid>
+    //             </Grid>
+    //         );
+    //     } else {
+    //         return (
+    //             <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
+    //                 <Grid item xs={12} md={4}>
+    //                     <Box
+    //                         component="img"
+    //                         sx={{
+    //                             height: 350,
+    //                             width: '100%',
+    //                             minWidth: '300px',
+    //                             borderRadius: '10%',
+    //                         }}
+    //                         src={`http://localhost:8000${d.image}`}
+    //                     />
+    //                 </Grid>
+    //                 <Grid item xs={12} md={4}>
+    //                     <div>
+    //                         <Typography variant='h6' align="right"><b>{d.title}</b></Typography>
+    //                         {/* Konten tambahan untuk id ganjil */}
+    //                         <p>{d.description}</p>
+    //                     </div>
+    //                     <Box mt={2} display="flex" justifyContent="flex-end">
+    //                         <Link to=''>
+    //                             <Button
+    //                                 variant="contained"
+    //                                 color="warning">
+    //                                 Donation
+    //                             </Button>
+    //                         </Link>
+    //                     </Box>
+    //                 </Grid>
+    //             </Grid>
+    //         );
+    //     }
+    // });
 
     const styles = {
         // backgroundColor: '#ffac33',
