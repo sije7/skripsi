@@ -267,6 +267,7 @@ export default function RequestGalangDana() {
                         </Grid>
 
                     </Grid>
+                    {!errorDeadline ? <small style={{fontSize: '13px' }}>jangka waktu minimal 1 minggu</small>: ''}
                     {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
                     <Grid item>
 
