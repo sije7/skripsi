@@ -15,6 +15,8 @@ import MeletusJeder from '../assets/Beranda/MeletusJeder.jpg'
 import GSJA from '../assets/Beranda/GSJA.jpg'
 import TFI from '../assets/Beranda/TFI.jpg'
 import TzuChi from '../assets/Beranda/TzuChi.jpg'
+import logo2 from '../assets/Beranda/a.jpg'
+import logo3 from '../assets/Beranda/b.jpg'
 import I1 from '../assets/Beranda/1.jpg'
 import I2 from '../assets/Beranda/2.jpg'
 import I3 from '../assets/Beranda/3.jpg'
@@ -22,6 +24,7 @@ import I4 from '../assets/Beranda/4.jpg'
 import I5 from '../assets/Beranda/5.jpg'
 import I6 from '../assets/Beranda/6.jpg'
 import CircularIndeterminate from '../components/CircularIndeterminate';
+
 
 
 export default function Beranda() {
@@ -411,10 +414,10 @@ export default function Beranda() {
                         {LembagaSosial({ picture: GSJA, name: "GSJA" })}
                     </Grid>
                     <Grid item xs={12} md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        {LembagaSosial({ picture: TzuChi, name: "Tzu Chi" })}
+                        {LembagaSosial({ picture: logo2, name: "Thu Chu" })}
                     </Grid>
                     <Grid item xs={12} md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        {LembagaSosial({ picture: TFI, name: "Teach For Indonesia" })}
+                        {LembagaSosial({ picture: logo3, name: "Teach For Tangerang" })}
                     </Grid>
                 </Grid>
                 <br />
