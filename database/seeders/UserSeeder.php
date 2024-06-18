@@ -106,7 +106,7 @@ class UserSeeder extends Seeder
             'umur'=>null,
             'nomor_telepon'=>'850937366470',
             'role'=>'lembaga',
-            'profile_image'=>null,
+            'profile_image'=>'/storage/images/Learn.png',
             'no_req'=>'7359356462',
             'lokasi'=>'Jl. Kelapa Dua Raya, Klp. Dua, Kec. Klp. Dua, Kabupaten Tangerang, Banten 15810',
             'penanggung_jawab'=>'',

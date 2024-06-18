@@ -64,13 +64,13 @@ export default function Footer() {
                 <Grid spacing={2} container sx={{ display: 'block', justifyContent: 'center', padding: '20px' }}>
                     <Grid sx={{ display: 'flex', justifyContent: 'center' }}>
                         <Grid sx={{ marginRight: '20px' }}>
-                            <Link style={{ textDecoration: 'none', color: 'white' }}><h2>About</h2></Link>
+                            <Link to={'/aboutus'} style={{ textDecoration: 'none', color: 'white' }}><h2>About</h2></Link>
                         </Grid>
                         <Grid sx={{ marginRight: '20px' }}>
-                            <Link style={{ textDecoration: 'none', color: 'white' }}><h2>Faq</h2></Link>
+                            <Link to={'/faq'} style={{ textDecoration: 'none', color: 'white' }}><h2>Faq</h2></Link>
                         </Grid>
                         <Grid sx={{ marginRight: '20px' }}>
-                            <Link style={{ textDecoration: 'none', color: 'white' }}><h2>Lembaga Sosial</h2></Link>
+                            <Link to={'/lembagas'} style={{ textDecoration: 'none', color: 'white' }}><h2>Lembaga Sosial</h2></Link>
                         </Grid>
                     </Grid >
                     <hr></hr>

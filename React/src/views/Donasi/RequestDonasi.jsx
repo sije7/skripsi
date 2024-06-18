@@ -293,6 +293,7 @@ export default function RequestDonasi() {
                             InputProps={{
                                 readOnly: true,
                             }}
+                            InputLabelProps={{ shrink: true }}  
                             value={user.name}
                         />
                     </Grid>
@@ -412,6 +413,7 @@ export default function RequestDonasi() {
                         </Grid>
 
                     </Grid>
+                    {!errorDeadline ? <small style={{ fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
                     {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
                     {listId.length !== 0 && <TableContainer component={Paper} sx={{ maxHeight: '200px' }} >
                         <Table sx={{ minWidth: 350, tableLayout: 'fixed  ' }} aria-label="simple table">
