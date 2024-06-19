@@ -134,13 +134,14 @@ export default function RequestGalangDana() {
                         <TextField
                             required
                             id="outlined-required"
-                            // label="Penanggung Jawab"
+                            label="Penanggung Jawab"
                             style={{ minWidth: '60%', backgroundColor: 'white' }}
                             InputProps={{
                                 readOnly: true,
                               }}
-                            value={user.name+ ' (Penanggung Jawab)'}
-                            onChange={event => setPenanggungjawab(event.target.value)}
+                            value={user.name}
+                            // onChange={event => setPenanggungjawab(event.target.value)}
+                            InputLabelProps={{ shrink: true }}  
                         />
                     </Grid>
                     <Grid item>
@@ -266,6 +267,7 @@ export default function RequestGalangDana() {
                         </Grid>
 
                     </Grid>
+                    {!errorDeadline ? <small style={{fontSize: '13px' }}>jangka waktu minimal 1 minggu</small>: ''}
                     {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
                     <Grid item>
 

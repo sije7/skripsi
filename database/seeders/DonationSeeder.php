@@ -16,7 +16,7 @@ class DonationSeeder extends Seeder
     public function run()
     {
         DB::table('donations')->insert([
-            'user_id'=>'4',
+            'user_id'=>'5',
             'pemohon_id'=>'1',
             'status'=>3,
             'deadline'=>19,
@@ -48,8 +48,8 @@ class DonationSeeder extends Seeder
         ]);
 
         DB::table('donations')->insert([
-            'user_id'=>'11',
-            'pemohon_id'=>'11',
+            'user_id'=>'5',
+            'pemohon_id'=>'4',
             'status'=>1,
             'deadline'=>29,
             'title'=>'Gempa Bumi Cianjur',
@@ -103,8 +103,8 @@ class DonationSeeder extends Seeder
         ]);
 
         DB::table('donations')->insert([
-            'user_id'=>'10',
-            'pemohon_id'=>'10',
+            'user_id'=>'7',
+            'pemohon_id'=>'7',
             'status'=>3,
             'deadline'=>30,
             'title'=>'Gempa Bumi Maluku',

@@ -5,6 +5,7 @@ import axiosClient from "../axios-client";
 import Footer from "../components/Footer";
 import HeaderMain from "../components/Header";
 import { Button, Grid } from "@mui/material";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function DefaultLayout() {
     const { user, token, notification, setUser, setToken } = useStateContext()
@@ -38,7 +39,7 @@ export default function DefaultLayout() {
         <>
             <HeaderMain />
             <Grid sx={{display:'flex', justifyContent:'right'}}>
-            <Button  onClick={onLogout}>Logout</Button>
+            <Button color="error"  onClick={onLogout}><LogoutIcon />Logout</Button>
             </Grid>
                 <Outlet />
             <Footer />

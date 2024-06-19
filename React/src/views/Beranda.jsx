@@ -15,6 +15,8 @@ import MeletusJeder from '../assets/Beranda/MeletusJeder.jpg'
 import GSJA from '../assets/Beranda/GSJA.jpg'
 import TFI from '../assets/Beranda/TFI.jpg'
 import TzuChi from '../assets/Beranda/TzuChi.jpg'
+import logo2 from '../assets/Beranda/a.jpg'
+import logo3 from '../assets/Beranda/b.jpg'
 import I1 from '../assets/Beranda/1.jpg'
 import I2 from '../assets/Beranda/2.jpg'
 import I3 from '../assets/Beranda/3.jpg'
@@ -22,6 +24,7 @@ import I4 from '../assets/Beranda/4.jpg'
 import I5 from '../assets/Beranda/5.jpg'
 import I6 from '../assets/Beranda/6.jpg'
 import CircularIndeterminate from '../components/CircularIndeterminate';
+
 
 
 export default function Beranda() {
@@ -147,76 +150,76 @@ export default function Beranda() {
         )
     }
 
-    const processedNonSlide = latestNonSlide.map(d => {
-        if (d.id % 2 === 0) {
-            return (
-                <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '0px', paddingTop: '100px' }}>
-                    <Grid item xs={12} md={4}>
-                        <div key={d.id}>
-                            <Typography variant='h6' align="left"><b>{d.title}</b></Typography>
-                            {/* Konten tambahan untuk id genap */}
-                            <p>{d.description}</p>
-                        </div>
-                        <Box mt={2} display="flex" justifyContent="flex-start">
-                            <Link to=''>
-                                <Button
-                                    variant="contained"
-                                    color="warning">
-                                    Donation
-                                </Button>
-                            </Link>
-                        </Box>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Box
-                            component="img"
-                            sx={{
-                                height: 350,
-                                width: '100%',
-                                minWidth: '400px',
-                                borderRadius: '10%',
-                            }}
-                            src={`http://localhost:8000${d.image}`}
-                        />
+    // const processedNonSlide = latestNonSlide.map(d => {
+    //     if (d.id % 2 === 0) {
+    //         return (
+    //             <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '0px', paddingTop: '100px' }}>
+    //                 <Grid item xs={12} md={4}>
+    //                     <div key={d.id}>
+    //                         <Typography variant='h6' align="left"><b>{d.title}</b></Typography>
+    //                         {/* Konten tambahan untuk id genap */}
+    //                         <p>{d.description}</p>
+    //                     </div>
+    //                     <Box mt={2} display="flex" justifyContent="flex-start">
+    //                         <Link to=''>
+    //                             <Button
+    //                                 variant="contained"
+    //                                 color="warning">
+    //                                 Donation
+    //                             </Button>
+    //                         </Link>
+    //                     </Box>
+    //                 </Grid>
+    //                 <Grid item xs={12} md={4}>
+    //                     <Box
+    //                         component="img"
+    //                         sx={{
+    //                             height: 350,
+    //                             width: '100%',
+    //                             minWidth: '400px',
+    //                             borderRadius: '10%',
+    //                         }}
+    //                         src={`http://localhost:8000${d.image}`}
+    //                     />
 
-                    </Grid>
-                </Grid>
-            );
-        } else {
-            return (
-                <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
-                    <Grid item xs={12} md={4}>
-                        <Box
-                            component="img"
-                            sx={{
-                                height: 350,
-                                width: '100%',
-                                minWidth: '300px',
-                                borderRadius: '10%',
-                            }}
-                            src={`http://localhost:8000${d.image}`}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <div>
-                            <Typography variant='h6' align="right"><b>{d.title}</b></Typography>
-                            {/* Konten tambahan untuk id ganjil */}
-                            <p>{d.description}</p>
-                        </div>
-                        <Box mt={2} display="flex" justifyContent="flex-end">
-                            <Link to=''>
-                                <Button
-                                    variant="contained"
-                                    color="warning">
-                                    Donation
-                                </Button>
-                            </Link>
-                        </Box>
-                    </Grid>
-                </Grid>
-            );
-        }
-    });
+    //                 </Grid>
+    //             </Grid>
+    //         );
+    //     } else {
+    //         return (
+    //             <Grid rowSpacing={{ xs: 6 }} container sx={{ justifyContent: 'space-evenly', paddingBottom: '100px' }}>
+    //                 <Grid item xs={12} md={4}>
+    //                     <Box
+    //                         component="img"
+    //                         sx={{
+    //                             height: 350,
+    //                             width: '100%',
+    //                             minWidth: '300px',
+    //                             borderRadius: '10%',
+    //                         }}
+    //                         src={`http://localhost:8000${d.image}`}
+    //                     />
+    //                 </Grid>
+    //                 <Grid item xs={12} md={4}>
+    //                     <div>
+    //                         <Typography variant='h6' align="right"><b>{d.title}</b></Typography>
+    //                         {/* Konten tambahan untuk id ganjil */}
+    //                         <p>{d.description}</p>
+    //                     </div>
+    //                     <Box mt={2} display="flex" justifyContent="flex-end">
+    //                         <Link to=''>
+    //                             <Button
+    //                                 variant="contained"
+    //                                 color="warning">
+    //                                 Donation
+    //                             </Button>
+    //                         </Link>
+    //                     </Box>
+    //                 </Grid>
+    //             </Grid>
+    //         );
+    //     }
+    // });
 
     const styles = {
         // backgroundColor: '#ffac33',
@@ -411,10 +414,10 @@ export default function Beranda() {
                         {LembagaSosial({ picture: GSJA, name: "GSJA" })}
                     </Grid>
                     <Grid item xs={12} md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        {LembagaSosial({ picture: TzuChi, name: "Tzu Chi" })}
+                        {LembagaSosial({ picture: logo2, name: "Thu Chu" })}
                     </Grid>
                     <Grid item xs={12} md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        {LembagaSosial({ picture: TFI, name: "Teach For Indonesia" })}
+                        {LembagaSosial({ picture: logo3, name: "Teach For Tangerang" })}
                     </Grid>
                 </Grid>
                 <br />
