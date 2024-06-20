@@ -105,7 +105,7 @@ class UserController extends Controller
     }
 
     public function getUsersToApprove(){
-        $users = DB::table('users')->where('status', '=', 0 )->get();
+        $users = DB::table('users')->where('status', '=', 0 )->where('role','=','lembaga')->get();
         return compact('users');
     }
     public function approveUser($id){

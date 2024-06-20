@@ -73,7 +73,7 @@ class AuthController extends Controller
         
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        if($user->status !== 1){
+        if($user->status !== 1 && $user->role === 'lembaga'){
             return response([
                 'message' => 'Akun belum aktif'
             ], 422);
