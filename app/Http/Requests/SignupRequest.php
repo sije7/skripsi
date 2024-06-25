@@ -38,7 +38,7 @@ class SignupRequest extends FormRequest
                     ->numbers()
             ],
             'role' => ['required','string','in:admin,user,lembaga'],
-            'no_req' => ['nullable','string','regex:/^[0-9]{10,15}$/'],
+            'no_rekening' => ['nullable','string','regex:/^[0-9]{10,15}$/'],
             'jenis_kelamin' => ['nullable','string','in:pria,wanita'],
             'nomor_telepon' => ['nullable','string','regex:/^[0-9]{10,15}$/'],
             'umur' => ['nullable','integer','min:0','max:150'],

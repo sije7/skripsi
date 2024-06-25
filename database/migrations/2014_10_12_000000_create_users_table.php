@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('lokasi')->nullable();
             $table->string('penanggung_jawab')->nullable();
             $table->string('nomor_telepon')->nullable();
-            $table->string('profile_image')->nullable();
+            $table->string('profile_image')->default('/storage/images/profiledefault.png')->nullable();
             $table->string('bank')->nullable();
             $table->integer('status')->default(0);
             $table->longText('deskripsi')->nullable();

@@ -15,13 +15,15 @@ import { useRef } from 'react';
 import { useStateContext } from '../context/ContextProvider';
 import { useState } from 'react';
 import axiosClient from '../axios-client';
+import { Snackbar } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'© '}
-            <Link style={{textDecoration:'none'}} color="inherit" to="/">
-            2024 All Right Reserved
+            <Link style={{ textDecoration: 'none' }} color="inherit" to="/">
+                2024 All Right Reserved
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -30,6 +32,7 @@ function Copyright(props) {
 }
 
 const defaultTheme = createTheme();
+
 
 export default function Login() {
     const emailRef = useRef()
@@ -40,7 +43,23 @@ export default function Login() {
 
     const [errorMessage, setErrorMessage] = useState(null)
 
-
+    const location = useLocation()
+    const [message, setMessage] = useState(null)
+    const [stateSnackbar] = useState({
+        open: true,
+        vertical: 'top',
+        horizontal: 'center',
+    });
+    const { vertical, horizontal } = stateSnackbar;
+    const [open, setOpen] = useState(false);
+    
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+    
+        setOpen(false);
+    };
     const handleSubmit = (event) => {
         event.preventDefault()
         const payload = {
@@ -62,8 +81,24 @@ export default function Login() {
             })
     }
 
+    React.useEffect(() => {
+        location.state ? location.state.message ? setMessage(location.state.message) : '' : ''
+        location.state ? location.state.message ? setOpen(true) : '' : ''
+        window.history.replaceState({}, '')
+    }, [])
+    
+
     return (
+
         <ThemeProvider theme={defaultTheme}>
+            {message && <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                autoHideDuration={5000}
+                message={message}
+                key={vertical + horizontal}
+                onClose={handleClose}
+            />}
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid
@@ -97,7 +132,7 @@ export default function Login() {
                             Sign in
                         </Typography>
                         {errors && <div className="alert">
-                            {Object.keys(errors).map(key=>(
+                            {Object.keys(errors).map(key => (
                                 <p key={key}>{errors[key][0]}</p>
                             ))}
                         </div>
@@ -117,7 +152,7 @@ export default function Login() {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2, backgroundColor:'#66AB92' }}
+                                sx={{ mt: 3, mb: 2, backgroundColor: '#66AB92' }}
                             >
                                 Sign In
                             </Button>

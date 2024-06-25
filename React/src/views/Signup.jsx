@@ -66,7 +66,7 @@ export default function SignUp() {
             password_confirmation: passwordConfirmationRef.current.value,
             jenis_kelamin: gender || null,
             umur: umurRef.current.value,
-            no_req: noReqRef.current.value,
+            no_rekening: noReqRef.current.value,
             nomor_telepon: noTelpRef.current.value,
             role: "user",
             bank: bankRef.current.value
@@ -138,13 +138,13 @@ export default function SignUp() {
                                         </RadioGroup>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={noReqRef} type="" placeholder="No Rekening" />
+                                        <input ref={noReqRef} type="number" placeholder="No Rekening" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={umurRef} type="" placeholder="Umur" />
+                                        <input ref={umurRef} type="number" placeholder="Umur" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={noTelpRef} type="" placeholder="No Telepon" />
+                                        <input ref={noTelpRef} type="number" placeholder="No Telepon" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={bankRef} type="" placeholder="Bank" />
