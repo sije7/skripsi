@@ -66,6 +66,9 @@ class AuthController extends Controller
         // error_log($user->status);
         if (!Auth::attempt($credentials)) {
             return response([
+                'errors'=>[
+                    'credentials' => ['email atau password salah']
+                ],
                 'message' => 'Email atau Password Salah'
             ], 422);
         }
@@ -75,6 +78,9 @@ class AuthController extends Controller
         $user = Auth::user();
         if($user->status !== 1 && $user->role === 'lembaga'){
             return response([
+                'errors'=>[
+                    'Account' => ['akun belum aktif']
+                ],
                 'message' => 'Akun belum aktif'
             ], 422);
         }

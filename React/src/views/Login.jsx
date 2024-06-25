@@ -38,6 +38,8 @@ export default function Login() {
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
 
+    const [errorMessage, setErrorMessage] = useState(null)
+
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -55,6 +57,8 @@ export default function Login() {
                 if (response && response.status === 422) {
                     setErrors(response.data.errors)
                 }
+                setErrorMessage(response.data.message)
+                console.log(response.data.message)
             })
     }
 
@@ -98,6 +102,10 @@ export default function Login() {
                             ))}
                         </div>
                         }
+                        {/* {errorMessage && <div className="alert">
+                            {errorMessage}
+                        </div>
+                        } */}
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <input ref={emailRef} type="email" placeholder="Email" />
                             <input ref={passwordRef} type="password" placeholder="Password" />
