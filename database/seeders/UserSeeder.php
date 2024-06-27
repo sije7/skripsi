@@ -184,7 +184,7 @@ class UserSeeder extends Seeder
             'longitude'=>106.8073101
         ]);
         DB::table('users')->insert([
-            'name' => 'Solidaritas Kemanusiaan Indonesia',
+            'name' => 'Solidaritas',
             'email' => 'solidaritaskemanusiaan@email',
             'password' => bcrypt('solidaritas'),
             'remember_token'=>'831239812',
@@ -198,7 +198,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BNI',
             'status'=> 1,
-            'deskripsi'=> 'Solidaritas Kemanusiaan Indonesia adalah organisasi nirlaba yang bekerja untuk mengatasi ketidaksetaraan dan memberikan bantuan kepada mereka yang terkena dampak bencana alam. Kami menyediakan layanan vital seperti pendidikan, kesehatan, dan bantuan darurat.',
+            'deskripsi'=> 'Solidaritas adalah organisasi nirlaba yang bekerja untuk mengatasi ketidaksetaraan dan memberikan bantuan kepada mereka yang terkena dampak bencana alam. Kami menyediakan layanan vital seperti pendidikan, kesehatan, dan bantuan darurat.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',
             'latitude'=>-6.2472195,
