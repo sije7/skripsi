@@ -17,8 +17,7 @@ import axiosClient from '../axios-client';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 function Copyright(props) {
     return (
@@ -52,7 +51,7 @@ export default function SignUp() {
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
-
+    const [bank, setBank] = useState('Bank')
     const styles = {
         // backgroundColor: '#E1F3D8',
         padding: 4
@@ -60,30 +59,36 @@ export default function SignUp() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        const payload = {
-            name: nameRef.current.value,
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
-            password_confirmation: passwordConfirmationRef.current.value,
-            jenis_kelamin: gender || null,
-            umur: umurRef.current.value,
-            no_rekening: noReqRef.current.value,
-            nomor_telepon: noTelpRef.current.value,
-            role: "user",
-            bank: bankRef.current.value,
-            nik: nikRef.current.value
+        if (bank === 'Bank') {
+            setErrors({ bank: ["Bank wajib dipilih"] })
+
+        } else {
+            const payload = {
+                name: nameRef.current.value,
+                email: emailRef.current.value,
+                password: passwordRef.current.value,
+                password_confirmation: passwordConfirmationRef.current.value,
+                jenis_kelamin: gender || null,
+                umur: umurRef.current.value,
+                no_rekening: noReqRef.current.value,
+                nomor_telepon: noTelpRef.current.value,
+                role: "user",
+                bank: bank,
+                nik: nikRef.current.value
+            }
+            // console.log('test')
+            axiosClient.post('/signup', payload)
+                .then(({ data }) => {
+                    setUser(data.user)
+                    setToken(data.token);
+                })
+                .catch(err => {
+                    const response = err.response;
+                    if (response && response.status === 422) {
+                        setErrors(response.data.errors)
+                    }
+                })
         }
-        axiosClient.post('/signup', payload)
-            .then(({ data }) => {
-                setUser(data.user)
-                setToken(data.token);
-            })
-            .catch(err => {
-                const response = err.response;
-                if (response && response.status === 422) {
-                    setErrors(response.data.errors)
-                }
-            })
 
     }
 
@@ -103,7 +108,7 @@ export default function SignUp() {
                         {/* <Avatar sx={{ m: 1, bgcolor: '#132519' }}>
                             <LockOutlinedIcon />
                         </Avatar> */}
-                        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, borderRadius: 10, width:'1000px' }}>
+                        <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2, borderRadius: 10, width: '1000px' }}>
                             <Typography component="h1" variant="h5">
                                 {/* Sign Up User */}
                             </Typography>
@@ -154,16 +159,32 @@ export default function SignUp() {
                                         <input ref={noTelpRef} type="number" placeholder="No Telepon" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={bankRef} type="" placeholder="Bank" />
+                                        <FormControl fullWidth>
+                                            <InputLabel id="bank-label">Bank</InputLabel>
+                                            <Select
+                                                labelId="bank-label"
+                                                id="bank-select"
+                                                value={bank}
+                                                onChange={(event) => setBank(event.target.value)}
+                                                label="Bank"
+                                                style={{height:'50px'}}
+                                            >
+                                                <MenuItem value="BCA">BCA</MenuItem>
+                                                <MenuItem value="Mandiri">Mandiri</MenuItem>
+                                                <MenuItem value="BNI">BNI</MenuItem>
+                                                <MenuItem value="BRI">BRI</MenuItem>
+                                                <MenuItem value="CIMB">CIMB</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </Grid>
                                 </Grid>
-                                <Grid item sx={{justifyContent:'center', display:'flex'}}>
+                                <Grid item sx={{ justifyContent: 'center', display: 'flex' }}>
 
-                                <Button
+                                    <Button
                                         type="submit"
                                         fullWidth
                                         variant="contained"
-                                        sx={{ width: '400px', backgroundColor:'#66AB92' }}
+                                        sx={{ width: '400px', backgroundColor: '#66AB92' }}
                                     >
                                         Sign Up
                                     </Button>

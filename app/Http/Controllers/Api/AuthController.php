@@ -40,7 +40,7 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         /** @var \App\Models\User $user */
-        error_log($data['nik']);
+        // error_log($data['nik']);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
