@@ -34,6 +34,7 @@ class UserSeeder extends Seeder
             'bank'=>'BCA',
             'status'=> 1,
             'deskripsi'=> '',
+            'nik'=>'3171001234560001',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]));
@@ -53,6 +54,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BCA',
             'status'=> 1,
+            'nik'=>'3172002345670002',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -72,6 +74,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BCA',
             'status'=> 1,
+            'nik'=>'3173003456780003',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22'
         ]);
@@ -91,6 +94,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BCA',
             'status'=> 1,
+            'nik'=>'3174004567890004',
             'deskripsi'=>'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',
@@ -112,6 +116,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BCA',
             'status'=> 1,
+            'nik'=>'3175005678900005',
             'deskripsi'=> 'Lembaga Kami Bisa adalah sebuah lembaga sosial yang berdedikasi untuk meningkatkan kesejahteraan komunitas dan mendorong perubahan positif melalui dukungan yang terarah dan program inovatif. Misi kami mencakup penyediaan layanan penting seperti pendidikan, kesehatan, dan bantuan bencana kepada populasi yang kurang terlayani.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',
@@ -133,6 +138,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BCA',
             'status'=> 1,
+            'nik'=>'3176006789010006',
             'deskripsi'=> 'Teach For Tangerang adalah lembaga sosial yang berdedikasi untuk memberdayakan komunitas dan menciptakan perubahan positif melalui program-program unggulan dan dukungan yang berkelanjutan. Kami fokus pada penyediaan layanan vital seperti pendidikan, kesehatan, dan bantuan darurat bagi mereka yang paling membutuhkan.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',
@@ -155,6 +161,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'Mandiri',
             'status'=> 1,
+            'nik'=>'3177007890120007',
             'deskripsi'=> 'Yayasan Peduli Nusa adalah organisasi sosial yang berkomitmen untuk meningkatkan kualitas hidup masyarakat melalui bantuan yang terarah dan program berkelanjutan. Kami menyediakan layanan penting seperti pendidikan, kesehatan, dan bantuan darurat, khususnya bagi mereka yang terdampak bencana alam.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',
@@ -177,6 +184,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BRI',
             'status'=> 1,
+            'nik'=>'3178008901230008',
             'deskripsi'=> 'Lembaga Amal Bersatu berkomitmen untuk memberikan dukungan yang komprehensif kepada komunitas yang kurang terlayani di seluruh Indonesia. Fokus kami meliputi pendidikan, pelayanan kesehatan, dan tanggap darurat bencana.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',
@@ -198,6 +206,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BNI',
             'status'=> 1,
+            'nik'=>'3179009012340009',
             'deskripsi'=> 'Solidaritas adalah organisasi nirlaba yang bekerja untuk mengatasi ketidaksetaraan dan memberikan bantuan kepada mereka yang terkena dampak bencana alam. Kami menyediakan layanan vital seperti pendidikan, kesehatan, dan bantuan darurat.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',
@@ -221,6 +230,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'BCA',
             'status'=> 0,
+            'nik'=>'3170100123450010',
             'deskripsi'=> 'Yayasan Harapan Bangsa adalah lembaga sosial yang berfokus pada pemberdayaan masyarakat melalui program pendidikan, kesehatan, dan bantuan darurat. Kami berkomitmen untuk membantu mereka yang terkena dampak bencana alam dan krisis lainnya.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',
@@ -242,6 +252,7 @@ class UserSeeder extends Seeder
             'penanggung_jawab'=>'',
             'bank'=>'Panin',
             'status'=> 0,
+            'nik'=>'3171101234560011',
             'deskripsi'=> 'Rumah Peduli Sesama adalah organisasi nirlaba yang berdedikasi untuk membantu masyarakat yang kurang beruntung dan korban bencana alam. Kami menyediakan berbagai layanan, termasuk pendidikan, kesehatan, dan bantuan darurat.',
             'created_at'=>'2024-05-10 14:43:22',
             'updated_at'=>'2024-05-10 14:43:22',

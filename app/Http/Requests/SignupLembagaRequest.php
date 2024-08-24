@@ -47,6 +47,8 @@ class SignupLembagaRequest extends FormRequest
             'deskripsi' => ['required'],
             'latitude' =>['required'],
             'longitude' =>['required'],
+            'nik'=>['required','min:16','max:16'],
+            'npwp'=>['required','min:16','max:16']
         ];
     }
 }

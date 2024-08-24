@@ -39,7 +39,9 @@ class User extends Authenticatable
         'bank',
         'deskripsi',
         'latitude',
-        'longitude'
+        'longitude',
+        'nik',
+        'npwp'
     ];
 
     /**

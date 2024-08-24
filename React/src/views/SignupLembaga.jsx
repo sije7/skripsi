@@ -50,6 +50,8 @@ export default function SignUp() {
     const lokasiRef = useRef()
     const bankRef = useRef()
     const deskripsiRef = useRef()
+    const nikRef = useRef()
+    const npwpRef = useRef()
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
@@ -82,7 +84,9 @@ export default function SignUp() {
             bank: bankRef.current.value,
             deskripsi: deskripsiRef.current.value,
             latitude: location.lat,
-            longitude:location.lon
+            longitude:location.lon,
+            nik: nikRef.current.value,
+            npwp: npwpRef.current.value
         }
         axiosClient.post('/signupLembaga', payload)
             .then(({ data }) => {
@@ -165,6 +169,12 @@ export default function SignUp() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={deskripsiRef} type="" placeholder="Deskripsi Lembaga" />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <input ref={nikRef} placeholder="Nomor Induk Kependudukan Penanggung Jawab (NIK)" />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <input ref={npwpRef} placeholder="Nomor Pokok Wajib Pajak (NPWP)" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={noReqRef} type="number" placeholder="No Rekening" />

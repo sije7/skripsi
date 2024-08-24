@@ -29,6 +29,7 @@ class AuthController extends Controller
             'nomor_telepon' => $data['nomor_telepon'],
             'bank' => $data['bank'],
             'status' => 1,
+            'nik'=> $data['nik']
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
@@ -39,6 +40,7 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         /** @var \App\Models\User $user */
+        error_log($data['nik']);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -53,6 +55,8 @@ class AuthController extends Controller
             'deskripsi'=> $data['deskripsi'],
             'latitude'=>$data['latitude'],
             'longitude'=>$data['longitude'],
+            'nik'=> $data['nik'],
+            'npwp'=> $data['npwp']
         ]);
 
         $token = $user->createToken('main')->plainTextToken;

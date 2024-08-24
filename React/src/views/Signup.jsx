@@ -48,6 +48,7 @@ export default function SignUp() {
     const noTelpRef = useRef()
     // const roleRef = useRef()
     const bankRef = useRef()
+    const nikRef = useRef()
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
@@ -69,7 +70,8 @@ export default function SignUp() {
             no_rekening: noReqRef.current.value,
             nomor_telepon: noTelpRef.current.value,
             role: "user",
-            bank: bankRef.current.value
+            bank: bankRef.current.value,
+            nik: nikRef.current.value
         }
         axiosClient.post('/signup', payload)
             .then(({ data }) => {
@@ -118,6 +120,11 @@ export default function SignUp() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={emailRef} type="email" placeholder="Email Address" />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <input ref={nikRef} placeholder="Nomor Induk Kependudukan (NIK)" />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={passwordRef} type="password" placeholder="Password" />

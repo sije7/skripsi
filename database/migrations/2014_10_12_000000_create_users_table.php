@@ -32,6 +32,8 @@ return new class extends Migration
             $table->longText('deskripsi')->nullable();
             $table->decimal('latitude',20,7)->nullable();
             $table->decimal('longitude',20,7)->nullable();
+            $table->string('npwp')->nullable();
+            $table->string('nik');
             $table->timestamps();
         });
     }
