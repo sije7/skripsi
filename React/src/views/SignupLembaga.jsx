@@ -50,6 +50,8 @@ export default function SignUp() {
     const lokasiRef = useRef()
     const bankRef = useRef()
     const deskripsiRef = useRef()
+    const nikRef = useRef()
+    const npwpRef = useRef()
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
@@ -74,7 +76,7 @@ export default function SignUp() {
             email: emailRef.current.value,
             password: passwordRef.current.value,
             password_confirmation: passwordConfirmationRef.current.value,
-            no_req: noReqRef.current.value,
+            no_rekening: noReqRef.current.value,
             nomor_telepon: noTelpRef.current.value,
             role: "lembaga",
             penanggung_jawab: penanggungRef.current.value,
@@ -82,11 +84,13 @@ export default function SignUp() {
             bank: bankRef.current.value,
             deskripsi: deskripsiRef.current.value,
             latitude: location.lat,
-            longitude:location.lon
+            longitude:location.lon,
+            nik: nikRef.current.value,
+            npwp: npwpRef.current.value
         }
         axiosClient.post('/signupLembaga', payload)
             .then(({ data }) => {
-                return navigate('/login')
+                return navigate('/login', { state: { message: 'Lembaga Berhasil dibuat, mohon ditunggu untuk disetujui oleh Admin' } })
             })
             .catch(err => {
                 const response = err.response;
@@ -167,13 +171,19 @@ export default function SignUp() {
                                         <input ref={deskripsiRef} type="" placeholder="Deskripsi Lembaga" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={noReqRef} type="" placeholder="No Rekening" />
+                                        <input ref={nikRef} placeholder="Nomor Induk Kependudukan Penanggung Jawab (NIK)" />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <input ref={npwpRef} placeholder="Nomor Pokok Wajib Pajak (NPWP)" />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <input ref={noReqRef} type="number" placeholder="No Rekening" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={lokasiRef} type="" placeholder="Lokasi" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={noTelpRef} type="" placeholder="No Telepon" />
+                                        <input ref={noTelpRef} type="number" placeholder="No Telepon" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={bankRef} type="" placeholder="Bank" />

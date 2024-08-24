@@ -48,6 +48,7 @@ export default function SignUp() {
     const noTelpRef = useRef()
     // const roleRef = useRef()
     const bankRef = useRef()
+    const nikRef = useRef()
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
@@ -66,10 +67,11 @@ export default function SignUp() {
             password_confirmation: passwordConfirmationRef.current.value,
             jenis_kelamin: gender || null,
             umur: umurRef.current.value,
-            no_req: noReqRef.current.value,
+            no_rekening: noReqRef.current.value,
             nomor_telepon: noTelpRef.current.value,
             role: "user",
-            bank: bankRef.current.value
+            bank: bankRef.current.value,
+            nik: nikRef.current.value
         }
         axiosClient.post('/signup', payload)
             .then(({ data }) => {
@@ -120,6 +122,11 @@ export default function SignUp() {
                                         <input ref={emailRef} type="email" placeholder="Email Address" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
+                                        <input ref={nikRef} placeholder="Nomor Induk Kependudukan (NIK)" />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
                                         <input ref={passwordRef} type="password" placeholder="Password" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -138,13 +145,13 @@ export default function SignUp() {
                                         </RadioGroup>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={noReqRef} type="" placeholder="No Rekening" />
+                                        <input ref={noReqRef} type="number" placeholder="No Rekening" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={umurRef} type="" placeholder="Umur" />
+                                        <input ref={umurRef} type="number" placeholder="Umur" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={noTelpRef} type="" placeholder="No Telepon" />
+                                        <input ref={noTelpRef} type="number" placeholder="No Telepon" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <input ref={bankRef} type="" placeholder="Bank" />

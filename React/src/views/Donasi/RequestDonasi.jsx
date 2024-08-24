@@ -101,7 +101,6 @@ export default function RequestDonasi() {
         }
     }, [])
 
-
     const handleImage = (e) => {
         const file = e.target.files[0]
         setImage(file)
@@ -486,6 +485,7 @@ export default function RequestDonasi() {
                             <FormControl sx={{ width: '25ch' }} variant="outlined">
                                 <OutlinedInput
                                     value={jumlah}
+                                    type="number"
                                     onChange={handleChangeJumlah}
                                     id="outlined-adornment-weight"
                                     endAdornment={<InputAdornment position="end">{satuan}</InputAdornment>}

@@ -23,12 +23,13 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => 'user',
-            'no_req' => $data['no_req'],
+            'no_req' => $data['no_rekening'],
             'jenis_kelamin' => $data['jenis_kelamin'],
             'umur' => $data['umur'],
             'nomor_telepon' => $data['nomor_telepon'],
             'bank' => $data['bank'],
             'status' => 1,
+            'nik'=> $data['nik']
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
@@ -39,12 +40,13 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         /** @var \App\Models\User $user */
+        error_log($data['nik']);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'role' => $data['role'],
-            'no_req' => $data['no_req'],
+            'no_req' => $data['no_rekening'],
             'nomor_telepon' => $data['nomor_telepon'],
             'lokasi' => $data['lokasi'],
             'penanggung_jawab' => $data['penanggung_jawab'],
@@ -53,6 +55,8 @@ class AuthController extends Controller
             'deskripsi'=> $data['deskripsi'],
             'latitude'=>$data['latitude'],
             'longitude'=>$data['longitude'],
+            'nik'=> $data['nik'],
+            'npwp'=> $data['npwp']
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
@@ -66,6 +70,9 @@ class AuthController extends Controller
         // error_log($user->status);
         if (!Auth::attempt($credentials)) {
             return response([
+                'errors'=>[
+                    'credentials' => ['email atau password salah']
+                ],
                 'message' => 'Email atau Password Salah'
             ], 422);
         }
@@ -75,6 +82,9 @@ class AuthController extends Controller
         $user = Auth::user();
         if($user->status !== 1 && $user->role === 'lembaga'){
             return response([
+                'errors'=>[
+                    'Account' => ['akun belum aktif']
+                ],
                 'message' => 'Akun belum aktif'
             ], 422);
         }
