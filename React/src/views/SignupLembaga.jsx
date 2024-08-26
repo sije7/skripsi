@@ -14,12 +14,9 @@ import { useRef } from 'react';
 import { useStateContext } from '../context/ContextProvider';
 import { useState } from 'react';
 import axiosClient from '../axios-client';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import { useNavigate } from 'react-router-dom';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 function Copyright(props) {
     return (
@@ -61,6 +58,7 @@ export default function SignUp() {
     const [route, setRoute] = useState([]);
     const [distance, setDistance] = useState(null);
     const [destinationName, setDestinationName] = useState("Enter coordinates to get name");
+    const [bank, setBank] = useState(null)
 
     const styles = {
         // backgroundColor: '#E1F3D8',
@@ -81,10 +79,10 @@ export default function SignUp() {
             role: "lembaga",
             penanggung_jawab: penanggungRef.current.value,
             lokasi: lokasiRef.current.value,
-            bank: bankRef.current.value,
+            bank: bank,
             deskripsi: deskripsiRef.current.value,
             latitude: location.lat,
-            longitude:location.lon,
+            longitude: location.lon,
             nik: nikRef.current.value,
             npwp: npwpRef.current.value
         }
@@ -103,26 +101,26 @@ export default function SignUp() {
 
     React.useEffect(() => {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              setLocation({
-                lat: position.coords.latitude,
-                lon: position.coords.longitude,
-              });
-            },
-            (error) => {
-              console.error("Error obtaining geolocation:", error);
-              // Fallback ke lokasi manual jika geolocation gagal
-              const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
-              setLocation(jakartaCoords);
-            }
-          );
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setLocation({
+                        lat: position.coords.latitude,
+                        lon: position.coords.longitude,
+                    });
+                },
+                (error) => {
+                    console.error("Error obtaining geolocation:", error);
+                    // Fallback ke lokasi manual jika geolocation gagal
+                    const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
+                    setLocation(jakartaCoords);
+                }
+            );
         } else {
-          // Fallback ke lokasi manual jika geolocation tidak didukung
-          const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
-          setLocation(jakartaCoords);
+            // Fallback ke lokasi manual jika geolocation tidak didukung
+            const jakartaCoords = { lat: -6.2088, lon: 106.8456 };
+            setLocation(jakartaCoords);
         }
-      }, []);
+    }, []);
 
     return (
         <div style={styles}>
@@ -186,7 +184,24 @@ export default function SignUp() {
                                         <input ref={noTelpRef} type="number" placeholder="No Telepon" />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <input ref={bankRef} type="" placeholder="Bank" />
+                                        <FormControl fullWidth>
+                                            <InputLabel id="bank-label">Bank</InputLabel>
+                                            <Select
+                                                labelId="bank-label"
+                                                id="bank-select"
+                                                value={bank}
+                                                onChange={(event) => setBank(event.target.value)}
+                                                label="Bank"
+                                                style={{ height: '50px' }}
+                                            >
+                                                <MenuItem value="BCA">BCA</MenuItem>
+                                                <MenuItem value="Mandiri">Mandiri</MenuItem>
+                                                <MenuItem value="BNI">BNI</MenuItem>
+                                                <MenuItem value="BRI">BRI</MenuItem>
+                                                <MenuItem value="CIMB">CIMB</MenuItem>
+                                                <MenuItem value="Panin">Panin</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </Grid>
                                 </Grid>
                                 <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -194,7 +209,7 @@ export default function SignUp() {
                                         type="submit"
                                         fullWidth
                                         variant="contained"
-                                        sx={{ width: '400px', backgroundColor:'#66AB92' }}
+                                        sx={{ width: '400px', backgroundColor: '#66AB92' }}
                                     >
                                         Sign Up
                                     </Button>

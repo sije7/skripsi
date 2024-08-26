@@ -42,7 +42,7 @@ class SignupRequest extends FormRequest
             'jenis_kelamin' => ['nullable','string','in:pria,wanita'],
             'nomor_telepon' => ['nullable','string','regex:/^[0-9]{10,15}$/'],
             'umur' => ['nullable','integer','min:0','max:150'],
-            'bank' => ['nullable','string'],
+            'bank' => ['required','string'],
             'nik'=>['required','string','min:16','max:16']
         ];
     }

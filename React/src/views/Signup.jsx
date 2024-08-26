@@ -51,7 +51,7 @@ export default function SignUp() {
 
     const { setUser, setToken } = useStateContext()
     const [errors, setErrors] = useState(null)
-    const [bank, setBank] = useState('Bank')
+    const [bank, setBank] = useState(null)
     const styles = {
         // backgroundColor: '#E1F3D8',
         padding: 4
@@ -174,6 +174,7 @@ export default function SignUp() {
                                                 <MenuItem value="BNI">BNI</MenuItem>
                                                 <MenuItem value="BRI">BRI</MenuItem>
                                                 <MenuItem value="CIMB">CIMB</MenuItem>
+                                                <MenuItem value="Panin">Panin</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Grid>
