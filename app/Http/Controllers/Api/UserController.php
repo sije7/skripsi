@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailVerification;
 
 class UserController extends Controller
 {
@@ -114,5 +116,18 @@ class UserController extends Controller
 
         $user->save();
         return 'User Berhasil Diapprove';
+    }
+
+    public function rejectUser($id){
+        $user = User::find($id);
+        $user->status = -1;
+
+        $user->save();
+        return 'User Telah Direject';
+    }
+
+    public function sendEmail(){
+        Mail::mailer('smtp')->to('cjchristian78@gmail.com')->send(new EmailVerification);
+        return 'Sent!';
     }
 }

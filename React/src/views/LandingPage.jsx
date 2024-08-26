@@ -4,12 +4,17 @@ import HeaderLandingPage from '../components/LandingPage/Header';
 import CardLandingPage from '../components/LandingPage/Card';
 import { Card, Grid, Typography } from '@mui/material';
 import Footer from '../components/Footer';
+import axiosClient from "../axios-client";
 import Money from '../assets/LandingPage/Money.png'
 import Item from '../assets/LandingPage/Item.png'
 import Learn from '../assets/LandingPage/Learn.png'
 import HeroImage1 from '../assets/LandingPage/HeroLanding1.jpg'
 import HeroImage2 from '../assets/LandingPage/HeroLanding2.jpg'
 export default function LandingPage() {
+
+    const handleClick = () => {
+        axiosClient.post(`/mail`)
+    }
     return (
         <>
             <HeaderLandingPage />
@@ -38,21 +43,21 @@ export default function LandingPage() {
 
             <Grid container rowSpacing={4} sx={{ justifyContent: 'space-evenly', marginTop: '150px', fontSize:'15px' }}>
                 <Grid item>
-                    <CardLandingPage 
-                    title='Donasi Barang' 
-                    content='Memberi barang tidak terpakai untuk korban bencana alam yang membutuhkan.' 
+                    <CardLandingPage
+                    title='Donasi Barang'
+                    content='Memberi barang tidak terpakai untuk korban bencana alam yang membutuhkan.'
                     image={Item} />
                 </Grid>
                 <Grid item>
-                    <CardLandingPage 
-                    title='Galang Dana' 
-                    content='Membantu korban bencana alam yang membutuhkan dana untuk bertahan hidup dalam kondisi sulit.' 
+                    <CardLandingPage
+                    title='Galang Dana'
+                    content='Membantu korban bencana alam yang membutuhkan dana untuk bertahan hidup dalam kondisi sulit.'
                     image={Money} />
                 </Grid>
                 <Grid item>
-                    <CardLandingPage 
-                    title='Pembelajaran' 
-                    content='Mengedukasi masyarakat yang mengalami bencana alam dalam hal penanganan bencana alam dan informasi yang membantu' 
+                    <CardLandingPage
+                    title='Pembelajaran'
+                    content='Mengedukasi masyarakat yang mengalami bencana alam dalam hal penanganan bencana alam dan informasi yang membantu'
                     image={Learn} />
                 </Grid>
             </Grid>
@@ -60,10 +65,10 @@ export default function LandingPage() {
             <Grid rowSpacing={{xs: 6}} container sx={{justifyContent:'space-evenly', paddingBottom: '0px', paddingTop:'100px' }}>
                 <Grid item xs={12} md={4}>
                     <h1>Kebaikan, Kekuatan dalam Memberi</h1>
-                    <p style={{marginTop:'30px', fontSize:'16px'}}>Di dunia yang sering terasa kacau, tindakan kebaikan kecil dapat membuat dampak yang signifikan. 
-                        Baik itu menyumbang ke badan amal setempat, menjadi sukarelawan, 
-                        atau hanya membantu tetangga yang membutuhkan, tindakan ini menciptakan efek riak positif. 
-                        Dengan memberi kembali, kita tidak hanya meningkatkan kehidupan orang lain tetapi juga memelihara jiwa kita sendiri. 
+                    <p style={{marginTop:'30px', fontSize:'16px'}}>Di dunia yang sering terasa kacau, tindakan kebaikan kecil dapat membuat dampak yang signifikan.
+                        Baik itu menyumbang ke badan amal setempat, menjadi sukarelawan,
+                        atau hanya membantu tetangga yang membutuhkan, tindakan ini menciptakan efek riak positif.
+                        Dengan memberi kembali, kita tidak hanya meningkatkan kehidupan orang lain tetapi juga memelihara jiwa kita sendiri.
                         Mari kita rangkul semangat kemurahan hati dan kasih sayang, mengetahui bahwa bahkan gerakan terkecil pun dapat mengubah dunia. </p>
                     <p style={{fontWeight:'bold', fontSize:'16px', marginTop:'10px'}}>Ingat, kebaikan itu menular — sebarkanlah dengan bebas! </p>
                 </Grid>
@@ -103,6 +108,10 @@ export default function LandingPage() {
 
             </Grid>
             <Footer />
+
+            <button onClick={handleClick}>
+                <h1>Click</h1>
+            </button>
         </>
     )
 }
