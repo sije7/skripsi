@@ -13,14 +13,15 @@ class EmailVerification extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -31,7 +32,7 @@ class EmailVerification extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Email Verification',
+            subject: 'HopefulHarbor Team',
         );
     }
 
@@ -42,7 +43,7 @@ class EmailVerification extends Mailable
      */
     public function build()
     {
-        return $this->view('welcome');
+        return $this->view('welcome')->with('data', $this->data);
     }
 
     /**

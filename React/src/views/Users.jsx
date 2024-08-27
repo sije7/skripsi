@@ -70,14 +70,6 @@ export default function UsersPage() {
         <>
             <TableContainer component={Paper} >
                 <Table sx={{ minWidth: 650, tableLayout: 'fixed  ' }} aria-label="simple table">
-                    {/* <colgroup>
-                        <col style={{ width: '10%' }} />
-                        <col style={{ width: '20%' }} />
-                        <col style={{ width: '20%' }} />
-                        <col style={{ width: '20%' }} />
-                        <col style={{ width: '20%' }} />
-                        <col style={{ width: '20%' }} />
-                    </colgroup> */}
                     <TableHead>
                         <TableRow>
                             <TableCell width={'100px'}>Name</TableCell>

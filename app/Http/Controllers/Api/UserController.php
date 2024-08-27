@@ -127,7 +127,10 @@ class UserController extends Controller
     }
 
     public function sendEmail(){
-        Mail::mailer('smtp')->to('cjchristian78@gmail.com')->send(new EmailVerification);
+        $data = [
+            'msg'=>'data npwp anda tidak valid'
+        ];
+        Mail::mailer('smtp')->to('danielson7632@gmail.com')->send(new EmailVerification($data));
         return 'Sent!';
     }
 }
