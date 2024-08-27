@@ -123,12 +123,12 @@ class UserController extends Controller
 
     public function rejectUser(Request $request)
     {
-        $data = [
-            'msg' => $request->message
-        ];
-        Mail::mailer('smtp')->to($request->email)->send(new EmailVerification($data));
-        $user = User::find($request->id);
-        $user->delete();
+        // $data = [
+        //     'msg' => $request->message
+        // ];
+        // Mail::mailer('smtp')->to($request->email)->send(new EmailVerification($data));
+        // $user = User::find($request->id);
+        // $user->delete();
 
         return 'User Berhasil Direject';
     }

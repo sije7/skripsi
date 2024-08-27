@@ -14,6 +14,7 @@ export default function FormDialogReject(props) {
   const [message, setMessage] = useState(null)
 
   const handleSubmit = () => {
+    props.setLoading(true)
     let fd = new FormData()
     fd.append("id", props.data.id)
     fd.append("message", message)
@@ -21,8 +22,10 @@ export default function FormDialogReject(props) {
 
     axiosClient.post(`/users/reject`, fd)
       .then(({ res }) => {
-        console.log(res)
+        setOpen(false)
+        props.setLoading(false)
       })
+
   }
 
   const handleClickOpen = () => {
