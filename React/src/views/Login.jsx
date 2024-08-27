@@ -77,7 +77,6 @@ export default function Login() {
                     setErrors(response.data.errors)
                 }
                 setErrorMessage(response.data.message)
-                console.log(response.data.message)
             })
     }
 

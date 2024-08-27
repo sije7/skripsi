@@ -10,7 +10,6 @@ export default function SignupAll() {
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
-        console.log(value)
         setValue(newValue);
     };
 

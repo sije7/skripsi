@@ -10,6 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import FormDialog from "../components/FormDialog"
 
 export default function UsersPage() {
     const [users, setUsers] = useState([{}])
@@ -102,8 +103,8 @@ export default function UsersPage() {
                                         Approve
                                     </Button>
                                     &nbsp;
-                                    <Button variant="contained" color="error" onClick={() => onDelete(row)}>
-                                        Reject
+                                    <Button variant="contained" color="error">
+                                        <FormDialog data={row} />
                                     </Button>
 
                                 </TableCell>

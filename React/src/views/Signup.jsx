@@ -76,7 +76,6 @@ export default function SignUp() {
                 bank: bank,
                 nik: nikRef.current.value
             }
-            // console.log('test')
             axiosClient.post('/signup', payload)
                 .then(({ data }) => {
                     setUser(data.user)

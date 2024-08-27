@@ -11,10 +11,6 @@ import Learn from '../assets/LandingPage/Learn.png'
 import HeroImage1 from '../assets/LandingPage/HeroLanding1.jpg'
 import HeroImage2 from '../assets/LandingPage/HeroLanding2.jpg'
 export default function LandingPage() {
-
-    const handleClick = () => {
-        axiosClient.post(`/mail`)
-    }
     return (
         <>
             <HeaderLandingPage />
@@ -108,10 +104,6 @@ export default function LandingPage() {
 
             </Grid>
             <Footer />
-
-            <button onClick={handleClick}>
-                <h1>Click</h1>
-            </button>
         </>
     )
 }

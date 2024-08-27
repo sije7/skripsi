@@ -72,8 +72,6 @@ export default function DonasiDetail() {
     }, [])
 
     const handleCalculateDistance = async () => {
-        console.log('yes')
-        console.log(location.lat, location.lon , parseFloat(deslat), parseFloat(deslon))
         if (location.lat !== null && location.lon !== null && deslat && deslon) {
             const url = `http://router.project-osrm.org/route/v1/driving/${location.lon},${location.lat};${deslon},${deslat}?overview=full&geometries=geojson`;
             try {
@@ -106,7 +104,6 @@ export default function DonasiDetail() {
                 if (data.donation === null) {
                     return navigate('/')
                 }
-                // console.log(data.donation)
                 setDetail(data.donation)
                 setSubCategories(removeDuplicates(data.donation.sub_category))
                 setprogressDonation(data.donation.progress_donation)
@@ -214,15 +211,8 @@ export default function DonasiDetail() {
 
     }
 
-    // function onTest(){
-    //     console.log(deslat, deslon)
-    //     console.log(location)
-    // }
-
-
     return (
         <>
-        {/* <Button onClick={onTest}>Test</Button> */}
             {loading &&
                 <CircularIndeterminate />}
             {message && <Snackbar
