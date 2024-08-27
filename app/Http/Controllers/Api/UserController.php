@@ -38,7 +38,7 @@ class UserController extends Controller
 
         $user = User::create($data);
 
-        return response(new UserResource($user) , 201);
+        return response(new UserResource($user), 201);
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if($user->profile_image){
+        if ($user->profile_image) {
             Storage::delete($user->profile_image);
         }
         $user->delete();
@@ -101,16 +101,19 @@ class UserController extends Controller
         return response("", 204);
     }
 
-    public function getLembaga(){
-        $lembaga = DB::table('users')->where('role', '=','lembaga')->where('status', 1)->get();
+    public function getLembaga()
+    {
+        $lembaga = DB::table('users')->where('role', '=', 'lembaga')->where('status', 1)->get();
         return $lembaga;
     }
 
-    public function getUsersToApprove(){
-        $users = DB::table('users')->where('status', '=', 0 )->where('role','=','lembaga')->get();
+    public function getUsersToApprove()
+    {
+        $users = DB::table('users')->where('status', '=', 0)->where('role', '=', 'lembaga')->get();
         return compact('users');
     }
-    public function approveUser($id){
+    public function approveUser($id)
+    {
         $user = User::find($id);
         $user->status = 1;
 
@@ -118,19 +121,24 @@ class UserController extends Controller
         return 'User Berhasil Diapprove';
     }
 
-    public function rejectUser($id){
-        $user = User::find($id);
-        $user->status = -1;
-
-        $user->save();
-        return 'User Telah Direject';
-    }
-
-    public function sendEmail(){
+    public function rejectUser(Request $request)
+    {
         $data = [
-            'msg'=>'data npwp anda tidak valid'
+            'msg' => $request->message
         ];
-        Mail::mailer('smtp')->to('danielson7632@gmail.com')->send(new EmailVerification($data));
-        return 'Sent!';
+        Mail::mailer('smtp')->to($request->email)->send(new EmailVerification($data));
+        $user = User::find($request->id);
+        $user->delete();
+
+        return 'User Berhasil Direject';
     }
+
+    // public function sendEmail()
+    // {
+    //     $data = [
+    //         'msg' => 'data npwp anda tidak valid'
+    //     ];
+    //     Mail::mailer('smtp')->to('danielson7632@gmail.com')->send(new EmailVerification($data));
+    //     return 'Sent!';
+    // }
 }

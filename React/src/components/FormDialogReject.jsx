@@ -7,21 +7,32 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
+import axiosClient from '../axios-client';
 
-export default function FormDialog(props) {
+export default function FormDialogReject(props) {
   const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState(null)
 
+  const handleSubmit = () => {
+    let fd = new FormData()
+    fd.append("id", props.data.id)
+    fd.append("message", message)
+    fd.append("email", props.data.email)
 
+    axiosClient.post(`/users/reject`, fd)
+      .then(({ res }) => {
+        console.log(res)
+      })
+  }
 
   const handleClickOpen = () => {
-    console.log(props.data)
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
-  
+
 
   return (
     <React.Fragment>
@@ -42,7 +53,7 @@ export default function FormDialog(props) {
       >
         <DialogTitle>Penolakan Akun {props.data.name}</DialogTitle>
         <DialogContent>
-          <DialogContentText style={{fontWeight:'bold'}}>
+          <DialogContentText style={{ fontWeight: 'bold' }}>
             Untuk menolak aktivasi akun lembaga, berikan alasan untuk penolakan.
             Alasan penolakan akan dikirim kepada email lembaga.
           </DialogContentText>
@@ -50,17 +61,17 @@ export default function FormDialog(props) {
             autoFocus
             required
             margin="dense"
-            id="name"
-            name="email"
+            value={message}
             label="Alasan Penolakan"
             type="text"
             fullWidth
             variant="standard"
+            onChange={(e) => setMessage(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" color="error" type="submit">Tolak Akun</Button>
+          <Button variant="contained" color="error" onClick={handleSubmit}>Tolak Akun</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

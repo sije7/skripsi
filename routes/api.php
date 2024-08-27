@@ -77,3 +77,4 @@ Route::get('/usersToApprove' ,[UserController::class, 'getUsersToApprove']);
 Route::post('/mail',[UserController::class, 'sendEmail' ]);
 
 Route::post('/users/approve/{id}', [UserController::class, 'approveUser']);
+Route::post('/users/reject', [UserController::class, 'rejectUser']);
