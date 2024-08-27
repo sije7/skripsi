@@ -24,6 +24,7 @@ export default function FormDialogReject(props) {
       .then(({ res }) => {
         setOpen(false)
         props.setLoading(false)
+        props.getUsers()
       })
 
   }
@@ -43,16 +44,16 @@ export default function FormDialogReject(props) {
       <Dialog
         open={open}
         onClose={handleClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            handleClose();
-          },
-        }}
+        // PaperProps={{
+        //   component: 'form',
+        //   onSubmit: (event) => {
+        //     event.preventDefault();
+        //     const formData = new FormData(event.currentTarget);
+        //     const formJson = Object.fromEntries(formData.entries());
+        //     const email = formJson.email;
+        //     handleClose();
+        //   },
+        // }}
       >
         <DialogTitle>Penolakan Akun {props.data.name}</DialogTitle>
         <DialogContent>

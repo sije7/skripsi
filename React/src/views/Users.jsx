@@ -93,7 +93,7 @@ export default function UsersPage() {
                                         </Button>
                                         &nbsp;
                                         <Button variant="contained" color="error">
-                                            <FormDialogReject data={row} setLoading={loading => setLoading(loading)} />
+                                            <FormDialogReject data={row} setLoading={loading => setLoading(loading)}  getUsers={()=>getUsers()} />
                                         </Button>
                                     </TableCell>
                                 </TableRow>
