@@ -38,15 +38,17 @@ class SignupLembagaRequest extends FormRequest
                     ->numbers()
             ],
             'role' => ['required','string','in:admin,user,lembaga'],
-            'no_req' => ['nullable','string','regex:/^[0-9]{10,15}$/'],
+            'no_rekening' => ['nullable','string'],
             'jenis_kelamin' => ['nullable','string','in:pria,wanita'],
             'nomor_telepon' => ['nullable','string','regex:/^[0-9]{0,15}$/'],
             'lokasi' => ['required'],
             'penanggung_jawab' => ['required'],
-            'bank' => ['nullable','string'],
+            'bank' => ['required','string'],
             'deskripsi' => ['required'],
             'latitude' =>['required'],
             'longitude' =>['required'],
+            'nik'=>['required','min:16','max:16'],
+            'npwp'=>['required','min:16','max:16']
         ];
     }
 }

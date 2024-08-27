@@ -74,5 +74,7 @@ Route::get('/categories', [DonationController::class, 'getCategories']);
 Route::post('/getDonationBySubCategory', [DonationController::class, 'getDonationBySubCategory']);
 Route::post('/getDonationByCategory', [DonationController::class, 'getDonationByCategory']);
 Route::get('/usersToApprove' ,[UserController::class, 'getUsersToApprove']);
+Route::post('/mail',[UserController::class, 'sendEmail' ]);
 
 Route::post('/users/approve/{id}', [UserController::class, 'approveUser']);
+Route::post('/users/reject', [UserController::class, 'rejectUser']);
