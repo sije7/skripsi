@@ -1,4 +1,4 @@
-import { Button, FormControl, Grid, InputAdornment, InputLabel, OutlinedInput, TextField, styled } from "@mui/material";
+import { Button, FormControl, Grid, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -22,7 +22,7 @@ export default function RequestGalangDana() {
     const [preview, setPreview] = useState('')
     const [nomorRekening, setNomorRekening] = useState('')
     const [namaRekening, setNamaRekening] = useState('')
-    const [bank, setBank] = useState('')
+    const [bank, setBank] = useState(null)
 
     //error
     const [errorJudul, seterrorJudul] = useState('')
@@ -41,7 +41,7 @@ export default function RequestGalangDana() {
         setLoading(true)
         axiosClient.get('/user')
             .then(({ data }) => {
-                if(data.role === 'admin'){
+                if (data.role === 'admin') {
                     return navigate('/')
                 }
                 setUser(data)
@@ -85,7 +85,7 @@ export default function RequestGalangDana() {
         formData.append("Lokasi", lokasi)
         formData.append("NomorRekening", nomorRekening)
         formData.append("NamaRekening", namaRekening)
-        formData.append("Bank", bank.toUpperCase())
+        formData.append("Bank", bank)
 
         let nowDate = new Date().toLocaleString()
 
@@ -138,10 +138,9 @@ export default function RequestGalangDana() {
                             style={{ minWidth: '60%', backgroundColor: 'white' }}
                             InputProps={{
                                 readOnly: true,
-                              }}
+                            }}
                             value={user.name}
-                            // onChange={event => setPenanggungjawab(event.target.value)}
-                            InputLabelProps={{ shrink: true }}  
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
                     <Grid item>
@@ -191,15 +190,24 @@ export default function RequestGalangDana() {
                     </Grid>
                     {errorNamaRekening ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorNamaRekening}</small> : ""}
                     <Grid item>
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Bank Tujuan *"
-                            multiline
-                            style={{ minWidth: '50%', backgroundColor: 'white' }}
-                            maxRows={4}
-                            value={bank}
-                            onChange={event => setBank(event.target.value)}
-                        />
+                        <FormControl fullWidth>
+                            <InputLabel id="bank-label">Bank</InputLabel>
+                            <Select
+                                labelId="bank-label"
+                                id="bank-select"
+                                value={bank}
+                                onChange={(event) => setBank(event.target.value)}
+                                label="Bank"
+                                style={{ height: '50px' }}
+                            >
+                                <MenuItem value="BCA">BCA</MenuItem>
+                                <MenuItem value="Mandiri">Mandiri</MenuItem>
+                                <MenuItem value="BNI">BNI</MenuItem>
+                                <MenuItem value="BRI">BRI</MenuItem>
+                                <MenuItem value="CIMB">CIMB</MenuItem>
+                                <MenuItem value="Panin">Panin</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
                     {errorBank ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorBank}</small> : ""}
                     <Grid item>
@@ -219,7 +227,7 @@ export default function RequestGalangDana() {
                 {/* Right Side */}
                 <Grid container xs={12} md={6} direction={"column"} rowSpacing={3} sx={{ paddingLeft: '100px' }}>
                     <Grid item>
-                        <p style={{fontWeight:'lighter'}}>Upload Gambar</p>
+                        <p style={{ fontWeight: 'lighter' }}>Upload Gambar</p>
                         <Button
                             component="label"
                             role={undefined}
@@ -239,7 +247,7 @@ export default function RequestGalangDana() {
                         </Grid>
                     ) : " "}
                     <Grid item>
-                        <p style={{fontWeight:'lighter'}}>Jumlah Dana yang Dibutuhkan</p>
+                        <p style={{ fontWeight: 'lighter' }}>Jumlah Dana yang Dibutuhkan</p>
                         <FormControl >
                             <CurrencyInput
                                 id="input-example"
@@ -251,14 +259,13 @@ export default function RequestGalangDana() {
                                 style={{ width: '300px', height: '57px' }}
                                 value={target}
                                 onValueChange={(value) => setTarget(value)}
-                            // onChange={event => setTarget(event.target.value)}
                             />
                         </FormControl>
                     </Grid>
                     {errorTarget ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorTarget}</small> : ""}
                     <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
                         <Grid item >
-                            <p style={{fontWeight:'lighter'}}>Tanggal Terakhir Penyaluran Dana </p>
+                            <p style={{ fontWeight: 'lighter' }}>Tanggal Terakhir Penyaluran Dana </p>
                             <DatePicker
                                 selected={startDate}
                                 dateFormat="yyyy/MM/dd"
@@ -267,7 +274,7 @@ export default function RequestGalangDana() {
                         </Grid>
 
                     </Grid>
-                    {!errorDeadline ? <small style={{fontSize: '13px' }}>jangka waktu minimal 1 minggu</small>: ''}
+                    {!errorDeadline ? <small style={{ fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ''}
                     {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
                     <Grid item>
 

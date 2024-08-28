@@ -32,7 +32,7 @@ export default function UsersPage() {
     }, [])
 
     const onApprove = (user) => {
-        if (!window.confirm("Are you sure to approve this User?")) {
+        if (!window.confirm(`Apakah anda ingin melakukan approve Lembaga ${user.name}?`)) {
             return
         }
 
@@ -62,12 +62,8 @@ export default function UsersPage() {
                     <Table sx={{ minWidth: 650, tableLayout: 'fixed  ' }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell width={'100px'}>Name</TableCell>
-                                <TableCell width={'100px'} align="left">Penanggung Jawab</TableCell>
-                                <TableCell width={'200px'} align="left">Email</TableCell>
+                                <TableCell width={'200px'}>Data Lembaga</TableCell>
                                 <TableCell width={'200px'} align="left">Lokasi</TableCell>
-                                <TableCell width={'150px'} align="left">No Telepon</TableCell>
-                                <TableCell width={'150px'} align="left">No Rekening</TableCell>
                                 <TableCell width={'500px'} align="left">Dekripsi</TableCell>
                                 <TableCell width={'100px'} align="left">Action</TableCell>
                             </TableRow>
@@ -79,21 +75,32 @@ export default function UsersPage() {
                                 // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {row.name}
+                                        Nama: {row.name}
+                                        <br />
+                                        Penanggung Jawab: {row.penanggung_jawab}
+                                        <br />
+                                        Email: {row.email}
+                                        <br />
+                                        No Telepon: {row.nomor_telepon}
+                                        <br />
+                                        NIK: {row.nik}
+                                        <br />
+                                        NPWP: {row.npwp}
+                                        <br/>
+                                        No Rekening: {row.no_req}
+                                        <br/>
+                                        Bank: {row.bank}
                                     </TableCell>
-                                    <TableCell align="left">{row.penanggung_jawab}</TableCell>
-                                    <TableCell align="left">{row.email}</TableCell>
                                     <TableCell component="th" scope="row" align="left">{row.lokasi}</TableCell>
-                                    <TableCell align="left">{row.nomor_telepon}</TableCell>
-                                    <TableCell align="left">{row.no_req}({row.bank})</TableCell>
                                     <TableCell component="th" scope="row" align="left">{row.deskripsi}</TableCell>
                                     <TableCell component="th" scope="row" align="left">
                                         <Button variant="contained" color="success" onClick={() => onApprove(row)} style={{ backgroundColor: '#66AB92' }} >
                                             Approve
                                         </Button>
                                         &nbsp;
+                                        <br></br>
                                         <Button variant="contained" color="error">
-                                            <FormDialogReject data={row} setLoading={loading => setLoading(loading)}  getUsers={()=>getUsers()} />
+                                            <FormDialogReject data={row} setLoading={loading => setLoading(loading)} getUsers={() => getUsers()} />
                                         </Button>
                                     </TableCell>
                                 </TableRow>
