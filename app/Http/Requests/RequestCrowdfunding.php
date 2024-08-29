@@ -27,7 +27,7 @@ class RequestCrowdfunding extends FormRequest
             'Judul'=>'required',
             'user_id'=>'required',
             'Deskripsi'=>'required',
-            'Dana'=>'required',
+            'Dana'=>'required | gte:1',
             'Lokasi'=>'required',
             'Gambar'=>'required|mimes:png,jpg,jpeg',
             'Deadline'=>'required|gte:7',

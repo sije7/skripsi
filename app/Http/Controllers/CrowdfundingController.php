@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\getCrowdfundingRequest;
 use App\Http\Requests\RequestCrowdfunding;
 use App\Models\Crowdfunding;
+use App\Models\CrowdfundingAllocation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -65,6 +66,17 @@ class CrowdfundingController extends Controller
             $crowdfunding->image = '/storage/' . $path;
 
             $crowdfunding->save();
+
+            $allocation = explode(',', $request->Alokasi);
+            $allocationFund = explode(',',$request->DanaAlokasi);
+
+            for($i = 0; $i < count($allocation); $i++){
+                $pd = new CrowdfundingAllocation();
+                $pd->crowdfunding_id = $crowdfunding->id;
+                $pd->allocation = $allocation[$i];
+                $pd->fund = $allocationFund[$i];
+                $pd->save();
+            }
             return 'Request Galangdana Berhasil';
     }
 
