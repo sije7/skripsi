@@ -41,6 +41,8 @@ Route::get('/crowdfunding/{id}', [CrowdfundingController :: class, 'getCrowdfund
 Route::post('/crowdfunding/request', [CrowdfundingController :: class, 'requestCrowdfunding']);
 Route::post('/crowdfunding/approve/{id}', [CrowdfundingController :: class, 'approveCrowdfunding']);
 Route::post('/crowdfunding/reject/{id}', [CrowdfundingController :: class, 'rejectCrowdfunding']);
+Route::get('/crowdfunding/getAllocation/{id}', [CrowdfundingController :: class, 'getAllocation']);
+Route::post('/crowdfunding/proof/upload', [CrowdfundingController::class, 'uploadRealisasi']);
 
 Route::post('/uploads',[UploadController::class, 'createUpload']);
 Route::get('/getLearningCategories',[UploadController::class, 'getLearningCategories']);
@@ -78,3 +80,5 @@ Route::post('/mail',[UserController::class, 'sendEmail' ]);
 
 Route::post('/users/approve/{id}', [UserController::class, 'approveUser']);
 Route::post('/users/reject', [UserController::class, 'rejectUser']);
+
+

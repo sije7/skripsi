@@ -33,6 +33,7 @@ import PembelajaranApprove from './views/Pembelajaran/PembelajaranApprove';
 import Geolocation from './views/Geolocation'
 import Faq from './views/Faq';
 import Lembagas from './views/Lembagas';
+import RealisasiGalangDanaUpload from './views/RealisasiGalangDanaUpload';
 
 const router = createBrowserRouter([
     {
@@ -142,6 +143,10 @@ const router = createBrowserRouter([
             {
                 path:'/lembagas',
                 element: <Lembagas />
+            },
+            {
+                path:'/galangdana/realisasi/upload/:id',
+                element: <RealisasiGalangDanaUpload />
             }
            
         ]

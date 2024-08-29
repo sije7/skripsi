@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Database\Factories\CrowdfundingAllocationFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,5 +33,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LearningCategorySeeder::class);
         $this->call(LearningSubCategorySeeder::class);
         $this->call(UploadSeeder::class);
+        $this->call(CrowdfundingAllocationSeeder::class);
     }
 }
