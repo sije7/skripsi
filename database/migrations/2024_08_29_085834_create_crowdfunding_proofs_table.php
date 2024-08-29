@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('crowdfunding_proofs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('crowdfunding_id')->references('id')->on('crowdfundings')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('image');
             $table->timestamps();
         });
     }
