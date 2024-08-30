@@ -90,7 +90,6 @@ export default function PembelajaranDetail() {
                         sx={{
                             height: '400px',
                             width: '600px',
-                            // borderRadius: '40px',
                             minWidth: '400px',
                         }}
                         src={`http://localhost:8000${detail.upload_image}`}
