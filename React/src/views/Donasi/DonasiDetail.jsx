@@ -3,7 +3,7 @@ import LinearDeterminate from "../../components/LinearDeterminate";
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useReducer, useState } from "react";
 import axiosClient from "../../axios-client";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CircularIndeterminate from "../../components/CircularIndeterminate";
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from "react-leaflet";
 import { parse } from "date-fns";
@@ -30,14 +30,13 @@ export default function DonasiDetail() {
     const [open, setOpen] = useState(false);
 
     const [location, setLocation] = useState({ lat: null, lon: null });
-    const [destination, setDestination] = useState({ lat: '', lon: '' }); // Destination input state
+    const [destination, setDestination] = useState({ lat: '', lon: '' });
     const [route, setRoute] = useState([]);
     const [distance, setDistance] = useState(null);
     const [deslat, setDeslat] = useState('')
     const [deslon, setDeslon] = useState('')
-    // const [destinationName, setDestinationName] = useState("Enter coordinates to get name");
     const [flag, setFlag] = useState(0)
-
+    const [proofs, setProofs] = useState([])
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -111,18 +110,22 @@ export default function DonasiDetail() {
                 setDeslon(data.donation.longitude)
                 setLoading(false)
             })
-            // .catch((err) => {
-            //     return navigate('/')
-            // })
+        // .catch((err) => {
+        //     return navigate('/')
+        // })
         axiosClient.get('/user')
             .then(({ data }) => {
                 setRole(data.role)
                 setUserId(data.id)
             })
+        axiosClient.get(`/donation/getProofs/${id.id}`)
+            .then(({ data }) => {
+                setProofs(data.proofs)
+            })
     }, [location])
 
     useEffect(() => {
-       
+
         if (role !== 'admin') {
             if (detail.status !== 3) {
                 if (role === 'user') {
@@ -137,18 +140,18 @@ export default function DonasiDetail() {
                 }
             }
         }
-        
-       
+
+
 
     }, [location])
 
     useEffect(() => {
-        if(deslat && deslon && location){
+        if (deslat && deslon && location) {
             handleCalculateDistance()
         }
-        
+
     }, [deslat, deslon, location])
-    
+
 
 
     function removeDuplicates(arr) {
@@ -273,18 +276,18 @@ export default function DonasiDetail() {
                         </Grid>
 
                     </Grid>
-                    {role !== 'lembaga' && <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px', paddingBottom:'10px' }} spacing={1}>
-                        <Grid container sx={{display:'flex', justifyContent:'space-between'}}>
+                    {role !== 'lembaga' && <Grid container direction={'row'} sx={{ padding: '100px', paddingTop: '30px', paddingBottom: '10px' }} spacing={1}>
+                        <Grid container sx={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Grid>
-                            <h1>Lokasi Donasi </h1>
+                                <h1>Lokasi Donasi </h1>
                             </Grid>
                             <Grid>
-                            <h3>Jarak : {parseInt(distance)}km</h3>
+                                <h3>Jarak : {parseInt(distance)}km</h3>
                             </Grid>
-                       
+
                         </Grid>
-                       
-                       
+
+
                         {location.lat && location.lon && (
                             <MapContainer center={[location.lat, location.lon]} zoom={8} style={{ height: '300px', width: '100%' }}>
                                 <TileLayer
@@ -296,7 +299,7 @@ export default function DonasiDetail() {
                                         <Popup>Lokasi User</Popup>
                                     </Marker>
                                 )}
-                                {deslat && deslon  && (
+                                {deslat && deslon && (
                                     <Marker position={[deslat, deslon]}>
                                         <Popup>Lokasi Lembaga</Popup>
                                     </Marker>
@@ -421,43 +424,6 @@ export default function DonasiDetail() {
                                             </CardContent>
                                         </Grid>
                                     </Card>}
-                                {/* <Card sx={{ width: '550px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
-                                    <Grid container direction={'column'} sx={{ minHeight: '100px' }}>
-                                        <CardContent>
-                                            <Grid item sx={{ textAlign: 'center' }}>
-                                                <h2>Progress Donasi</h2>
-                                            </Grid>
-                                            {userId !== detail.user_id && role !== 'admin' || detail.status !== 3 && role !== 'admin' && progressDonation ? progressDonation.map((pd, i) => (
-                                                <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
-                                                    <Checkbox
-                                                        checked={pd.status}
-                                                        color="secondary"
-                                                        onChange={() => { onChangeCheckbox(pd, i) }}
-                                                        disabled
-                                                    />
-                                                    <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
-                                                </Grid>
-                                            )) : ''}
-                                            {userId === detail.user_id && detail.status === 3 || role === 'admin' && detail.status === 3 && progressDonation ? progressDonation.map((pd, i) => (
-                                                <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
-                                                    <Checkbox
-                                                        checked={pd.status}
-                                                        color="secondary"
-                                                        onChange={() => { onChangeCheckbox(pd, i) }}
-                                                    />
-                                                    <p>{pd.item.name} {pd.quantity} {pd.item.currency}</p>
-                                                </Grid>
-                                            )) : ''}
-                                            {userId === detail.user_id && detail.status === 3 || role === 'admin' &&
-                                                <Grid item sx={{ display: 'flex', justifyContent: 'right' }}>
-                                                    <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92' }} onClick={onUpdate}>
-                                                        Update Progress Donasi
-                                                    </Button>
-                                                </Grid>
-                                            }
-                                        </CardContent>
-                                    </Grid>
-                                </Card> */}
                                 {role === 'admin' && <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Grid item sx={{ display: 'flex', marginTop: '30px' }}>
                                         {detail.status !== 3 && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
@@ -486,12 +452,35 @@ export default function DonasiDetail() {
                                         </Button>}
                                     </Grid>
                                 </Grid>}
-
-
-
                             </Grid>
                         </Grid>
 
+                    </Grid>
+                    {/* Realisasi */}
+                    <Grid container xs={12} md={12} flexDirection={'column'} sx={{marginLeft:'50px'}}>
+                        <Grid container direction={'row'}>
+                            <Grid item><h1>Realisasi</h1></Grid>
+                            {detail.status === 3 && detail.user_id === userId && <Link to={`/donasi/realisasi/upload/${id.id}`}>
+                                <Button variant="contained" style={{ backgroundColor: '#BEDAB1', color: 'black', marginLeft: '50px' }}>
+                                    Upload Realisasi
+                                </Button>
+                            </Link>}
+                        </Grid>
+                        <Grid direction={'row'} sx={{ marginTop: '20px' }}>
+                            {proofs ? proofs.map((p) => (
+                                <Box
+                                    component="img"
+                                    sx={{
+                                        height: '200px',
+                                        width: '300px',
+                                        borderRadius: '5px',
+                                        marginRight: '20px',
+                                        marginBottom: '20px'
+                                    }}
+                                    src={`http://localhost:8000${p.image}`}
+                                />
+                            )) : ''}
+                        </Grid>
                     </Grid>
                 </Grid>
             }

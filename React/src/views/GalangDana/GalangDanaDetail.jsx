@@ -14,12 +14,14 @@ export default function GalangDanaDetail() {
     const [allocation, setAllocation] = useState([])
     const [files, setFiles] = useState([])
     const [proofs, setProofs] = useState([])
+    const [userId, setUserId] = useState('')
 
     useEffect(() => {
         setLoading(true)
         axiosClient.get('/user')
             .then(({ data }) => {
                 setRole(data.role)
+                setUserId(data.id)
             })
 
         axiosClient.get(`/crowdfunding/${id.id}`)
@@ -167,15 +169,15 @@ export default function GalangDanaDetail() {
                                 </>}
                         </Grid>
                     </Grid>
-
+                    {/* Realisasi */}
                     <Grid container xs={12} md={7} flexDirection={'column'} sx={{ marginTop: '50px' }}>
                         <Grid container direction={'row'}>
                             <Grid item><h1>Realisasi</h1></Grid>
-                            <Link to={`/galangdana/realisasi/upload/${id.id}`}>
+                            {detail.status === 1 && detail.user_id === userId &&<Link to={`/galangdana/realisasi/upload/${id.id}`}>
                                 <Button variant="contained" style={{ backgroundColor: '#BEDAB1', color: 'black', marginLeft: '50px' }}>
                                     Upload Realisasi
                                 </Button>
-                            </Link>
+                            </Link>}
                         </Grid>
                         <Grid direction={'row'} sx={{ marginTop: '20px' }}>
                             {proofs ? proofs.map((p)=>(
@@ -191,32 +193,9 @@ export default function GalangDanaDetail() {
                                 src={`http://localhost:8000${p.image}`}
                             />
                             )):''}
-                            
-                            {/* <Box
-                                component="img"
-                                sx={{
-                                    height: '200px',
-                                    width: '300px',
-                                    borderRadius: '5px',
-                                    marginRight: '20px',
-                                    marginBottom: '20px'
-
-                                }}
-                                src={image}
-                            />
-                            <Box
-                                component="img"
-                                sx={{
-                                    height: '200px',
-                                    width: '300px',
-                                    borderRadius: '5px',
-                                    marginRight: '20px',
-                                    marginBottom: '20px'
-                                }}
-                                src={image}
-                            /> */}
                         </Grid>
                     </Grid>
+                    {/* Alokasi */}
                     <Grid container xs={12} md={5} flexDirection={'column'} sx={{ marginTop: '50px' }}>
                         <Card sx={{ width: '450px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
                             <Grid container direction={'column'} sx={{ minHeight: '100px' }}>

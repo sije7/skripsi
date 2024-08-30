@@ -69,6 +69,8 @@ Route::post('/rejectDonation',[DonationController::class, 'rejectDonation']);
 Route::post('/donationaslembaga',[DonationController::class, 'getDonationsAsLembaga']);
 Route::post('/donationByCategoryAsLembaga',[DonationController::class, 'getDonationByCategoryAsLembaga']);
 Route::post('/donationBySubCategoryAsLembaga',[DonationController::class, 'getDonationBySubCategoryAsLembaga']);
+Route::get('/donation/getProofs/{id}',[DonationController::class, 'getProofs']);
+Route::post('/donation/proof/upload', [DonationController::class, 'uploadRealisasi']);
 
 
 Route::get('/lembaga', [UserController::class, 'getLembaga']);

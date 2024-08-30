@@ -33,7 +33,8 @@ import PembelajaranApprove from './views/Pembelajaran/PembelajaranApprove';
 import Geolocation from './views/Geolocation'
 import Faq from './views/Faq';
 import Lembagas from './views/Lembagas';
-import RealisasiGalangDanaUpload from './views/RealisasiGalangDanaUpload';
+import RealisasiGalangDanaUpload from './views/GalangDana/RealisasiGalangDanaUpload';
+import RealisasiDonasiUpload from './views/Donasi/RealisasiDonasiUpload';
 
 const router = createBrowserRouter([
     {
@@ -147,6 +148,10 @@ const router = createBrowserRouter([
             {
                 path:'/galangdana/realisasi/upload/:id',
                 element: <RealisasiGalangDanaUpload />
+            },
+            {
+                path:'/donasi/realisasi/upload/:id',
+                element: <RealisasiDonasiUpload />
             }
            
         ]

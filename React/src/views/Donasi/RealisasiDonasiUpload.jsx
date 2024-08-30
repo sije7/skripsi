@@ -2,12 +2,15 @@ import { Button, Grid, styled } from "@mui/material"
 import { useNavigate, useParams } from "react-router-dom"
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useEffect, useState } from "react";
-import axiosClient from "../axios-client";
-import addImage from "../assets/t.png"
+import axiosClient from "../../axios-client";
+import addImage from "../../assets/t.png"
+import CircularIndeterminate from "../../components/CircularIndeterminate";
 
-export default function RealisasiGalangDanaUpload() {
+export default function RealisasiDonasiUpload() {
     const [preview, setPreview] = useState([])
     const [image, setImage] = useState([])
+
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
     const id = useParams()
@@ -31,20 +34,23 @@ export default function RealisasiGalangDanaUpload() {
     }
 
     const handleSubmit = (e) => {
+        setLoading(true)
         let fd = new FormData()
         fd.append('id', id.id)
         for (let i = 0; i < image.length; i++) {
             fd.append('images[]', image[i]);
         }
-        axiosClient.post('/crowdfunding/proof/upload', fd)
+        axiosClient.post('/donation/proof/upload', fd)
             .then((res) => {
+                setLoading(false)
                 return navigate(-1)
             })
     }
 
     return (
         <>
-            <Grid container direction={'column'} sx={{ minHeight: '500px' }}>
+            {loading && <CircularIndeterminate />}
+            {!loading && <Grid container direction={'column'} sx={{ minHeight: '500px' }}>
                 <Grid item>
                     <Button variant="contained" sx={{ width: '100px', marginLeft: "30px", backgroundColor: '#66AB92' }} onClick={() => navigate(-1)}>
                         Back
@@ -53,7 +59,7 @@ export default function RealisasiGalangDanaUpload() {
                 <Grid item sx={{ textAlign: 'center' }}>
                     <h1>Upload Gambar Realisasi</h1>
                 </Grid>
-                <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'center', marginTop:'20px' }}>
                     {preview ? preview.map((p) => (
                         <Grid item>
                             <img src={p} style={{ width: '200px', height: '100px', marginLeft: '20px' }}></img>
@@ -82,7 +88,7 @@ export default function RealisasiGalangDanaUpload() {
                         Upload Bukti Realisasi
                     </Button>
                 </Grid>
-            </Grid >
+            </Grid >}
         </>
     )
 }
