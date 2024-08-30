@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\GetDonationsRequest;
 use App\Http\Requests\RequestDonationRequest;
 use App\Models\Category;
+use App\Models\CrowdfundingProof;
 use App\Models\Donation;
+use App\Models\DonationProof;
 use App\Models\Item;
 use App\Models\ProgressDonation;
 use App\Models\Subcategory;
@@ -330,5 +332,27 @@ class DonationController extends Controller
             }
         }
         return compact('donations');
+    }
+
+    public function uploadRealisasi(Request $request)
+    {
+        $id = $request->id;
+        error_log($request->file('images')[0]->getClientOriginalName('image'));
+        foreach ($request->file('images') as $image) {
+            $r = new DonationProof();
+            $r->donation_id = $id;
+
+            $fileName = $image->getClientOriginalName('image');
+            $path = $image->storeAs('images', $fileName, 'public');
+            $r->image = '/storage/' . $path;
+
+            $r->save();
+        }
+        return 'Upload Realisasi Berhasil';
+    }
+
+    public function getProofs($id){
+        $proofs = DonationProof::where('donation_id','=',$id)->get();
+        return compact('proofs');
     }
 }

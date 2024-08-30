@@ -1,7 +1,7 @@
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
 import axiosClient from "../../axios-client"
 import { useEffect, useState } from "react"
-import { Box, Button, Grid } from "@mui/material"
+import { Box, Button, Card, CardContent, Grid } from "@mui/material"
 import LinearDeterminate from "../../components/LinearDeterminate"
 import CircularIndeterminate from "../../components/CircularIndeterminate"
 
@@ -11,33 +11,46 @@ export default function GalangDanaDetail() {
     const [role, setRole] = useState('')
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
+    const [allocation, setAllocation] = useState([])
+    const [files, setFiles] = useState([])
+    const [proofs, setProofs] = useState([])
+    const [userId, setUserId] = useState('')
 
     useEffect(() => {
         setLoading(true)
         axiosClient.get('/user')
             .then(({ data }) => {
                 setRole(data.role)
+                setUserId(data.id)
             })
 
         axiosClient.get(`/crowdfunding/${id.id}`)
             .then(({ data }) => {
-                if(data.crowdfunding === null){
+                if (data.crowdfunding === null) {
                     return navigate('/')
                 }
                 setDetail(data.crowdfunding)
                 setLoading(false)
             })
-            .catch((err)=>{
+            .catch((err) => {
                 return navigate('/')
+            })
+        axiosClient.get(`/crowdfunding/getAllocation/${id.id}`)
+            .then(({ data }) => {
+                setAllocation(data.allocations)
+            })
+
+        axiosClient.get(`/crowdfunding/getProofs/${id.id}`)
+            .then(({ data }) => {
+                setProofs(data.proofs)
             })
     }, [])
 
     useEffect(() => {
-      if(detail.status === 0 && role !== 'admin'){
-        return navigate('/')
-      }
+        if (detail.status === 0 && role !== 'admin') {
+            return navigate('/')
+        }
     }, [detail])
-    
 
     let image = `http://localhost:8000${detail.image}`
 
@@ -60,13 +73,13 @@ export default function GalangDanaDetail() {
         <>
             {loading && <CircularIndeterminate />}
             {!loading && <Grid>
-                <Button variant="contained" sx={{width:'100px', marginLeft:"30px", backgroundColor: '#66AB92'}} onClick={()=>navigate(-1)}>
+                <Button variant="contained" sx={{ width: '100px', marginLeft: "30px", backgroundColor: '#66AB92' }} onClick={() => navigate(-1)}>
                     Back
                 </Button>
-                <Grid container direction={'row'} sx={{ padding: '100px', paddingBottom: '0', paddingTop:'50px' }}>
+                <Grid container direction={'row'} sx={{ padding: '100px', paddingBottom: '0', paddingTop: '50px' }}>
                     {/* {Left Side} */}
-                    
-                    <Grid item xs={12} md={6} sx={{ }}>
+
+                    <Grid item xs={12} md={6} sx={{}}>
                         <Box
                             component="img"
                             sx={{
@@ -133,7 +146,7 @@ export default function GalangDanaDetail() {
                     {/* Right */}
                     <Grid container xs={12} md={4} sx={{ display: 'flex', justifyContent: 'right', alignItems: 'self-end' }}>
                         <Grid item >
-                            {detail.status === 1 && role!== 'admin' &&
+                            {detail.status === 1 && role !== 'admin' &&
                                 <Link to='/galangdana/payment' state={{ detail: detail }}>
                                     <Button variant="contained" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px', fontSize: '18px' }}>
                                         Beri Bantuan
@@ -156,11 +169,54 @@ export default function GalangDanaDetail() {
                                 </>}
                         </Grid>
                     </Grid>
+                    {/* Realisasi */}
+                    <Grid container xs={12} md={7} flexDirection={'column'} sx={{ marginTop: '50px' }}>
+                        <Grid container direction={'row'}>
+                            <Grid item><h1>Realisasi</h1></Grid>
+                            {detail.status === 1 && detail.user_id === userId &&<Link to={`/galangdana/realisasi/upload/${id.id}`}>
+                                <Button variant="contained" style={{ backgroundColor: '#BEDAB1', color: 'black', marginLeft: '50px' }}>
+                                    Upload Realisasi
+                                </Button>
+                            </Link>}
+                        </Grid>
+                        <Grid direction={'row'} sx={{ marginTop: '20px' }}>
+                            {proofs ? proofs.map((p)=>(
+                                <Box
+                                component="img"
+                                sx={{
+                                    height: '200px',
+                                    width: '300px',
+                                    borderRadius: '5px',
+                                    marginRight: '20px',
+                                    marginBottom: '20px'
+                                }}
+                                src={`http://localhost:8000${p.image}`}
+                            />
+                            )):''}
+                        </Grid>
+                    </Grid>
+                    {/* Alokasi */}
+                    <Grid container xs={12} md={5} flexDirection={'column'} sx={{ marginTop: '50px' }}>
+                        <Card sx={{ width: '450px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
+                            <Grid container direction={'column'} sx={{ minHeight: '100px' }}>
+                                <CardContent>
+                                    <Grid item sx={{ textAlign: 'center' }}>
+                                        <h2>Alokasi Donasi</h2>
+                                    </Grid>
+                                    {allocation ? allocation.map((a) => (
+                                        <Grid item sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+                                            <p>{a.allocation} Rp{parseInt(a.fund).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</p>
+                                        </Grid>
+                                    )) : ''}
+                                </CardContent>
+                            </Grid>
+                        </Card>
+                    </Grid>
 
                 </Grid>
-                </Grid>
-                    }
-                </>
-                )
+            </Grid>
+            }
+        </>
+    )
 
 }

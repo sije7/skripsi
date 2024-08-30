@@ -124,7 +124,7 @@ export default function PembelajaranApprove() {
                     {/* Header */}
                     <Grid container direction={'row'} sx={{ marginTop: '20px', padding: '20px' }}>
                         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <h1>Approve Pembelajaran</h1>
+                            <h1>Approve Artikel</h1>
                         </Grid>
                         <Grid item xs={12}  sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <TextField
@@ -142,7 +142,7 @@ export default function PembelajaranApprove() {
                         <Grid item>
                             <Link to={'/pembelajaran'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                    Pembelajaran
+                                    Artikel
                                 </Button>
                             </Link>
                         </Grid>

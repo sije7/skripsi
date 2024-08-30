@@ -14,6 +14,7 @@ export default function FormDialogReject(props) {
   const [message, setMessage] = useState(null)
 
   const handleSubmit = () => {
+    props.setLoading(true)
     let fd = new FormData()
     fd.append("id", props.data.id)
     fd.append("message", message)
@@ -21,8 +22,11 @@ export default function FormDialogReject(props) {
 
     axiosClient.post(`/users/reject`, fd)
       .then(({ res }) => {
-        console.log(res)
+        setOpen(false)
+        props.setLoading(false)
+        props.getUsers()
       })
+
   }
 
   const handleClickOpen = () => {
@@ -40,16 +44,16 @@ export default function FormDialogReject(props) {
       <Dialog
         open={open}
         onClose={handleClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            handleClose();
-          },
-        }}
+        // PaperProps={{
+        //   component: 'form',
+        //   onSubmit: (event) => {
+        //     event.preventDefault();
+        //     const formData = new FormData(event.currentTarget);
+        //     const formJson = Object.fromEntries(formData.entries());
+        //     const email = formJson.email;
+        //     handleClose();
+        //   },
+        // }}
       >
         <DialogTitle>Penolakan Akun {props.data.name}</DialogTitle>
         <DialogContent>

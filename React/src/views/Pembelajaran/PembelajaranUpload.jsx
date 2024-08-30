@@ -147,7 +147,7 @@ export default function UploadLearning() {
             {loading && <CircularIndeterminate />}
             {!loading && <Grid container direction='column' sx={{ minHeight: '700px', padding: '0px' }}>
                 <Grid item sx={{ textAlign: 'center' }}>
-                    <h1>Upload Pembelajaran</h1>
+                    <h1>Upload Artikel</h1>
                 </Grid>
                 <Grid container direction={'row'} sx={{ padding: '50px 100px 100px 100px' }}>
                     {/* Left */}
@@ -156,7 +156,7 @@ export default function UploadLearning() {
                             <TextField
                                 required
                                 id="outlined-required"
-                                label="Judul Pembelajaran"
+                                label="Judul Artikel"
                                 style={{ minWidth: '50%', backgroundColor: 'white' }}
                                 value={judul}
                                 onChange={event => setJudul(event.target.value)}
@@ -167,7 +167,7 @@ export default function UploadLearning() {
                             <TextField
                                 required
                                 id="outlined-required"
-                                label="Judul Konten Pembelajaran"
+                                label="Judul Konten Artikel"
                                 multiline
                                 style={{ minWidth: '50%', backgroundColor: 'white' }}
                                 value={judulDeskripsi}
@@ -179,7 +179,7 @@ export default function UploadLearning() {
                             <TextField
                                 required
                                 id="outlined-required"
-                                label="Konten Pembelajaran"
+                                label="Konten Artikel"
                                 multiline
                                 style={{ minWidth: '80%', backgroundColor: 'white' }}
                                 value={deskripsi}
@@ -247,7 +247,7 @@ export default function UploadLearning() {
                         ) : " "}
                         <Grid item sx={{ marginTop: '30px' }}>
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Jenis Pembelajaran</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Jenis Artikel</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -265,7 +265,7 @@ export default function UploadLearning() {
                         {errorJenisPembelajaran ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorJenisPembelajaran}</small> : ""}
                         {subCategory.length !== 0 && <Grid item sx={{ marginTop: '30px' }}>
                             <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Tipe Pembelajaran</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Tipe Artikel</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -284,7 +284,7 @@ export default function UploadLearning() {
                         {errorTipePembelajaran ? <small style={{ color: "#B00020", fontSize: '13px' }}>{errorTipePembelajaran}</small> : ""}
                         <Grid item sx={{ display: 'flex', marginTop: '50px' }}>
                             <Button onClick={onSubmit} variant="contained" style={{ backgroundColor: '#66AB92', color: 'black' }}>
-                                Upload Pembelajaran
+                                Upload Artikel
                             </Button>
                         </Grid>
 

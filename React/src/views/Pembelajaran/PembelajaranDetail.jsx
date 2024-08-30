@@ -99,12 +99,12 @@ export default function PembelajaranDetail() {
                 <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }} spacing={10}>
                     <Grid item>
                         {detail?.status === 0 && role === 'admin' && <Button variant="contained" color="error" style={{ width: '200px', height: '50px' }} onClick={onReject}>
-                            Reject Pembelajaran
+                            Reject Artikel
                         </Button>}
                     </Grid>
                     <Grid item>
                         {detail?.status === 0 && role === 'admin' && <Button variant="contained" color="success" style={{ backgroundColor: '#66AB92', width: '200px', height: '50px' }} onClick={onApprove}>
-                            Approve Pembelajaran
+                            Approve Artikel
                         </Button>}
                     </Grid>
                 </Grid>

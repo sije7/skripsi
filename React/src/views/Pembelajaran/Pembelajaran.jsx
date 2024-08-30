@@ -119,7 +119,7 @@ export default function Pembelajaran() {
                     {/* Header */}
                     <Grid container direction={'row'} sx={{ marginTop: '20px', padding: '20px' }}>
                         <Grid item xs={10} md={9} sx={{ display: 'flex', justifyContent: 'center', paddingLeft: '19%' }}>
-                            <h1>Pembelajaran</h1>
+                            <h1>Artikel</h1>
                         </Grid>
                         <Grid item xs={12} md={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <TextField
@@ -137,14 +137,14 @@ export default function Pembelajaran() {
                         <Grid item>
                             {role !== 'admin' && <Link to={'/pembelajaran/upload'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                    Upload Pembelajaran
+                                    Upload Artikel
                                 </Button>
                             </Link>}
                         </Grid>
                         {role === 'admin' && <Grid item>
                             <Link to={'/pembelajaran/approve'}>
                                 <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                    Approve Pembelajaran
+                                    Approve Artikel
                                 </Button>
                             </Link>
                         </Grid>}
