@@ -12,7 +12,6 @@ export default function GalangDanaDetail() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const [allocation, setAllocation] = useState([])
-    const [files, setFiles] = useState([])
     const [proofs, setProofs] = useState([])
     const [userId, setUserId] = useState('')
 
@@ -171,29 +170,31 @@ export default function GalangDanaDetail() {
                     </Grid>
                     {/* Realisasi */}
                     <Grid container xs={12} md={7} flexDirection={'column'} sx={{ marginTop: '50px' }}>
-                        <Grid container direction={'row'}>
-                            <Grid item><h1>Realisasi</h1></Grid>
-                            {detail.status === 1 && detail.user_id === userId &&<Link to={`/galangdana/realisasi/upload/${id.id}`}>
-                                <Button variant="contained" style={{ backgroundColor: '#BEDAB1', color: 'black', marginLeft: '50px' }}>
-                                    Upload Realisasi
-                                </Button>
-                            </Link>}
-                        </Grid>
-                        <Grid direction={'row'} sx={{ marginTop: '20px' }}>
-                            {proofs ? proofs.map((p)=>(
-                                <Box
-                                component="img"
-                                sx={{
-                                    height: '200px',
-                                    width: '300px',
-                                    borderRadius: '5px',
-                                    marginRight: '20px',
-                                    marginBottom: '20px'
-                                }}
-                                src={`http://localhost:8000${p.image}`}
-                            />
-                            )):''}
-                        </Grid>
+                        {detail.status === 1 && <>
+                            <Grid container direction={'row'}>
+                                <Grid item><h1>Realisasi</h1></Grid>
+                                {detail.status === 1 && detail.user_id === userId && <Link to={`/galangdana/realisasi/upload/${id.id}`}>
+                                    <Button variant="contained" style={{ backgroundColor: '#BEDAB1', color: 'black', marginLeft: '50px' }}>
+                                        Upload Realisasi
+                                    </Button>
+                                </Link>}
+                            </Grid>
+                            <Grid direction={'row'} sx={{ marginTop: '20px' }}>
+                                {proofs ? proofs.map((p) => (
+                                    <Box
+                                        component="img"
+                                        sx={{
+                                            height: '200px',
+                                            width: '300px',
+                                            borderRadius: '5px',
+                                            marginRight: '20px',
+                                            marginBottom: '20px'
+                                        }}
+                                        src={`http://localhost:8000${p.image}`}
+                                    />
+                                )) : ''}
+                            </Grid>
+                        </>}
                     </Grid>
                     {/* Alokasi */}
                     <Grid container xs={12} md={5} flexDirection={'column'} sx={{ marginTop: '50px' }}>

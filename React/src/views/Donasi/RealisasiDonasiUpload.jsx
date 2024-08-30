@@ -71,7 +71,6 @@ export default function RealisasiDonasiUpload() {
                     <VisuallyHiddenInput type="file" onChange={handleImage} />
                 </Grid>}
                 <Grid item sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-                    {/* <p style={{ fontWeight: 'lighter' }}>Upload Gambar</p> */}
                     <Button
                         component="label"
                         role={undefined}

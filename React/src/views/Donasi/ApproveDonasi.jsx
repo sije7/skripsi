@@ -168,11 +168,6 @@ export default function ApproveDonasi() {
                                 </Button>
                             </Link>
                         </Grid>
-                        {/* <Grid item>
-                            <Button variant="contained" style={{ backgroundColor: '#66AB92' }}>
-                                Approve Donasi
-                            </Button>
-                        </Grid> */}
                     </Grid>
                     {/* Cards */}
                     <Grid container direction={'row'} sx={{ padding: '30px' }} spacing={3}>

@@ -110,9 +110,6 @@ export default function DonasiDetail() {
                 setDeslon(data.donation.longitude)
                 setLoading(false)
             })
-        // .catch((err) => {
-        //     return navigate('/')
-        // })
         axiosClient.get('/user')
             .then(({ data }) => {
                 setRole(data.role)
@@ -457,7 +454,7 @@ export default function DonasiDetail() {
 
                     </Grid>
                     {/* Realisasi */}
-                    <Grid container xs={12} md={12} flexDirection={'column'} sx={{marginLeft:'50px'}}>
+                    {detail.status === 3 && <Grid container xs={12} md={12} flexDirection={'column'} sx={{ marginLeft: '50px' }}>
                         <Grid container direction={'row'}>
                             <Grid item><h1>Realisasi</h1></Grid>
                             {detail.status === 3 && detail.user_id === userId && <Link to={`/donasi/realisasi/upload/${id.id}`}>
@@ -481,7 +478,7 @@ export default function DonasiDetail() {
                                 />
                             )) : ''}
                         </Grid>
-                    </Grid>
+                    </Grid>}
                 </Grid>
             }
         </>
