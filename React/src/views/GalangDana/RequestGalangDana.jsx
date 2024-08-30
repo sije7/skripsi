@@ -367,7 +367,6 @@ export default function RequestGalangDana() {
                     {!errorDeadline ? <small style={{ fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ''}
                     {errorDeadline ? <small style={{ color: "#B00020", fontSize: '13px' }}>jangka waktu minimal 1 minggu</small> : ""}
                     <Grid item>
-
                         <Button onClick={onSubmit} variant="contained" style={{ backgroundColor: '#66AB92' }}>
                             Request Galang Dana
                         </Button>

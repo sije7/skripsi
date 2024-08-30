@@ -6,11 +6,14 @@ use App\Http\Requests\getCrowdfundingRequest;
 use App\Http\Requests\RequestCrowdfunding;
 use App\Models\Crowdfunding;
 use App\Models\CrowdfundingAllocation;
+use App\Models\CrowdfundingProof;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\Console\Input\Input;
 
 class CrowdfundingController extends Controller
 {
@@ -49,7 +52,7 @@ class CrowdfundingController extends Controller
     public function requestCrowdfunding(RequestCrowdfunding $request)
     {
         $data = $request->validated();
-
+        $fileName = $request->Gambar->getClientOriginalName('image');
         $crowdfunding = new Crowdfunding();
         $crowdfunding->title = $request->Judul;
         $crowdfunding->description = $request->Deskripsi;
@@ -60,11 +63,9 @@ class CrowdfundingController extends Controller
         $crowdfunding->no_rekening = $request->NomorRekening;
         $crowdfunding->nama_rekening = $request->NamaRekening;
         $crowdfunding->bank = $request->Bank;
-
         $fileName = $request->Gambar->getClientOriginalName('image');
         $path = $request->Gambar->storeAs('images', $fileName, 'public');
         $crowdfunding->image = '/storage/' . $path;
-
         $crowdfunding->save();
 
         $allocation = explode(',', $request->Alokasi);
@@ -102,8 +103,25 @@ class CrowdfundingController extends Controller
         return compact('allocations');
     }
 
-    public function uploadRealisasi(Request $request) {
+    public function uploadRealisasi(Request $request)
+    {
+        $id = $request->id;
+        error_log($request->file('images')[0]->getClientOriginalName('image'));
+        foreach ($request->file('images') as $image) {
+            $r = new CrowdfundingProof();
+            $r->crowdfunding_id = $id;
 
+            $fileName = $image->getClientOriginalName('image');
+            $path = $image->storeAs('images', $fileName, 'public');
+            $r->image = '/storage/' . $path;
+
+            $r->save();
+        }
         return 'Upload Realisasi Berhasil';
+    }
+
+    public function getProofs($id){
+        $proofs = CrowdfundingProof::where('crowdfunding_id','=',$id)->get();
+        return compact('proofs');
     }
 }

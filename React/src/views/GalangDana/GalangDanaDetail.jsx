@@ -13,6 +13,7 @@ export default function GalangDanaDetail() {
     const [loading, setLoading] = useState(false)
     const [allocation, setAllocation] = useState([])
     const [files, setFiles] = useState([])
+    const [proofs, setProofs] = useState([])
 
     useEffect(() => {
         setLoading(true)
@@ -35,6 +36,11 @@ export default function GalangDanaDetail() {
         axiosClient.get(`/crowdfunding/getAllocation/${id.id}`)
             .then(({ data }) => {
                 setAllocation(data.allocations)
+            })
+
+        axiosClient.get(`/crowdfunding/getProofs/${id.id}`)
+            .then(({ data }) => {
+                setProofs(data.proofs)
             })
     }, [])
 
@@ -162,17 +168,18 @@ export default function GalangDanaDetail() {
                         </Grid>
                     </Grid>
 
-                    <Grid container xs={12} md={8} flexDirection={'column'} sx={{ marginTop: '50px' }}>
+                    <Grid container xs={12} md={7} flexDirection={'column'} sx={{ marginTop: '50px' }}>
                         <Grid container direction={'row'}>
                             <Grid item><h1>Realisasi</h1></Grid>
                             <Link to={`/galangdana/realisasi/upload/${id.id}`}>
-                            <Button variant="contained" style={{ backgroundColor: '#BEDAB1', color: 'black', marginLeft:'50px'}}>
-                                Upload Realisasi
-                            </Button>
+                                <Button variant="contained" style={{ backgroundColor: '#BEDAB1', color: 'black', marginLeft: '50px' }}>
+                                    Upload Realisasi
+                                </Button>
                             </Link>
                         </Grid>
-                        <Grid direction={'row'} sx={{marginTop:'20px'}}>
-                            <Box
+                        <Grid direction={'row'} sx={{ marginTop: '20px' }}>
+                            {proofs ? proofs.map((p)=>(
+                                <Box
                                 component="img"
                                 sx={{
                                     height: '200px',
@@ -181,9 +188,11 @@ export default function GalangDanaDetail() {
                                     marginRight: '20px',
                                     marginBottom: '20px'
                                 }}
-                                src={image}
+                                src={`http://localhost:8000${p.image}`}
                             />
-                            <Box
+                            )):''}
+                            
+                            {/* <Box
                                 component="img"
                                 sx={{
                                     height: '200px',
@@ -205,10 +214,10 @@ export default function GalangDanaDetail() {
                                     marginBottom: '20px'
                                 }}
                                 src={image}
-                            />
+                            /> */}
                         </Grid>
                     </Grid>
-                    <Grid container xs={12} md={4} flexDirection={'column'} sx={{ marginTop: '50px' }}>
+                    <Grid container xs={12} md={5} flexDirection={'column'} sx={{ marginTop: '50px' }}>
                         <Card sx={{ width: '450px', borderRadius: '10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}>
                             <Grid container direction={'column'} sx={{ minHeight: '100px' }}>
                                 <CardContent>

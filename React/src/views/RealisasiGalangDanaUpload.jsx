@@ -1,14 +1,16 @@
 import { Button, Grid, styled } from "@mui/material"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useEffect, useState } from "react";
 import axiosClient from "../axios-client";
+import addImage from "../assets/t.png"
 
 export default function RealisasiGalangDanaUpload() {
     const [preview, setPreview] = useState([])
     const [image, setImage] = useState([])
 
     const navigate = useNavigate()
+    const id = useParams()
 
     const VisuallyHiddenInput = styled('input')({
         clip: 'rect(0 0 0 0)',
@@ -29,39 +31,41 @@ export default function RealisasiGalangDanaUpload() {
     }
 
     const handleSubmit = (e) => {
-        axiosClient.post('/crowdfunding/proof/upload')
+        let fd = new FormData()
+        fd.append('id', id.id)
+        for (let i = 0; i < image.length; i++) {
+            fd.append('images[]', image[i]);
+        }
+        axiosClient.post('/crowdfunding/proof/upload', fd)
             .then((res) => {
-                console.log('yes')
-            }).catch((error) => {
-                console.log(error)
+                return navigate(-1)
             })
     }
 
-    useEffect(() => {
-        console.log(image)
-    }, [image])
-
-
     return (
         <>
-            <Grid container direction={'column'}>
+            <Grid container direction={'column'} sx={{ minHeight: '500px' }}>
                 <Grid item>
                     <Button variant="contained" sx={{ width: '100px', marginLeft: "30px", backgroundColor: '#66AB92' }} onClick={() => navigate(-1)}>
                         Back
                     </Button>
                 </Grid>
-                <Grid item>
-                    <h2>Upload Gambar Realisasi</h2>
+                <Grid item sx={{ textAlign: 'center' }}>
+                    <h1>Upload Gambar Realisasi</h1>
                 </Grid>
-                <Grid container direction={'row'}>
-                {preview ? preview.map((p) => (
-                    <Grid item>
-                        <img src={p} style={{ width: '100px', height: '100px' }}></img>
-                    </Grid>
-                )) : " "}
+                <Grid container direction={'row'} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    {preview ? preview.map((p) => (
+                        <Grid item>
+                            <img src={p} style={{ width: '200px', height: '100px', marginLeft: '20px' }}></img>
+                        </Grid>
+                    )) : " "}
                 </Grid>
-                <Grid item>
-                    <p style={{ fontWeight: 'lighter' }}>Upload Gambar</p>
+                {image.length === 0 && <Grid item sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <img src={addImage} style={{ width: '100px', height: '100px' }}></img>
+                    <VisuallyHiddenInput type="file" onChange={handleImage} />
+                </Grid>}
+                <Grid item sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    {/* <p style={{ fontWeight: 'lighter' }}>Upload Gambar</p> */}
                     <Button
                         component="label"
                         role={undefined}
@@ -69,14 +73,16 @@ export default function RealisasiGalangDanaUpload() {
                         tabIndex={-1}
                         startIcon={<CloudUploadIcon />}
                     >
-                        Upload file
+                        Upload Gambar
                         <VisuallyHiddenInput type="file" onChange={handleImage} />
                     </Button>
                 </Grid>
-                <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#66AB92', width:'40%' }}>
-                    Upload Bukti Realisasi
-                </Button>
-            </Grid>
+                <Grid sx={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+                    <Button onClick={handleSubmit} variant="contained" style={{ backgroundColor: '#66AB92', width: '20%', height: '40px' }}>
+                        Upload Bukti Realisasi
+                    </Button>
+                </Grid>
+            </Grid >
         </>
     )
 }
