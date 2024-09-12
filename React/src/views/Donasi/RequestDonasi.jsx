@@ -57,9 +57,6 @@ export default function RequestDonasi() {
     const [selectedDestinationLon, setSelectedDestinationLon] = useState('')
     const [selectedRoute, setSelectedRoute] = useState([])
 
-
-
-
     //modal
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
